@@ -1,0 +1,87 @@
+
+\documentclass[numbers=noenddot, abstract=on]{scrreprt}
+
+% Setting heading fonts to serif
+\addtokomafont{disposition}{\rmfamily}
+
+\usepackage[english]{babel} 
+\usepackage[utf8]{inputenc}
+\usepackage[backend=bibtex8]{biblatex}
+\bibliography{bib/bibliography}
+
+% Using links in PDFs, but without the ugly borders
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+
+
+\begin{document}
+
+\title{\bf E-Voting on Android Devices using the CGS97 Protocol}
+\subject{Master Thesis Proposal}
+\author{Juerg Ritter (\url{rittj1@bfh.ch})\\
+\\
+Bern University of Applied Sciences\\
+Engineering and Information Technology\\
+Biel, Switzerland\\}
+\date{\today}
+\publishers{Advisor: Prof. Dr. Rolf Haenni, Bern University of Applied
+Sciences\\
+Expert: Prof. Dr. X Y}
+\maketitle
+
+
+
+
+\begin{abstract}
+The E-Voting group of the Bern University of Applied Sciences is planning to
+evaluate distributed E-Voting systems for practical use. The term
+``distributed'' in that context means that there is no central server
+infrastructure involved in the voting process. The main application of such
+E-Voting systems are polls with a low number of participants, for example the
+board of directors in a company. The idea is, that the participants create an
+ad-hoc network with mobile devices. The goal of this project is to implement a
+distributed E-Voting system for Android devices. The communications schema among
+the voting participants will rely on the proposal made by Cramer, Gennaro and
+Schoenmakers in 1997 \cite{CGS97}. The cryptographic library UniCrypt and
+InstaCircle which is an ad-hoc decentralized communication infrastructure are
+other foundation blocks of this project. UniCrypt and InstaCircle are both
+projects which have been implemented at the Bern University of Applied Sciences.
+\end{abstract}
+
+\tableofcontents
+
+\chapter{Introduction}
+One of the research fields of the Bern University of Applied Sciences is the
+area of E-Voting. E-Voting has become a big field of research in the past couple
+years. Still, there is no generic approach which meets all the criteria such as
+privacy, transparency, etc. which we want in E-Voting. The E-Voting research
+group of the Bern University of Applied Sciences \cite{www:EVG} tries to improve
+this situation with the following approaches:
+\begin{itemize}
+  \item Develop new approaches and provide them to the community for review
+  \item Take existing approaches and evaluate them in terms of practicability.
+  These approaches are usually available as scientific papers
+\end{itemize}
+
+The evaluation of these approaches is usually done by implementing them into a
+prototype level application to show that the approach actually works.
+
+The E-Voting group would like to gain some experience on how distributed
+E-Voting systems could be implemented and how they behave in practice. There are
+some approaches which focus explicitely on distributed E-Voting systems, such as
+the proposal of Khader et al. \cite{HKRS12}. In this project, we would like to
+adapt the protocol proposed by Cramer et. al. \cite{CGS97} in a way that it can
+be used as a distributed E-Voting system.
+
+A possible use case of such a system could be an executive board or any other
+committee that would like to vote on some matters without having their members
+to reveal what exactly they voted for. The architecture of our system requires
+that all the participants are in a confined space and are able to exchange some
+sort of credential using a non-electronic channel.
+
+\printbibliography
+
+\end{document}
