@@ -29,7 +29,7 @@ Biel, Switzerland\\}
 \date{\today}
 \publishers{Advisor: Prof. Dr. Rolf Haenni, Bern University of Applied
 Sciences\\
-Expert: Prof. Dr. X Y}
+Expert: Stephan Neumann, Technical University of Darmstadt}
 \maketitle
 
 
@@ -93,8 +93,8 @@ polls on mobile Android devices under the following terms:
 \end{itemize}
 
 In previous projects during the master studies, some groundwork has been
-implemented which can now be used in this projects. The previously implemented
-projects are the following:
+implemented which can now be used as a foundation for this project. The
+previously implemented projects are the following:
 \begin{itemize}
   \item \textbf{UniCrypt:} Unicrypt is a cryptographic library developed by the
   members of the E-Voting Group of the Bern University of Applied Sciences. It
@@ -116,9 +116,58 @@ has been done previously on which this project is built on.
 
 \section{The voting schema CGS97}
 In 1997, Cramer, Gennaro and Schoenmakers proposed a scheme which allows to
-do E-Voting in a secure and verifyable manner. 
+do E-Voting in a secure and verifyable manner \cite{CGS97}. The participants of
+the protocol can be divided into four different categories:
+\begin{itemize}
+  \item \textbf{Voter: } A voter is somebody who is eligible to participate on
+  an election or a poll. 
+  \item \textbf{Trustee: } A trustee is somebody who helps setting up the
+  election by creating an asymmetric keypair in cooperation with other trustees.
+  At the end of the election phase, the trustees have to cooperate in order to
+  reveal the result of the election or the poll.
+  \item \textbf{Observer: } An observer is somebody who wants to verify that all
+  the participants of an election or a poll behave as they are supposed to.
+\end{itemize}
+
+In the scenario of an ad-hoc voting system as we are going to develop during
+this project, the three roles can be combined, meaning that all voters are also
+acting as a trustee. 
+
+\subsection{Cryptographic Building Blocks}
+The CGS97 voting scheme is assembled from some well known cryptographic building
+blocks which are shortly explained in this section.
+
+\paragraph{ElGamal Cryptosystem.} The ElGamal cryptosystem \cite{EG84}, proposed
+by Taher El Gamal in 1984, is the asymmetric cryptosystem which is mostly used in the
+context of E-Voting. An asymmetric cryptosystem uses two keys to operate, one
+which is used to encrypt a certain message (the public key) and another to
+decrypt the message (the secret key). The security of this cryptosystem is based
+on the fact that it is hard to compute the logarithm in discrete modular groups
+and hence making the exponentiation in modular groups a one way function. 
+
+\paragraph{Secret sharing.} In E-Voting scenarios it is crucial that not a
+single entity can manipulate the result or reveal single votes. This
+responsibility, or in our case the secret key which is needed to obtain the
+final result, has to be spread across a set of trustees. In the CGS97 scheme,
+this property is achieved by using a secret sharing mechanism as proposed by Adi
+Shamir in 1997 \cite{SHA79}. This schema even allows to define a so called
+\textit{threshold}, which defines the minimal amount of particpating trustees in
+order to decrypt the result. Such a system is also known as a
+$(t-n)$-threshold scheme, where $n$ defines the number of shares which are
+issued at the beginning and $t$ defines the number of participants needed to
+recover the secret. In a first step, a trusted dealer defines a polynomial
+function $f(x)$ with degree $t-1$ and random coefficients. Each trustee $A_{i |
+1 \leq i \leq n}$ gets its share $s_i=f(i)$. Secret itself, at this stage only
+known by the trusted dealer, is defined by $s=f(0)$. In order to reproduce the
+secret using the shares distributed among all trustees, we can interpolate the
+shares in order to reproduce the coefficients and therefore also $f(x)$. Since a
+polynomial function of degree $t-1$ needs at least $t$ points to reproduce using
+an interpolation technique such as Lagrange interpolation, the secret can only
+be reproduced if at least $t$ trustees are collaborating. 
 
 \section{UniCrypt}
+UniCrypt is the name of a cryptographic library which has been developed by the
+E-Voting group of the Bern University of Applied Sciences.
 
 \section{InstaCircle}
 
