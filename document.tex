@@ -16,6 +16,13 @@
     pdfborder={0 0 0},
 }
 
+% we need these packages for the gantt chart
+\usepackage{pgfgantt}
+\usepackage{rotating}
+
+% We need this to display the group symbols correctly
+\usepackage{amssymb}
+\usepackage{amsmath}
 
 \begin{document}
 
@@ -88,8 +95,8 @@ polls on mobile Android devices under the following terms:
   \item Voting needs to be done ad-hoc, meaning that no infrastructure other
   than the participants mobile devices are required to perform an election or
   poll.
-  \item The voting schema is based on the CGS97 approach proposed by Cramer et.
-  al. \cite{CGS97}
+  \item The voting schema is based on the CGS97 approach proposed by Cramer et
+  al.~\cite{CGS97}.
 \end{itemize}
 
 In previous projects during the master studies, some groundwork has been
@@ -145,6 +152,55 @@ decrypt the message (the secret key). The security of this cryptosystem is based
 on the fact that it is hard to compute the logarithm in discrete modular groups
 and hence making the exponentiation in modular groups a one way function. 
 
+In order to define an ElGamal cryptosystem, three parameters are required. Let
+$p$ and $q$ be large prime numbers such that $q|p-1$. $p$ and $q$ are so
+called save primes. $q$ defines the order of a subgroup $G_q$ of the
+multiplicative modular group $\mathbb{Z}^*_p$. The last parameter needed is a random generator
+$g$ of the group $G_q$. We can now derrive the asymmetric keypair containing the
+secret key $x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message
+$m \in G_q$ can be encrypted by first choosing a random value $r \in
+\mathbb{Z}_q$, and then calculating $(a, b)=Enc_y(m, r)=(g^r, y^r \cdot m)$. The
+tuple $(a, b)$ is the ciphertext of the message $m$. $m$ can be recovered using the secret key $x$
+by calculating $m=Dec_x(a, b)=a^{-x} \cdot b$.
+
+\paragraph{Homomorphic encryption.} The ElGamal cryptosystem has a property
+which is important for building verifiable E-Voting schemes, namely the property
+of homomorphism. Given two mathematical groups $(X,\oplus)$ and $(Y,\otimes)$, a
+mathematical function $f:X \rightarrow Y$ is $(\oplus, \otimes)$-homomorphic if
+the following condition holds:
+\begin{equation}
+f(m_1) \otimes f(m_2) = f(m_1 \oplus m_2) \notag
+\end{equation}
+The ElGamal function offers exactly that property for it's encryption function
+$Enc_y:G_q \rightarrow G_q$ using the same public key $y$:
+\begin{equation}
+Enc_y(m_1) \cdot Enc_y(m_2) = Enc_y(m_1 \cdot m_2) \notag
+\end{equation}
+This property allows to calculate the encrypted product of all messages out of
+the encrypted messages and decrypt only the result. Applied to E-Voting, the
+result can be calulated out of the encrypted ballots and only the final result
+needs to be decrypted. The ballots themselves can remain encrypted, which is
+important for maintaining privacy. The ElGamal cryptosystem is homomorphic
+respective to multiplication, which is not very fortunate for counting votes.
+Votes should be sumed up in order to get the final result. In order to reach
+this, we use the following mathematical property:
+\begin{equation}
+x^a \cdot x^b = x^{(a+b)} \notag
+\end{equation}
+
+Applied to ElGamal, this transforms to the following equation:
+
+\begin{equation}
+Enc_y(g^{m_1}) \cdot Enc_y(g^{m_2}) = Enc_y(g^{m_1 + m_2}) \notag
+\end{equation}
+
+In order to obtain the sum of $m_1$ and $m_2$, the computation of a discrete
+logarithm is required, which is considered as a hard problem. In the scenario of
+E-Voting, we know what the possible solutions are. The number of possible
+solution is merely the number of ballots which have been cast, so we can just
+iterate through all the possible solutions and stop as soon as it matches with
+the decrypted product.
+
 \paragraph{Secret sharing.} In E-Voting scenarios it is crucial that not a
 single entity can manipulate the result or reveal single votes. This
 responsibility, or in our case the secret key which is needed to obtain the
@@ -167,9 +223,99 @@ be reproduced if at least $t$ trustees are collaborating.
 
 \section{UniCrypt}
 UniCrypt is the name of a cryptographic library which has been developed by the
-E-Voting group of the Bern University of Applied Sciences.
+E-Voting group of the Bern University of Applied Sciences. The main goal of this
+project was to create a plattform on which upcoming projects can be built on.
+UniCrypt tries to look at cryptographic functions such as crypto systems,
+signature systems, hash functions etc. from a mathematical point of view. Cipher
+text, plain text, signatures, etc. are treated as elements of mathematical
+groups, the cryptographic functions are treated as mathematical functions. This
+is required because in secure protocols as we use in the area of E-Voting, we
+depend on the plain textbook implementation of the cryptographic functions
+without functions like automatic padding, encoding, etc. This is the main
+difference between UniCrypt and other cryptographic libraries.
+
+At the moment, UniCrypt has only been used in classic Java environments, but not
+on mobile devices. Futher information about UniCrypt can be found in
+\cite{ritter12}.
 
 \section{InstaCircle}
+InstaCircle is the name of a project that has been implemented as a preparation
+of this master thesis. It is intended as a platform to connect mobile devices
+in a confined space to a Wi-Fi ad-hoc network in order to exchange broadcast
+and unicast messages. In order to keep the network traffic as low as possible,
+the basic communication relies on broadcast messages. Since it's not possible
+implement a reliable protocol using broadcast techniques, mechanisms to
+compensate message losses have been implemented. These resending mechanisms rely
+on a reliable unicast channel.
+
+From a usability perspective, the process on agreeing to a communication channel
+for an ad-hoc network is quite challenging. All the participants need to have
+the know-how to switch their devices to the correct Wi-Fi network and enter the
+correct keys and passwords. InstaCircle tries to improve the usability by
+allowing the users to exchange the configuration by sharing a QR code or a NFC
+tag. Once a user has set up a conversation, other participants can join the
+conversation by reading the QR code or the NFC tag shared by the initiator of
+the conversation.
+
+InstaCircle is currently available for Android devices only. Futher information
+about InstaCircle can be found in \cite{ritter13a}.
+
+\section{Planning}
+\begin{sidewaysfigure}[ph]
+\centering
+\begin{ganttchart}
+[vgrid, hgrid,
+group/.style={draw=black, fill=black!50}, y unit chart=1cm]{26}
+\gantttitle{Planning Master Thesis (part 1)}{26} \\
+\gantttitlelist{8,...,33}{1} \\
+\ganttmilestone{Kickoff}{0.5} \\
+\ganttgroup{Writing of Project Proposal}{1}{3} \\
+\ganttgroup{Secret Sharing scheme}{4}{8} \\
+\ganttbar{Analyzing the possibilities of threshold secret sharing}{4}{6} \\
+\ganttbar{Implementing secret sharing into UniCrypt}{5}{8} \\
+\ganttbar{Testing the secret sharing scheme}{7}{8} \\
+\ganttgroup{Evalutation of UniCrypt on Android}{9}{10} \\
+\ganttbar{Testing out Example code on Android}{9}{9} \\
+\ganttbar{Integration of code into Android project}{10}{10} \\
+\ganttgroup{Implementation of E-Voting Application of Android}{11}{26} \\
+\ganttbar{Design of storyboard}{11}{12}\\
+\ganttbar{Implementation of the User Interface}{12}{15}\\
+\ganttbar{Implementation of the E-Voting logic}{20}{26}\\
+\ganttgroup{Testing}{30}{30} \\
+\ganttgroup{Documentation / Report}{1}{8} \\
+\ganttmilestone{Handin}{30}
+\end{ganttchart}
+\caption{Planning part 1}
+\label{fig:planningpart1}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[ph]
+\centering
+\begin{ganttchart}
+[vgrid, hgrid,
+group/.style={draw=black, fill=black!50}, y unit chart=1cm]{25}
+\gantttitle{Planning Master Thesis (part 2)}{25} \\
+\gantttitlelist{34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2,3,4,5,6}{1} \\
+\ganttmilestone{Kickoff}{100} \\
+\ganttgroup{Writing of Project Proposal}{100}{100} \\
+\ganttgroup{Secret Sharing scheme}{100}{100} \\
+\ganttbar{Analyzing the possibilities of threshold secret sharing}{100}{100} \\
+\ganttbar{Implementing secret sharing into UniCrypt}{100}{100} \\
+\ganttbar{Testing the secret sharing scheme}{100}{100} \\
+\ganttgroup{Evalutation of UniCrypt on Android}{100}{100} \\
+\ganttbar{Testing out Example code on Android}{100}{100} \\
+\ganttbar{Integration of code into Android project}{100}{100} \\
+\ganttgroup{Implementation of E-Voting Application of Android}{1}{13} \\
+\ganttbar{Design of storyboard}{100}{100}\\
+\ganttbar{Implementation of the User Interface}{100}{100}\\
+\ganttbar{Implementation of the E-Voting logic}{1}{13}\\
+\ganttgroup{Testing}{7}{19} \\
+\ganttgroup{Documentation / Report}{14}{24.5} \\
+\ganttmilestone{Handin}{24.5}
+\end{ganttchart}
+\caption{Planning part 2}
+\label{fig:planningpart2}
+\end{sidewaysfigure}
 
 \printbibliography
 
