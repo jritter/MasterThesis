@@ -61,6 +61,7 @@ projects which have been implemented at the Bern University of Applied Sciences.
 \tableofcontents
 
 \chapter{Introduction}
+\label{cha:introduction}
 One of the research fields of the Bern University of Applied Sciences is the
 area of E-Voting. E-Voting has become a big field of research in the past couple
 years. Still, there is no generic approach which meets all the criteria such as
@@ -118,10 +119,12 @@ The time budget of this Master Thesis is one year, although the project will be
 implemented part time. It is equivalent to 27 ECTS credits. 
 
 \chapter{Background and related work}
+\label{cha:brw}
 This section gives an overview of the theoretical foundations and the work which
 has been done previously on which this project is built on.
 
 \section{The voting schema CGS97}
+\label{sec:CGS97}
 In 1997, Cramer, Gennaro and Schoenmakers proposed a scheme which allows to
 do E-Voting in a secure and verifyable manner \cite{CGS97}. The participants of
 the protocol can be divided into four different categories:
@@ -141,11 +144,14 @@ this project, the three roles can be combined, meaning that all voters are also
 acting as a trustee. 
 
 \subsection{Cryptographic Building Blocks}
+\label{sec:buildingblocks}
 The CGS97 voting scheme is assembled from some well known cryptographic building
 blocks which are shortly explained in this section.
 
-\paragraph{ElGamal Cryptosystem.} The ElGamal cryptosystem \cite{EG84}, proposed
-by Taher El Gamal in 1984, is the asymmetric cryptosystem which is mostly used in the
+\subsubsection{ElGamal Cryptosystem}
+\label{sec:elgamal}
+The ElGamal cryptosystem \cite{EG84},
+proposed by Taher El Gamal in 1984, is the asymmetric cryptosystem which is mostly used in the
 context of E-Voting. An asymmetric cryptosystem uses two keys to operate, one
 which is used to encrypt a certain message (the public key) and another to
 decrypt the message (the secret key). The security of this cryptosystem is based
@@ -158,12 +164,14 @@ called save primes. $q$ defines the order of a subgroup $G_q$ of the
 multiplicative modular group $\mathbb{Z}^*_p$. The last parameter needed is a random generator
 $g$ of the group $G_q$. We can now derrive the asymmetric keypair containing the
 secret key $x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message
-$m \in G_q$ can be encrypted by first choosing a random value $r \in
+$m \in G_q$ can be encrypted by first choosing a random value $r \in_R
 \mathbb{Z}_q$, and then calculating $(a, b)=Enc_y(m, r)=(g^r, y^r \cdot m)$. The
 tuple $(a, b)$ is the ciphertext of the message $m$. $m$ can be recovered using the secret key $x$
 by calculating $m=Dec_x(a, b)=a^{-x} \cdot b$.
 
-\paragraph{Homomorphic encryption.} The ElGamal cryptosystem has a property
+\subsubsection{Homomorphic encryption}
+\label{sec:homenc}
+The ElGamal cryptosystem has a property
 which is important for building verifiable E-Voting schemes, namely the property
 of homomorphism. Given two mathematical groups $(X,\oplus)$ and $(Y,\otimes)$, a
 mathematical function $f:X \rightarrow Y$ is $(\oplus, \otimes)$-homomorphic if
@@ -171,8 +179,9 @@ the following condition holds:
 \begin{equation}
 f(m_1) \otimes f(m_2) = f(m_1 \oplus m_2) \notag
 \end{equation}
-The ElGamal function offers exactly that property for it's encryption function
-$Enc_y:G_q \rightarrow G_q$ using the same public key $y$:
+The ElGamal function offers exactly that property with respect to the
+multiplication operation for its encryption function $Enc_y:G_q \rightarrow
+G_q$ using the same public key $y$:
 \begin{equation}
 Enc_y(m_1) \cdot Enc_y(m_2) = Enc_y(m_1 \cdot m_2) \notag
 \end{equation}
@@ -185,7 +194,7 @@ respective to multiplication, which is not very fortunate for counting votes.
 Votes should be sumed up in order to get the final result. In order to reach
 this, we use the following mathematical property:
 \begin{equation}
-x^a \cdot x^b = x^{(a+b)} \notag
+x^a \cdot x^b = x^{a+b} \notag
 \end{equation}
 
 Applied to ElGamal, this transforms to the following equation:
@@ -201,12 +210,14 @@ solution is merely the number of ballots which have been cast, so we can just
 iterate through all the possible solutions and stop as soon as it matches with
 the decrypted product.
 
-\paragraph{Secret sharing.} In E-Voting scenarios it is crucial that not a
+\subsubsection{Secret sharing}
+\label{sec:secretsharing}
+In E-Voting scenarios it is crucial that not a
 single entity can manipulate the result or reveal single votes. This
 responsibility, or in our case the secret key which is needed to obtain the
 final result, has to be spread across a set of trustees. In the CGS97 scheme,
 this property is achieved by using a secret sharing mechanism as proposed by Adi
-Shamir in 1997 \cite{SHA79}. This schema even allows to define a so called
+Shamir in 1979 \cite{SHA79}. This schema even allows to define a so called
 \textit{threshold}, which defines the minimal amount of particpating trustees in
 order to decrypt the result. Such a system is also known as a
 $(t-n)$-threshold scheme, where $n$ defines the number of shares which are
@@ -221,7 +232,34 @@ polynomial function of degree $t-1$ needs at least $t$ points to reproduce using
 an interpolation technique such as Lagrange interpolation, the secret can only
 be reproduced if at least $t$ trustees are collaborating. 
 
+The approach of Shamir is quite simple, has one major drawback though: It
+requires a trusted authority which has the knowledge of the shared key. It it
+would be nice to have a schema where the group of trustees collaborate to create
+the shares in a way that nobody can derrive the private key unless a sufficient
+amount of trusees collaborate. In 1991, Torben Pedersen proposed a schema where
+this trusted dealer is no longer needed \cite{PED91}. In this schema, all the
+trustees perform the steps of the trusted dealer in the schema of Shamir, namely
+they generate a polynomial function with random coefficients of degree $t-1$ and
+caluclate a point for each trustee in the system. These points are then
+\textit{secretly} communicated individually to each trustee.
+
+\subsubsection{Bulletin Board}
+\label{sec:bulletinboard}
+The so called bulletin board is the
+public communication channel which is used to communicate between the
+participants of the election or poll. It is a transscript of all the
+communication steps between the participants and therefore contains encrypted
+ballots, zero knowledge proofs, etc. The bulletin board is also available for
+observers. Using the content of the bulletin board, everybody can verify that
+all the participants are following the protocol or that dishonest participants
+are excluded from the voting process. A voter can verify that his/her own
+ballot is counted properly and also reflects in the final result. In theory, it
+is not possible to delete anything from a bulletin board (append only). Since
+the bulletin board is a good target for a denial-of-service attack, it is a good
+idea to replicate the content of the bulletin board to multiple systems.
+
 \section{UniCrypt}
+\label{sec:unicrypt}
 UniCrypt is the name of a cryptographic library which has been developed by the
 E-Voting group of the Bern University of Applied Sciences. The main goal of this
 project was to create a plattform on which upcoming projects can be built on.
@@ -239,11 +277,12 @@ on mobile devices. Futher information about UniCrypt can be found in
 \cite{ritter12}.
 
 \section{InstaCircle}
+\label{sec:instacircle}
 InstaCircle is the name of a project that has been implemented as a preparation
 of this master thesis. It is intended as a platform to connect mobile devices
 in a confined space to a Wi-Fi ad-hoc network in order to exchange broadcast
 and unicast messages. In order to keep the network traffic as low as possible,
-the basic communication relies on broadcast messages. Since it's not possible
+the basic communication relies on broadcast messages. Since it is not possible
 implement a reliable protocol using broadcast techniques, mechanisms to
 compensate message losses have been implemented. These resending mechanisms rely
 on a reliable unicast channel.
@@ -260,6 +299,88 @@ the conversation.
 InstaCircle is currently available for Android devices only. Futher information
 about InstaCircle can be found in \cite{ritter13a}.
 
+\chapter{Expected Results}
+\label{cha:expectedresults}
+The final result of this project is a fully-fledged distributed E-Voting
+application which runs on Android devices and does not require any equipment
+other than the Android smartphones or tablets. Since a considerable amount of
+people carry such devices, which allows setting up spontaneous polls. The
+implementation can be split up in several packages, which are shortly explained
+in the following section.
+
+\section{Threshold Secret Sharing}
+\label{sec:thresholdsecretsharing}
+In order to ensure privacy of the ballots, the CGS97 \cite{CGS97} E-Voting
+protocol uses a threshold secret sharing mechanism which splits up the secret
+key which will later be used for decrypting the result among an certain number
+of trustees. Since the protocol allows participants to impersonate multiple
+rules, all participants could also be trustees. In the scenario of an ad-hoc
+E-Voting setup, it certainly makes sense to assign the role of the trustee to
+all participants. This is because of the following reasons:
+\begin{itemize}
+  \item In many cases, the number of participants in an ad-hoc poll can be so
+  small that it would be hard to find a trustee subset
+  \item In classical large-scale elections or polls, the role of the trustee
+  will probably be assigned to organizations such as political parties,
+  governmental authorities, election observation organizations, etc. In
+  spontaneous ad-hoc polls, the question of who gets to be a trustee is not an
+  obvious one, so it is probably the best choice to assign this role to all
+  participants.
+  \item Assigning the role of a trustee to all participants other than just to a
+  subset of participants means that the handling of the application would be the
+  same for all the participants (except for one special participant who defines
+  the question and the allowed options of the poll). That simplifies the design
+  of the User interface and avoids confusion about who has to do what during the
+  poll.
+\end{itemize}
+
+The CGS97 protocol suggests to use threshold secret sharing schema due to Torben
+Pedersen \cite{PED91}, which adds a distributed key generation mechanism to the
+schema proposed by Adi Shamir \cite{SHA79}. Especially the key generation part
+of the protocol involves a lot of steps and interaction between participants.
+
+The secret sharing mechanism is currently not part of the InstaCircle library
+and has to be implemented. The implementation such a threshold mechanism in
+InstaCircle is a goal for this project.
+
+\section{Graphical User Interface}
+\label{sec:gui}
+In many cases, cryptographic functions which are heavily used in the context of
+E-Voting have a negative impact on the usability. Many steps such as key
+generation, decryption, etc. have to be done in order to guarantee a poll which
+can't be compromised, and these steps bring a certain complexity into the
+handling of the application. Therefore it is crucial to guide the user
+through the process, and this can only be done by providing them a carefully
+crafted user interface. We can divide the required user interface into the
+following components:
+\begin{itemize}
+  \item \textbf{Administration:} The very first step in a poll would be to
+  define the question of the poll and the allowed options. Also, some sort of
+  access credential has to be defined. This step has to be performed by one
+  special participant, let's define this special participant as the
+  \textit{initiator} of the poll. Functionality in order to open and close the
+  voting period is also necessary in this part.
+  \item \textbf{Voting:} One part of the interface has to deal with the
+  functionality of casting a vote. It basically displays the question of the
+  poll and provides functionality to choose one of the available options.
+  \item \textbf{Bulletin board:} One building block of the CGS97 protocol
+  \cite{CGS97} is the so called bulletin board where the whole transscript of
+  messages between the participants is saved. All these information needs to be displayed on the
+  user interface so that the participant has the possibility to verify the
+  validity of the whole E-Voting process (see section \ref{sec:bulletinboard}
+  on page \pageref{sec:bulletinboard}).
+\end{itemize}
+
+\section{E-Voting Functionality}
+\label{sec:evotingfunctionality}
+The main challenge of this project is the implementation of the logic of CGS97 
+\cite{CGS97}, namely assemble the cryptographic building blocks to a working
+application and tie it to the user interface and to InstaCircle for communicating to the other
+participants. This part is heavily based on already existing components, namely
+InstaCircle which provides the decentralized communication infrastructure and
+UniCrypt which provides the implementation of the cryptographic building blocks
+which are used in CGS97.
+
 \section{Planning}
 \begin{sidewaysfigure}[ph]
 \centering
@@ -269,7 +390,7 @@ group/.style={draw=black, fill=black!50}, y unit chart=1cm]{26}
 \gantttitle{Planning Master Thesis (part 1)}{26} \\
 \gantttitlelist{8,...,33}{1} \\
 \ganttmilestone{Kickoff}{0.5} \\
-\ganttgroup{Writing of Project Proposal}{1}{3} \\
+\ganttgroup{Writing of Project Proposal}{1}{4} \\
 \ganttgroup{Secret Sharing scheme}{4}{8} \\
 \ganttbar{Analyzing the possibilities of threshold secret sharing}{4}{6} \\
 \ganttbar{Implementing secret sharing into UniCrypt}{5}{8} \\
