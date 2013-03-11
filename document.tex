@@ -24,6 +24,10 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 
+
+% definitions of own commands
+\newcommand{\myref}[1]{(see section \ref{#1} on page \pageref{#1})}
+
 \begin{document}
 
 \title{\bf E-Voting on Android Devices using the CGS97 Protocol}
@@ -123,6 +127,10 @@ implemented part time. It is equivalent to 27 ECTS credits.
 This section gives an overview of the theoretical foundations and the work which
 has been done previously on which this project is built on.
 
+\section{Mathematical basics}
+\label{sec:mathbasics}
+
+
 \section{The voting schema CGS97}
 \label{sec:CGS97}
 In 1997, Cramer, Gennaro and Schoenmakers proposed a scheme which allows to
@@ -169,6 +177,42 @@ $m \in G_q$ can be encrypted by first choosing a random value $r \in_R
 tuple $(a, b)$ is the ciphertext of the message $m$. $m$ can be recovered using the secret key $x$
 by calculating $m=Dec_x(a, b)=a^{-x} \cdot b$.
 
+\subsubsection{Subgroup Encoding}
+\label{sec:subgroupencoding}
+In the previous section, we have seen that the ElGamal encryption function takes
+a message $m \in G_q$ and a random value $r \in_R \mathbb{Z}_q$ as a function
+parameter. Since the group $G_q$ contains a non-continous set of integer numbers
+between $1$ and $p-1$, we need a mechanism to make sure that $m$ is an element
+of $G_q$ We call this operation \textit{encoding}.
+Assuming $g$ is a generator of the group $G_q$, we could just calculate
+$m=g^{m'}$, where $m' \in \mathbb{Z}_q$. This works because $G_q = \{g^0, g^1,
+g^2, \ldots, g^{q-1}\}$. While the encoding process is quite simple, the
+decoding part is more difficult because in order to find $m'$, we need to
+calculate the discrete logarithm which cannot be done in an efficient manner.
+Thus, this encoding schema is only applicable to a small set of possible
+plaintexts.
+
+There is also a more efficient mechanism which allows to
+map values between the groups $\mathbb{Z}_q$ and $G_q$. The encoding can be done
+as follows:
+\begin{equation}
+\text{encode} : \mathbb{Z}_q \rightarrow G_q, \text{encode}(m') = 
+	\begin{cases}
+	m'+1 & \text{if } (m'+1)^q = 1 \text{ mod } p \\
+	p-m'-1 & \text{else}
+	\end{cases} \notag
+\end{equation}
+
+The decoding function on the other hand looks as follows:
+
+\begin{equation}
+\text{decode} : G_q \rightarrow \mathbb{Z}_q, \text{decode}(m) = 
+	\begin{cases}
+	m-1 & \text{if } m \leq q \\
+	p-m-1 & \text{else}
+	\end{cases} \notag
+\end{equation}
+
 \subsubsection{Homomorphic encryption}
 \label{sec:homenc}
 The ElGamal cryptosystem has a property
@@ -209,6 +253,7 @@ E-Voting, we know what the possible solutions are. The number of possible
 solution is merely the number of ballots which have been cast, so we can just
 iterate through all the possible solutions and stop as soon as it matches with
 the decrypted product.
+
 
 \subsubsection{Secret sharing}
 \label{sec:secretsharing}
@@ -367,8 +412,7 @@ following components:
   \cite{CGS97} is the so called bulletin board where the whole transscript of
   messages between the participants is saved. All these information needs to be displayed on the
   user interface so that the participant has the possibility to verify the
-  validity of the whole E-Voting process (see section \ref{sec:bulletinboard}
-  on page \pageref{sec:bulletinboard}).
+  validity of the whole E-Voting process \myref{sec:bulletinboard}.
 \end{itemize}
 
 \section{E-Voting Functionality}
@@ -381,7 +425,36 @@ InstaCircle which provides the decentralized communication infrastructure and
 UniCrypt which provides the implementation of the cryptographic building blocks
 which are used in CGS97.
 
+\chapter{Organization}
+\label{cha:organization}
+This project is implemented as a master thesis project as a graduation project
+during the Master of Science in Engineering studies (MSE) at the Bern University
+of applied Sciences. This project values 27 ECTS credits and is spread among two
+semesters. The hand in of the project is planned for February 7, 2014.
+
+During the same period, a fellow master student is working on a very similar
+topic, namely the implementation of the distributed E-Voting system proposed by
+Dalia Khader et al. \cite{HKRS12}. This project will also be based on the
+InstaCircle communication infrastructure \cite{ritter13a} and the UniCrypt
+cryptographic library \cite{ritter12} which have been developed earlier during
+the master studies. It is the plan to establish a collaboration between these
+two project, mainly for the development of the graphical user interface. A
+collaboration between these project also makes it easier to compare the
+approaches and evaluate the advantages and disadvantages of the two approaches.
+
 \section{Planning}
+\label{sec:planning}
+The gantt charts in figure \ref{fig:planningpart1} and figure
+\ref{fig:planningpart2} visualize the steps which are planned on the time axis
+during the project period. At the first stage, we define the project setup,
+later on the cryptographic components will be put in place and will be tested on the
+Android platform. At some point a detailed story board for the graphical user
+interface will be created. Especially this project will be done in a strong
+collaboration with the other project which deals with distributed E-Voting
+systems. The part which will consume most of the time budget will be the
+implementation and the testing of the actual E-Voting logic. The last part will
+be dedicated to writing the project report of this master thesis project.
+
 \begin{sidewaysfigure}[ph]
 \centering
 \begin{ganttchart}
@@ -437,6 +510,10 @@ group/.style={draw=black, fill=black!50}, y unit chart=1cm]{25}
 \caption{Planning part 2}
 \label{fig:planningpart2}
 \end{sidewaysfigure}
+
+\section{Milestones}
+\label{sec:milestones}
+
 
 \printbibliography
 
