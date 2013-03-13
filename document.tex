@@ -54,7 +54,7 @@ infrastructure involved in the voting process. The main application of such
 E-Voting systems are polls with a low number of participants, for example the
 board of directors in a company. The idea is, that the participants create an
 ad-hoc network with mobile devices. The goal of this project is to implement a
-distributed E-Voting system for Android devices. The communications schema among
+distributed E-Voting system for Android devices. The communications scheme among
 the voting participants will rely on the proposal made by Cramer, Gennaro and
 Schoenmakers in 1997 \cite{CGS97}. The cryptographic library UniCrypt and
 InstaCircle which is an ad-hoc decentralized communication infrastructure are
@@ -79,14 +79,13 @@ this situation with the following approaches:
 \end{itemize}
 
 The evaluation of these approaches is usually done by implementing them into a
-prototype level application to show that the approach actually works.
-
-The E-Voting group would like to gain some experience on how distributed
-E-Voting systems could be implemented and how they behave in practice. There are
-some approaches which focus explicitely on distributed E-Voting systems, such as
-the proposal of Khader et al. \cite{HKRS12}. In this project, we would like to
-adapt the protocol proposed by Cramer et. al. \cite{CGS97} in a way that it can
-be used as a distributed E-Voting system.
+prototype level application to show that the approach actually works. The
+E-Voting group would like to gain some experience on how distributed E-Voting
+systems could be implemented and how they behave in practice. There are some
+approaches which focus explicitly on distributed E-Voting systems, such as the
+proposal of Khader et al. \cite{HKRS12}. In this project, we would like to adapt
+the protocol proposed by Cramer et. al. \cite{CGS97} in a way that it can be
+used as a distributed E-Voting system.
 
 A possible use case of such a system could be an executive board or any other
 committee that would like to vote on some matters without having their members
@@ -98,9 +97,9 @@ The goal of this project is to build Systems which allows perform elections and
 polls on mobile Android devices under the following terms:
 \begin{itemize}
   \item Voting needs to be done ad-hoc, meaning that no infrastructure other
-  than the participants mobile devices are required to perform an election or
+  than the participants' mobile devices are required to perform an election or
   poll.
-  \item The voting schema is based on the CGS97 approach proposed by Cramer et
+  \item The voting scheme is based on the CGS97 approach proposed by Cramer et
   al.~\cite{CGS97}.
 \end{itemize}
 
@@ -114,36 +113,38 @@ previously implemented projects are the following:
   Knowledge Proofs, digital Signatures, etc. 
   \item \textbf{InstaCircle: } InstaCircle provides a decentralized
   communication platform for Android devices. It allows to exchange messages
-  using WiFi among a closed user group.
+  using Wi-Fi among a closed user group.
 \end{itemize}
 The projects mentioned above will be discussed in more detail in the section
-Background and related work.
+``Background and related work'' \myref{cha:brw}.
 
 The time budget of this Master Thesis is one year, although the project will be
 implemented part time. It is equivalent to 27 ECTS credits. 
 
 \chapter{Background and related work}
 \label{cha:brw}
-This section gives an overview of the theoretical foundations and the work which
-has been done previously on which this project is built on.
+This section gives an overview of the theoretical foundations and some projects
+which have been implemented earlier in order to serve as a foundation for this
+project.
 
 \section{Mathematical basics}
 \label{sec:mathbasics}
 
 
-\section{The voting schema CGS97}
+\section{The voting scheme CGS97}
 \label{sec:CGS97}
-In 1997, Cramer, Gennaro and Schoenmakers proposed a scheme which allows to
-do E-Voting in a secure and verifyable manner \cite{CGS97}. The participants of
-the protocol can be divided into four different categories:
+In 1997, Cramer, Gennaro and Schoenmakers proposed a scheme \cite{CGS97} which
+allows to do E-Voting in a secure and verifiable manner. The participants of
+the protocol can be divided into three different categories:
 \begin{itemize}
-  \item \textbf{Voter: } A voter is somebody who is eligible to participate on
+  \item \textbf{Voter:} A voter is somebody who is eligible to participate on
   an election or a poll. 
-  \item \textbf{Trustee: } A trustee is somebody who helps setting up the
-  election by creating an asymmetric keypair in cooperation with other trustees.
+  \item \textbf{Trustee:} A trustee is somebody who helps setting up the
+  election by creating an asymmetric key pair in cooperation with other
+  trustees.
   At the end of the election phase, the trustees have to cooperate in order to
   reveal the result of the election or the poll.
-  \item \textbf{Observer: } An observer is somebody who wants to verify that all
+  \item \textbf{Observer:} An observer is somebody who wants to verify that all
   the participants of an election or a poll behave as they are supposed to.
 \end{itemize}
 
@@ -170,7 +171,7 @@ In order to define an ElGamal cryptosystem, three parameters are required. Let
 $p$ and $q$ be large prime numbers such that $q|p-1$. $p$ and $q$ are so
 called save primes. $q$ defines the order of a subgroup $G_q$ of the
 multiplicative modular group $\mathbb{Z}^*_p$. The last parameter needed is a random generator
-$g$ of the group $G_q$. We can now derrive the asymmetric keypair containing the
+$g$ of the group $G_q$. We can now derive the asymmetric key pair containing the
 secret key $x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message
 $m \in G_q$ can be encrypted by first choosing a random value $r \in_R
 \mathbb{Z}_q$, and then calculating $(a, b)=Enc_y(m, r)=(g^r, y^r \cdot m)$. The
@@ -181,7 +182,7 @@ by calculating $m=Dec_x(a, b)=a^{-x} \cdot b$.
 \label{sec:subgroupencoding}
 In the previous section, we have seen that the ElGamal encryption function takes
 a message $m \in G_q$ and a random value $r \in_R \mathbb{Z}_q$ as a function
-parameter. Since the group $G_q$ contains a non-continous set of integer numbers
+parameter. Since the group $G_q$ contains a non-continuous set of integer numbers
 between $1$ and $p-1$, we need a mechanism to make sure that $m$ is an element
 of $G_q$ We call this operation \textit{encoding}.
 Assuming $g$ is a generator of the group $G_q$, we could just calculate
@@ -189,14 +190,14 @@ $m=g^{m'}$, where $m' \in \mathbb{Z}_q$. This works because $G_q = \{g^0, g^1,
 g^2, \ldots, g^{q-1}\}$. While the encoding process is quite simple, the
 decoding part is more difficult because in order to find $m'$, we need to
 calculate the discrete logarithm which cannot be done in an efficient manner.
-Thus, this encoding schema is only applicable to a small set of possible
+Thus, this encoding scheme is only applicable to a small set of possible
 plaintexts.
 
 There is also a more efficient mechanism which allows to
 map values between the groups $\mathbb{Z}_q$ and $G_q$. The encoding can be done
 as follows:
 \begin{equation}
-\text{encode} : \mathbb{Z}_q \rightarrow G_q, \text{encode}(m') = 
+\text{Encode} : \mathbb{Z}_q \rightarrow G_q, \text{Encode}(m') = 
 	\begin{cases}
 	m'+1 & \text{if } (m'+1)^q = 1 \text{ mod } p \\
 	p-m'-1 & \text{else}
@@ -206,7 +207,7 @@ as follows:
 The decoding function on the other hand looks as follows:
 
 \begin{equation}
-\text{decode} : G_q \rightarrow \mathbb{Z}_q, \text{decode}(m) = 
+\text{Decode} : G_q \rightarrow \mathbb{Z}_q, \text{Decode}(m) = 
 	\begin{cases}
 	m-1 & \text{if } m \leq q \\
 	p-m-1 & \text{else}
@@ -231,11 +232,11 @@ Enc_y(m_1) \cdot Enc_y(m_2) = Enc_y(m_1 \cdot m_2) \notag
 \end{equation}
 This property allows to calculate the encrypted product of all messages out of
 the encrypted messages and decrypt only the result. Applied to E-Voting, the
-result can be calulated out of the encrypted ballots and only the final result
+result can be calculated out of the encrypted ballots and only the final result
 needs to be decrypted. The ballots themselves can remain encrypted, which is
 important for maintaining privacy. The ElGamal cryptosystem is homomorphic
 respective to multiplication, which is not very fortunate for counting votes.
-Votes should be sumed up in order to get the final result. In order to reach
+Votes should be summed up in order to get the final result. In order to reach
 this, we use the following mathematical property:
 \begin{equation}
 x^a \cdot x^b = x^{a+b} \notag
@@ -262,9 +263,9 @@ single entity can manipulate the result or reveal single votes. This
 responsibility, or in our case the secret key which is needed to obtain the
 final result, has to be spread across a set of trustees. In the CGS97 scheme,
 this property is achieved by using a secret sharing mechanism as proposed by Adi
-Shamir in 1979 \cite{SHA79}. This schema even allows to define a so called
-\textit{threshold}, which defines the minimal amount of particpating trustees in
-order to decrypt the result. Such a system is also known as a
+Shamir in 1979 \cite{SHA79}. This scheme even allows to define a so called
+\textit{threshold}, which defines the minimal amount of participating trustees
+in order to decrypt the result. Such a system is also known as a
 $(t-n)$-threshold scheme, where $n$ defines the number of shares which are
 issued at the beginning and $t$ defines the number of participants needed to
 recover the secret. In a first step, a trusted dealer defines a polynomial
@@ -279,20 +280,20 @@ be reproduced if at least $t$ trustees are collaborating.
 
 The approach of Shamir is quite simple, has one major drawback though: It
 requires a trusted authority which has the knowledge of the shared key. It it
-would be nice to have a schema where the group of trustees collaborate to create
-the shares in a way that nobody can derrive the private key unless a sufficient
-amount of trusees collaborate. In 1991, Torben Pedersen proposed a schema where
-this trusted dealer is no longer needed \cite{PED91}. In this schema, all the
-trustees perform the steps of the trusted dealer in the schema of Shamir, namely
+would be nice to have a scheme where the group of trustees collaborate to create
+the shares in a way that nobody can derive the private key unless a sufficient
+amount of trustees collaborate. In 1991, Torben Pedersen proposed a scheme where
+this trusted dealer is no longer needed \cite{PED91}. In this scheme, all the
+trustees perform the steps of the trusted dealer in the scheme of Shamir, namely
 they generate a polynomial function with random coefficients of degree $t-1$ and
-caluclate a point for each trustee in the system. These points are then
+calculate a point for each trustee in the system. These points are then
 \textit{secretly} communicated individually to each trustee.
 
 \subsubsection{Bulletin Board}
 \label{sec:bulletinboard}
 The so called bulletin board is the
 public communication channel which is used to communicate between the
-participants of the election or poll. It is a transscript of all the
+participants of the election or poll. It is a transcript of all the
 communication steps between the participants and therefore contains encrypted
 ballots, zero knowledge proofs, etc. The bulletin board is also available for
 observers. Using the content of the bulletin board, everybody can verify that
@@ -307,8 +308,8 @@ idea to replicate the content of the bulletin board to multiple systems.
 \label{sec:unicrypt}
 UniCrypt is the name of a cryptographic library which has been developed by the
 E-Voting group of the Bern University of Applied Sciences. The main goal of this
-project was to create a plattform on which upcoming projects can be built on.
-UniCrypt tries to look at cryptographic functions such as crypto systems,
+project was to create a platform on which upcoming projects can be built on.
+UniCrypt tries to look at cryptographic functions such as cryptosystems,
 signature systems, hash functions etc. from a mathematical point of view. Cipher
 text, plain text, signatures, etc. are treated as elements of mathematical
 groups, the cryptographic functions are treated as mathematical functions. This
@@ -318,7 +319,7 @@ without functions like automatic padding, encoding, etc. This is the main
 difference between UniCrypt and other cryptographic libraries.
 
 At the moment, UniCrypt has only been used in classic Java environments, but not
-on mobile devices. Futher information about UniCrypt can be found in
+on mobile devices. Further information about UniCrypt can be found in
 \cite{ritter12}.
 
 \section{InstaCircle}
@@ -341,7 +342,7 @@ tag. Once a user has set up a conversation, other participants can join the
 conversation by reading the QR code or the NFC tag shared by the initiator of
 the conversation.
 
-InstaCircle is currently available for Android devices only. Futher information
+InstaCircle is currently available for Android devices only. Further information
 about InstaCircle can be found in \cite{ritter13a}.
 
 \chapter{Expected Results}
@@ -379,9 +380,9 @@ all participants. This is because of the following reasons:
   poll.
 \end{itemize}
 
-The CGS97 protocol suggests to use threshold secret sharing schema due to Torben
+The CGS97 protocol suggests to use threshold secret sharing scheme due to Torben
 Pedersen \cite{PED91}, which adds a distributed key generation mechanism to the
-schema proposed by Adi Shamir \cite{SHA79}. Especially the key generation part
+scheme proposed by Adi Shamir \cite{SHA79}. Especially the key generation part
 of the protocol involves a lot of steps and interaction between participants.
 
 The secret sharing mechanism is currently not part of the InstaCircle library
@@ -409,7 +410,7 @@ following components:
   functionality of casting a vote. It basically displays the question of the
   poll and provides functionality to choose one of the available options.
   \item \textbf{Bulletin board:} One building block of the CGS97 protocol
-  \cite{CGS97} is the so called bulletin board where the whole transscript of
+  \cite{CGS97} is the so called bulletin board where the whole transcript of
   messages between the participants is saved. All these information needs to be displayed on the
   user interface so that the participant has the possibility to verify the
   validity of the whole E-Voting process \myref{sec:bulletinboard}.
@@ -468,7 +469,7 @@ group/.style={draw=black, fill=black!50}, y unit chart=1cm]{26}
 \ganttbar{Analyzing the possibilities of threshold secret sharing}{4}{6} \\
 \ganttbar{Implementing secret sharing into UniCrypt}{5}{8} \\
 \ganttbar{Testing the secret sharing scheme}{7}{8} \\
-\ganttgroup{Evalutation of UniCrypt on Android}{9}{10} \\
+\ganttgroup{Evaluation of UniCrypt on Android}{9}{10} \\
 \ganttbar{Testing out Example code on Android}{9}{9} \\
 \ganttbar{Integration of code into Android project}{10}{10} \\
 \ganttgroup{Implementation of E-Voting Application of Android}{11}{26} \\
@@ -477,7 +478,7 @@ group/.style={draw=black, fill=black!50}, y unit chart=1cm]{26}
 \ganttbar{Implementation of the E-Voting logic}{20}{26}\\
 \ganttgroup{Testing}{30}{30} \\
 \ganttgroup{Documentation / Report}{1}{8} \\
-\ganttmilestone{Handin}{30}
+\ganttmilestone{Hand in}{30}
 \end{ganttchart}
 \caption{Planning part 1}
 \label{fig:planningpart1}
@@ -496,7 +497,7 @@ group/.style={draw=black, fill=black!50}, y unit chart=1cm]{25}
 \ganttbar{Analyzing the possibilities of threshold secret sharing}{100}{100} \\
 \ganttbar{Implementing secret sharing into UniCrypt}{100}{100} \\
 \ganttbar{Testing the secret sharing scheme}{100}{100} \\
-\ganttgroup{Evalutation of UniCrypt on Android}{100}{100} \\
+\ganttgroup{Evaluation of UniCrypt on Android}{100}{100} \\
 \ganttbar{Testing out Example code on Android}{100}{100} \\
 \ganttbar{Integration of code into Android project}{100}{100} \\
 \ganttgroup{Implementation of E-Voting Application of Android}{1}{13} \\
@@ -505,7 +506,7 @@ group/.style={draw=black, fill=black!50}, y unit chart=1cm]{25}
 \ganttbar{Implementation of the E-Voting logic}{1}{13}\\
 \ganttgroup{Testing}{7}{19} \\
 \ganttgroup{Documentation / Report}{14}{24.5} \\
-\ganttmilestone{Handin}{24.5}
+\ganttmilestone{Hand in}{24.5}
 \end{ganttchart}
 \caption{Planning part 2}
 \label{fig:planningpart2}
