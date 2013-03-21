@@ -36,28 +36,30 @@
 \\
 Bern University of Applied Sciences\\
 Engineering and Information Technology\\
-Biel, Switzerland\\}
+CH-2501 Biel, Switzerland\\
+}
 \date{\today}
-\publishers{Advisor: Prof. Dr. Rolf Haenni, Bern University of Applied
-Sciences\\
-Expert: Stephan Neumann, Technical University of Darmstadt}
+\publishers{Advisor:\\
+Prof. Dr. Rolf Haenni, Bern University of Applied Sciences\\
+\bigskip
+Expert:\\
+Stephan Neumann, Technical University of Darmstadt}
 \maketitle
-
 
 
 
 \begin{abstract}
 The E-Voting group of the Bern University of Applied Sciences is planning to
-evaluate distributed E-Voting systems for practical use. The term
-``distributed'' in that context means that there is no central server
+evaluate decentralized E-Voting systems for practical use. The term
+``decentralized'' in that context means that there is no central server
 infrastructure involved in the voting process. The main application of such
 E-Voting systems are polls with a low number of participants, for example the
 board of directors in a company. The idea is, that the participants create an
 ad-hoc network with mobile devices. The goal of this project is to implement a
-distributed E-Voting system for Android devices. The communications scheme among
-the voting participants will rely on the proposal made by Cramer, Gennaro and
-Schoenmakers in 1997 \cite{CGS97}. The cryptographic library UniCrypt and
-InstaCircle which is an ad-hoc decentralized communication infrastructure are
+decentralized E-Voting system for Android devices. The communications scheme among
+the voting participants will rely on the proposal made by Ronald Cramer,
+Rosario Gennaro and Berry Schoenmakers in 1997 \cite{CGS97}. The cryptographic
+library UniCrypt and InstaCircle which is an ad-hoc decentralized communication infrastructure are
 other foundation blocks of this project. UniCrypt and InstaCircle are both
 projects which have been implemented at the Bern University of Applied Sciences.
 \end{abstract}
@@ -80,12 +82,12 @@ this situation with the following approaches:
 
 The evaluation of these approaches is usually done by implementing them into a
 prototype level application to show that the approach actually works. The
-E-Voting group would like to gain some experience on how distributed E-Voting
+E-Voting group would like to gain some experience on how decentralized E-Voting
 systems could be implemented and how they behave in practice. There are some
-approaches which focus explicitly on distributed E-Voting systems, such as the
+approaches which focus explicitly on decentralized E-Voting systems, such as the
 proposal of Khader et al. \cite{HKRS12}. In this project, we would like to adapt
 the protocol proposed by Cramer et. al. \cite{CGS97} in a way that it can be
-used as a distributed E-Voting system.
+used as a decentralized E-Voting system.
 
 A possible use case of such a system could be an executive board or any other
 committee that would like to vote on some matters without having their members
@@ -101,6 +103,10 @@ polls on mobile Android devices under the following terms:
   poll.
   \item The voting scheme is based on the CGS97 approach proposed by Cramer et
   al.~\cite{CGS97}.
+  \item It must be possible to perform elections or polls with the type $1-n$,
+  meaning the voter can choose exactly one option out of $n$ possible options.
+  It will not be possible to perform elections where multiple candidates can be
+  elected for example.
 \end{itemize}
 
 In previous projects during the master studies, some groundwork has been
@@ -127,14 +133,10 @@ This section gives an overview of the theoretical foundations and some projects
 which have been implemented earlier in order to serve as a foundation for this
 project.
 
-\section{Mathematical basics}
-\label{sec:mathbasics}
-
-
 \section{The voting scheme CGS97}
 \label{sec:CGS97}
-In 1997, Cramer, Gennaro and Schoenmakers proposed a scheme \cite{CGS97} which
-allows to do E-Voting in a secure and verifiable manner. The participants of
+In 1997, Ronald Cramer, Rosario Gennaro and Berry Schoenmakers proposed a scheme
+\cite{CGS97} which allows to do E-Voting in a secure and verifiable manner. The participants of
 the protocol can be divided into three different categories:
 \begin{itemize}
   \item \textbf{Voter:} A voter is somebody who is eligible to participate on
@@ -159,24 +161,29 @@ blocks which are shortly explained in this section.
 
 \subsubsection{ElGamal Cryptosystem}
 \label{sec:elgamal}
-The ElGamal cryptosystem \cite{EG84},
-proposed by Taher El Gamal in 1984, is the asymmetric cryptosystem which is mostly used in the
-context of E-Voting. An asymmetric cryptosystem uses two keys to operate, one
-which is used to encrypt a certain message (the public key) and another to
-decrypt the message (the secret key). The security of this cryptosystem is based
-on the fact that it is hard to compute the logarithm in discrete modular groups
-and hence making the exponentiation in modular groups a one way function. 
+The ElGamal cryptosystem \cite{EG84}, proposed by Taher El Gamal in 1984, is the
+asymmetric cryptosystem which is mostly used in the context of E-Voting. An
+asymmetric cryptosystem uses two keys to operate, one which is used to encrypt a
+certain message (the public key) and another to decrypt the message (the secret
+key). The security of this cryptosystem is based on the fact that it is hard to
+compute the logarithm in discrete modular groups and hence making the
+exponentiation in modular groups a one way function. A major advantage of the
+ElGamal cryptosystem is the fact, that the encryption function includes a random
+value. Especially in the context of E-Voting this is a crucial property, because
+when encrypting a value (for example the value $1$ which means \textit{Yes}),
+the resulting ciphertext is always different. That's why ElGamal is also called
+a \textit{randomized} cryptosystem.
 
 In order to define an ElGamal cryptosystem, three parameters are required. Let
-$p$ and $q$ be large prime numbers such that $q|p-1$. $p$ and $q$ are so
-called save primes. $q$ defines the order of a subgroup $G_q$ of the
-multiplicative modular group $\mathbb{Z}^*_p$. The last parameter needed is a random generator
+$p$ and $q$ be large prime numbers such that $q|p-1$. $p$ and $q$ are so called
+save primes. $q$ defines the order of a subgroup $G_q$ of the multiplicative
+modular group $\mathbb{Z}^*_p$. The last parameter needed is a random generator
 $g$ of the group $G_q$. We can now derive the asymmetric key pair containing the
 secret key $x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message
 $m \in G_q$ can be encrypted by first choosing a random value $r \in_R
 \mathbb{Z}_q$, and then calculating $(a, b)=Enc_y(m, r)=(g^r, y^r \cdot m)$. The
-tuple $(a, b)$ is the ciphertext of the message $m$. $m$ can be recovered using the secret key $x$
-by calculating $m=Dec_x(a, b)=a^{-x} \cdot b$.
+tuple $(a, b)$ is the ciphertext of the message $m$. $m$ can be recovered using
+the secret key $x$ by calculating $m=Dec_x(a, b)=a^{-x} \cdot b$.
 
 \subsubsection{Subgroup Encoding}
 \label{sec:subgroupencoding}
@@ -225,10 +232,11 @@ the following condition holds:
 f(m_1) \otimes f(m_2) = f(m_1 \oplus m_2) \notag
 \end{equation}
 The ElGamal function offers exactly that property with respect to the
-multiplication operation for its encryption function $Enc_y:G_q \rightarrow
-G_q$ using the same public key $y$:
+multiplication operation for its encryption function $Enc_y:G_q \times
+\mathbb{Z}_q \rightarrow G_q \times G_q$ using the same public key $y$:
 \begin{equation}
-Enc_y(m_1) \cdot Enc_y(m_2) = Enc_y(m_1 \cdot m_2) \notag
+Enc_y(m_1, r_1) \cdot Enc_y(m_2, r_2) = Enc_y(m_1 \cdot m_2, r_1 \cdot r_2)
+\notag
 \end{equation}
 This property allows to calculate the encrypted product of all messages out of
 the encrypted messages and decrypt only the result. Applied to E-Voting, the
@@ -263,7 +271,7 @@ single entity can manipulate the result or reveal single votes. This
 responsibility, or in our case the secret key which is needed to obtain the
 final result, has to be spread across a set of trustees. In the CGS97 scheme,
 this property is achieved by using a secret sharing mechanism as proposed by Adi
-Shamir in 1979 \cite{SHA79}. This scheme even allows to define a so called
+Shamir in 1979 \cite{Shamir79}. This scheme even allows to define a so called
 \textit{threshold}, which defines the minimal amount of participating trustees
 in order to decrypt the result. Such a system is also known as a
 $(t-n)$-threshold scheme, where $n$ defines the number of shares which are
@@ -282,27 +290,166 @@ The approach of Shamir is quite simple, has one major drawback though: It
 requires a trusted authority which has the knowledge of the shared key. It it
 would be nice to have a scheme where the group of trustees collaborate to create
 the shares in a way that nobody can derive the private key unless a sufficient
-amount of trustees collaborate. In 1991, Torben Pedersen proposed a scheme where
-this trusted dealer is no longer needed \cite{PED91}. In this scheme, all the
+amount of trustees collaborate. In 1991, Torben Pryds Pedersen proposed a scheme
+where this trusted dealer is no longer needed \cite{PED91}. In this scheme, all the
 trustees perform the steps of the trusted dealer in the scheme of Shamir, namely
 they generate a polynomial function with random coefficients of degree $t-1$ and
 calculate a point for each trustee in the system. These points are then
 \textit{secretly} communicated individually to each trustee.
 
+\subsubsection{Zero-Knowledge proofs}
+\label{sec:zeroknowledgeproofs}
+Zero-knowledge proofs (ZKPs) in their sense are conversations between a
+\textit{prover} and a \textit{verifier}. They allow the prover to demonstrate,
+that she knows a secret without actually revealing the secret itself. The
+conversation is similar to a challenge-response protocol, the verifier asks the
+prover certain questions about the secret and the verifier answers them. This
+kind of conversations are also known as $\Sigma$-protocols. Of course, the
+prover could just guess the correct answer to the question and cheat, but if the
+verifier repeats the challenge process with a different input, chances are
+almost zero that the prover can guess all the correct answers if he is not in
+fact in possession of the secret. Zero knowledge proofs offer therefore a
+\textit{probabilistic} security. In the context of E-Voting, these Zero
+Knowledge Proofs are used to make sure that none of the participants are
+cheating.
+
+\paragraph{Non-Interactive Zero-Knowledge proofs.}
+Zero-knowledge proofs as described above are \textit{interactive} conversations
+between a prover and a verifier. This also means that the prover proofs only to
+the verifier that she has knowledge of the secret. Of course, any observer could
+observe the conversation, but there is no way to determine whether the verifier
+actually accepts the the proof or not. The verifier could of course testify that
+the prover has the knowledge of the secret, but that would require a trust
+relationship between the observer and the verifier. In an E-Voting scenario, we
+need a proof which can be verified by anybody and doesn't require an interactive
+conversation between the verifier and the prover. Such proofs are called
+\textit{Non-Interactive Zero-Knowledge proofs} or \textit{NIZKPs}. The
+foundation of these NIZKPs were introduced by Amos Fiat and Adi Shamir in 1986
+\cite{FS87}, later known as the \textit{Fiat-Shamir heuristic}. Instead of the
+verifer challenging the prover, the prover challenges himself by using a
+\textit{hashfunction} such as SHA-1. The result of such a Non-interactive
+Zero-Knowledge Proof is similar to a digital signature. Once published,
+everybody can verify the integrity of the data over which the signature has been
+calculated. In a similar way, Non-interactive Zero-Knowlege proofs can be
+verified, with the important difference that the secret of course remains
+secret. So far, we didn't specify what a secret actually is. There are multiple
+types of secrets and therefore also multiple types of Zero-Knowledge proofs, but
+due to the work of Ueli Maurer \cite{Maurer09} we can formulate a general
+recipie how such a NIZKP is assembled:
+
+Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups and
+$f:X \rightarrow Y$ be a one-way homomorphic function. The prover wants to prove
+that she knows the preimage $a \in X$ of the publicly known value $b \in Y$,
+where $b=f(a)$. In order to prove the knowledge of the value $a$, the prover
+performs the following steps:
+\begin{enumerate}
+  \item Choose a uniformly random value $\omega \in_R X$
+  \item Compute $t=f(\omega)$
+  \item Compute $c=H(b,t)$, where $H$ represents a \textit{hashfunction} such as
+  SHA-1
+  \item Compute $s=\omega \oplus c \otimes a$
+  \item Publish the proof $\pi = (t,s)$
+\end{enumerate}
+
+A verifier can now calculate $c=H(b,t)$ and check whether the following
+condition holds:
+\begin{equation}
+	f(s) \stackrel{?}{=} t \otimes b^c \notag
+\end{equation}
+
+ In the following paragraphs, the different types of proofs are briefly
+ explained and we also make the adaption of the schema above.
+ 
+\subparagraph{Proving the Knowledge of discrete logarithm.}
+This type of Proof was first presented by Claus Peter Schnorr in 1991
+\cite{Schnorr91}. We have seen that the ElGamal encryption function has the
+homomorphic property \myref{sec:homenc}. Therefore, it is possible to prove the
+knowledge of the plaintext of a given ciphertext by applying the scheme above.
+We define the ElGamal encryption function using the public key $y$ and the
+predefined generator $g$ of the group $G_q$ as follows:
+\begin{equation}
+	Enc_y:G_q \times \mathbb{Z}_q \rightarrow G_q \times G_q, (a,b) = Enc_y(m,
+	r)=(g^r, y^r \cdot m) \notag
+\end{equation} 
+
+Since $g$ and $y$ are publicly known values, the knowledge of the value $r$
+implies the knowlege of $m$, therefore the prover only needs to prove the
+knowlege of $r$, which can be done by substituting the following variables in
+the generic scheme above:
+\begin{align}
+  X &= \mathbb{Z}_q \notag \\
+  Y &= G_q \notag \\
+  a &=m \notag \\
+  b &=r \notag \\
+  f(x) &= g^x \notag
+\end{align} 
+
+
+This translates to the following steps:
+
+\begin{enumerate}
+  \item Choose a uniformly random value $\omega \in_R \mathbb{Z}_q$
+  \item Compute $t=g^\omega$
+  \item Compute $c=H(a,t)$, where $H$ represents a \textit{hashfunction} such as
+  SHA-1
+  \item Compute $s=\omega + c \cdot r$
+  \item Publish the proof $\pi = (t,s)$
+\end{enumerate}
+
+A verifier can now verify the knowledge of $r$ and therefore $m$ by calculating
+$c=H(a,t)$ and check whether the following condition holds:
+\begin{equation}
+	g^s \stackrel{?}{=} t \cdot a^c \notag
+\end{equation}
+
+\subparagraph{Proving the Equality of Discrete Logarithms.}
+This type of proof due to David Chaum and Torben Pryds Pedersen \cite{CP93}
+that proofs the relation $log_{g_1} c_1 = log_{g_2} c_2 $ for two values $c_1 =
+g_1^m$ and $c_2 = g_2^m$, where $g_1$ and $g_2$ are generators of the
+mathematical group $G_q$. In order to prove this relation, we can again
+substitute the variables in the scheme above:
+\begin{align}
+  X &= \mathbb{Z}_q \notag \\
+  Y &= G_q \times G_q \notag \\
+  a &=m \notag \\
+  b &=(c_1, c_2) \notag \\
+  f(x) &= (g_1^x, g_2^x) \notag
+\end{align} 
+
+This translates to the following steps:
+
+\begin{enumerate}
+  \item Choose a uniformly random value $\omega \in_R \mathbb{Z}_q$
+  \item Compute $t=(g_1^\omega, g_2^\omega)$
+  \item Compute $c=H((c_1,c_2),t)$, where $H$ represents a \textit{hashfunction}
+  such as SHA-1
+  \item Compute $s=\omega + c \cdot m$
+  \item Publish the proof $\pi = (t,s)$
+\end{enumerate}
+
+A verifier can now verify the relation by calculating
+$c=H((c_1,c_2),t)$ and check whether the following condition holds:
+\begin{equation}
+	(g_1^s, g_2^s) \stackrel{?}{=} t \cdot (c_1, c_2)^c \notag
+\end{equation}
+
+
+\subparagraph{Proving Validity.}
+
 \subsubsection{Bulletin Board}
 \label{sec:bulletinboard}
-The so called bulletin board is the
-public communication channel which is used to communicate between the
-participants of the election or poll. It is a transcript of all the
-communication steps between the participants and therefore contains encrypted
-ballots, zero knowledge proofs, etc. The bulletin board is also available for
-observers. Using the content of the bulletin board, everybody can verify that
-all the participants are following the protocol or that dishonest participants
-are excluded from the voting process. A voter can verify that his/her own
-ballot is counted properly and also reflects in the final result. In theory, it
-is not possible to delete anything from a bulletin board (append only). Since
-the bulletin board is a good target for a denial-of-service attack, it is a good
-idea to replicate the content of the bulletin board to multiple systems.
+The so called bulletin board is the public communication channel which is used
+to communicate between the participants of the election or poll. It is a
+transcript of all the communication steps between the participants and therefore
+contains encrypted ballots, zero knowledge proofs, etc. The bulletin board is
+also available for observers. Using the content of the bulletin board, everybody
+can verify that all the participants are following the protocol or that
+dishonest participants are excluded from the voting process. A voter can verify
+that his/her own ballot is counted properly and also reflects in the final
+result. In theory, it is not possible to delete anything from a bulletin board
+(append only). Since the bulletin board is a good target for a denial-of-service
+attack, it is a good idea to replicate the content of the bulletin board to
+multiple systems.
 
 \section{UniCrypt}
 \label{sec:unicrypt}
@@ -347,7 +494,7 @@ about InstaCircle can be found in \cite{ritter13a}.
 
 \chapter{Expected Results}
 \label{cha:expectedresults}
-The final result of this project is a fully-fledged distributed E-Voting
+The final result of this project is a fully-fledged decentralized E-Voting
 application which runs on Android devices and does not require any equipment
 other than the Android smartphones or tablets. Since a considerable amount of
 people carry such devices, which allows setting up spontaneous polls. The
@@ -365,7 +512,8 @@ E-Voting setup, it certainly makes sense to assign the role of the trustee to
 all participants. This is because of the following reasons:
 \begin{itemize}
   \item In many cases, the number of participants in an ad-hoc poll can be so
-  small that it would be hard to find a trustee subset
+  small that it would be hard to find an even smaller subset of participants
+  which will act as trustees.
   \item In classical large-scale elections or polls, the role of the trustee
   will probably be assigned to organizations such as political parties,
   governmental authorities, election observation organizations, etc. In
@@ -381,9 +529,9 @@ all participants. This is because of the following reasons:
 \end{itemize}
 
 The CGS97 protocol suggests to use threshold secret sharing scheme due to Torben
-Pedersen \cite{PED91}, which adds a distributed key generation mechanism to the
-scheme proposed by Adi Shamir \cite{SHA79}. Especially the key generation part
-of the protocol involves a lot of steps and interaction between participants.
+Pryds Pedersen \cite{PED91}, which adds a distributed key generation mechanism to the
+scheme proposed by Adi Shamir \cite{Shamir79}. Especially the key generation
+part of the protocol involves a lot of steps and interaction between participants.
 
 The secret sharing mechanism is currently not part of the InstaCircle library
 and has to be implemented. The implementation such a threshold mechanism in
@@ -434,7 +582,7 @@ of applied Sciences. This project values 27 ECTS credits and is spread among two
 semesters. The hand in of the project is planned for February 7, 2014.
 
 During the same period, a fellow master student is working on a very similar
-topic, namely the implementation of the distributed E-Voting system proposed by
+topic, namely the implementation of the decentralized E-Voting system proposed by
 Dalia Khader et al. \cite{HKRS12}. This project will also be based on the
 InstaCircle communication infrastructure \cite{ritter13a} and the UniCrypt
 cryptographic library \cite{ritter12} which have been developed earlier during
@@ -448,13 +596,15 @@ approaches and evaluate the advantages and disadvantages of the two approaches.
 The gantt charts in figure \ref{fig:planningpart1} and figure
 \ref{fig:planningpart2} visualize the steps which are planned on the time axis
 during the project period. At the first stage, we define the project setup,
-later on the cryptographic components will be put in place and will be tested on the
-Android platform. At some point a detailed story board for the graphical user
-interface will be created. Especially this project will be done in a strong
-collaboration with the other project which deals with distributed E-Voting
-systems. The part which will consume most of the time budget will be the
-implementation and the testing of the actual E-Voting logic. The last part will
-be dedicated to writing the project report of this master thesis project.
+later on the cryptographic components will be put in place and will be tested on
+the Android platform. At some point a detailed story board for the graphical
+user interface will be created. Especially this project will be done in a strong
+collaboration with the other project which deals with decentralized E-Voting
+systems. At this stage, we have prepared all the components we need in order to
+implement the actual E-Voting system. The part which will consume most of the
+time budget will be the implementation and the testing of the actual E-Voting
+logic. The last part will be dedicated to writing the project report of this
+master thesis project.
 
 \begin{sidewaysfigure}[ph]
 \centering
@@ -514,7 +664,16 @@ group/.style={draw=black, fill=black!50}, y unit chart=1cm]{25}
 
 \section{Milestones}
 \label{sec:milestones}
-
+In order to track the progress of the project, we define some milestones
+throughout the project period.
+\begin{itemize}
+  \item \textbf{Kickoff:} The project is set up and the goals of the project
+  are clear.
+  \item \textbf{Building blocks ready:} At this stage, all the components we
+  need (e.g. UniCrypt) are prepared and tested on the Android platform.
+  \item \textbf{Hand in:} The implemenation and the documentation are finished
+  and the work is handed over to the advisor.
+\end{itemize}
 
 \printbibliography
 
