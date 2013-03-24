@@ -1,5 +1,6 @@
 
-\documentclass[numbers=noenddot, abstract=on]{scrreprt}
+\documentclass[numbers=noenddot, abstract=on, a4paper, headsepline,
+footsepline, oneside, draft=off]{scrreprt}
 
 % Setting heading fonts to serif
 \addtokomafont{disposition}{\rmfamily}
@@ -24,9 +25,29 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 
+\usepackage{menukeys}
+\usepackage{smartdiagram}
+
+
+
+% activate the headings
+\pagestyle{headings}
+\setkomafont{pagehead}{\scshape}
+
+% UML stuff
+\usepackage{tikz}
+\usepackage{tikz-uml}
+
+% Intelligent references
+\usepackage{varioref} 
+
+% Draft watermark
+\usepackage{draftwatermark}
+\SetWatermarkScale{5}
 
 % definitions of own commands
-\newcommand{\myref}[1]{(see section \ref{#1} on page \pageref{#1})}
+%\newcommand{\myref}[1]{(see section \ref{#1} on page \pageref{#1})}
+\newcommand{\myref}[1]{(see section \vref{#1})}
 
 \begin{document}
 
@@ -132,6 +153,53 @@ implemented part time. It is equivalent to 27 ECTS credits.
 This section gives an overview of the theoretical foundations and some projects
 which have been implemented earlier in order to serve as a foundation for this
 project.
+
+\section{E-Voting in 2013}
+\label{sec:evoting}
+In todays internet world, many tasks such as sending mail, doing bank
+transactions, booking flights etc. can be done using the internet. Instead of
+going to the post office, to the bank or the travel agency, one can complete
+these tasks in a very comfortable fashion at home in front of the computer. Not
+surprisingly, people have thought about replace the way to the voting station
+with an internet based solution. This so called E-Voting has appeared on the
+surface soon after the quick rise of the internet, but so far the big
+breakthrough has not happened, which might be surprising at the first sight.
+Instead, the area of E-Voting has become a big research area, tightly related to
+the area of cryptography. Let's have a closer look at the reasons why E-Voting
+couldn't find it's way to success so far. For a better understanding, we should
+identify the properties that we expect from an E-Voting system. Over the time,
+some properties and their definitions have emerged.
+
+\begin{itemize}
+  \item \textbf{Democracy:} Only eligible voters can a vote, and each voter can
+  cast at most one ballot which will be included in the result.
+  \item \textbf{Accuracy:} The result is derived only from \emph{all} valid
+  votes as they were cast, i.e. cast votes can not be modified.
+  \item \textbf{Universal verifiability:} Anyone can verify the correctness of
+  the result.
+  \item \textbf{Individual verifiability:} A voter can can verify that her vote
+  is included in the result as she cast it.
+  \item \textbf{Privacy:} Nobody can obtain information how a voter has
+  voted.
+  \item \textbf{Receipt-freeness:} The voter can not prove to anybody else how
+  she voted.
+  \item \textbf{Coercion-resistance:} Noone can force a voter to vote in a
+  particular way, or prevent a voter to vote at all.
+  \item \textbf{Robustness:} An attacker is not able to disrupt an election
+  process or change the outcome by dammaging a small set of system components. 
+\end{itemize}
+
+All these properties are discussed in detail in \cite{HS11} and \cite{Jonker09}.
+As it turns out, it is not at all easy to build a system that meets all these
+desired requirements. Not even the classic paper based voting meets all the
+requirements, for example the verifiability is not given in a classic voting
+scenario. Researchers are trying to develop schemes towards these requirements
+using cryptographic building blocks. The robustness property is probably the
+biggest factor that prevents the breakthrough of E-Voting on large scales.
+E-Voting systems are the perfect targets for an intended mainpulation or a
+boycott of an election. That's why many governments use E-Voting only on small
+scales so that the electorate is small enough that it is statistically unlikely
+to decide the outcome of the election.
 
 \section{The voting scheme CGS97}
 \label{sec:CGS97}
@@ -435,7 +503,8 @@ $c=H((c_1,c_2),t)$ and check whether the following condition holds:
 
 
 \subparagraph{Proving Validity.}
-This section needs to be written.  
+This section needs to be written. 
+
 
 \subsubsection{Bulletin Board}
 \label{sec:bulletinboard}
@@ -451,6 +520,16 @@ result. In theory, it is not possible to delete anything from a bulletin board
 (append only). Since the bulletin board is a good target for a denial-of-service
 attack, it is a good idea to replicate the content of the bulletin board to
 multiple systems.
+
+
+\subsection{Security properties}
+\label{sec:secproperties}
+The in section \vref{sec:evoting} we discussed some security requirements which
+are desirable for an E-Voting system.
+
+\subsection{Usability properties}
+\label{sec:usabilityproperties}
+This section needs to be written. 
 
 \section{UniCrypt}
 \label{sec:unicrypt}
@@ -608,57 +687,91 @@ logic. The last part will be dedicated to writing the project report of this
 master thesis project.
 
 \begin{sidewaysfigure}[ph]
-\centering
-\begin{ganttchart}
-[vgrid, hgrid,
-group/.style={draw=black, fill=black!50}, y unit chart=1cm]{26}
-\gantttitle{Planning Master Thesis (part 1)}{26} \\
-\gantttitlelist{8,...,33}{1} \\
-\ganttmilestone{Kickoff}{0.5} \\
-\ganttgroup{Writing of Project Proposal}{1}{4} \\
-\ganttgroup{Secret Sharing scheme}{4}{8} \\
-\ganttbar{Analyzing the possibilities of threshold secret sharing}{4}{6} \\
-\ganttbar{Implementing secret sharing into UniCrypt}{5}{8} \\
-\ganttbar{Testing the secret sharing scheme}{7}{8} \\
-\ganttgroup{Evaluation of UniCrypt on Android}{9}{10} \\
-\ganttbar{Testing out Example code on Android}{9}{9} \\
-\ganttbar{Integration of code into Android project}{10}{10} \\
-\ganttgroup{Implementation of E-Voting Application of Android}{11}{26} \\
-\ganttbar{Design of storyboard}{11}{12}\\
-\ganttbar{Implementation of the User Interface}{12}{15}\\
-\ganttbar{Implementation of the E-Voting logic}{20}{26}\\
-\ganttgroup{Testing}{30}{30} \\
-\ganttgroup{Documentation / Report}{1}{8} \\
-\ganttmilestone{Hand in}{30}
-\end{ganttchart}
+\noindent\resizebox{\textwidth}{!}{
+	\begin{tikzpicture}[x=.5cm, y=1cm]
+	\begin{ganttchart}
+	[vgrid, hgrid,
+	group/.style={draw=black, fill=black!50}, y unit chart=0.8cm]{26}
+	\gantttitle{\textbf{Planning Master Thesis (part 1)}}{26} \\
+	\gantttitlelist{8,...,33}{1} \\
+	\ganttmilestone{Kickoff}{0.5} \\
+	\ganttgroup{Writing of Project Proposal}{1}{6} \\
+	\ganttgroup{Secret Sharing scheme}{6}{10} \\
+	\ganttbar{Analyzing the possibilities of threshold secret sharing}{6}{8} \\
+	\ganttbar{Implementing secret sharing into UniCrypt}{7}{10} \\
+	\ganttbar{Testing the secret sharing scheme}{9}{10} \\
+	\ganttgroup{Proof of Validity}{11}{13} \\
+	\ganttbar{Implementing proof of validity into UniCrypt}{11}{12} \\
+	\ganttbar{Testing of the proof of validity implementation}{12}{13} \\
+	\ganttgroup{Evaluation of UniCrypt on Android}{14}{15} \\
+	\ganttbar{Testing out Example code on Android}{14}{14} \\
+	\ganttbar{Integration of code into Android project}{15}{15} \\
+	\ganttmilestone{Building blocks ready}{15.5} \\
+	\ganttgroup{Implementation of E-Voting Application of Android}{20}{26} \\
+	\ganttbar{Design of storyboard}{20}{24}\\
+	\ganttbar{Implementation of the User Interface}{23}{26}\\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the
+	E-Voting logic}{0}{0}\\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Testing}{0}{0} \\
+	\ganttgroup{Documentation / Report}{1}{8} \\
+	\ganttmilestone[milestone height=0.0, milestone/.style={draw=none}]{Hand in}{0}	
+	\end{ganttchart}
+	\end{tikzpicture}
+}
 \caption{Planning part 1}
 \label{fig:planningpart1}
 \end{sidewaysfigure}
+	
 
 \begin{sidewaysfigure}[ph]
-\centering
-\begin{ganttchart}
-[vgrid, hgrid,
-group/.style={draw=black, fill=black!50}, y unit chart=1cm]{25}
-\gantttitle{Planning Master Thesis (part 2)}{25} \\
-\gantttitlelist{34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2,3,4,5,6}{1} \\
-\ganttmilestone{Kickoff}{100} \\
-\ganttgroup{Writing of Project Proposal}{100}{100} \\
-\ganttgroup{Secret Sharing scheme}{100}{100} \\
-\ganttbar{Analyzing the possibilities of threshold secret sharing}{100}{100} \\
-\ganttbar{Implementing secret sharing into UniCrypt}{100}{100} \\
-\ganttbar{Testing the secret sharing scheme}{100}{100} \\
-\ganttgroup{Evaluation of UniCrypt on Android}{100}{100} \\
-\ganttbar{Testing out Example code on Android}{100}{100} \\
-\ganttbar{Integration of code into Android project}{100}{100} \\
-\ganttgroup{Implementation of E-Voting Application of Android}{1}{13} \\
-\ganttbar{Design of storyboard}{100}{100}\\
-\ganttbar{Implementation of the User Interface}{100}{100}\\
-\ganttbar{Implementation of the E-Voting logic}{1}{13}\\
-\ganttgroup{Testing}{7}{19} \\
-\ganttgroup{Documentation / Report}{14}{24.5} \\
-\ganttmilestone{Hand in}{24.5}
-\end{ganttchart}
+\noindent\resizebox{\textwidth}{!}{
+	\begin{tikzpicture}[x=.5cm, y=1cm]
+	\begin{ganttchart}
+	[vgrid, hgrid,
+	group/.style={draw=black, fill=black!50}, y unit chart=0.8cm]{26}
+	\gantttitle{\textbf{Planning Master Thesis (part 2)}}{26} \\
+	\gantttitlelist{34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2,3,4,5,6,7}{1}
+	\\
+	\ganttmilestone[milestone height=0.0,
+	milestone/.style={draw=none}]{Kickoff}{0.5} \\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Writing of Project
+	Proposal}{}{} \\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Secret Sharing
+	scheme}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Analyzing the possibilities
+	of threshold secret sharing}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementing secret sharing
+	into UniCrypt}{0}{0}
+	\\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing the secret sharing
+	scheme}{0}{0} \\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Proof of
+	Validity}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementing proof of
+	validity into UniCrypt}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing of the proof of
+	validity implementation}{0}{0} \\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Evaluation of UniCrypt
+	on Android}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing out Example code on
+	Android}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Integration of code into
+	Android project}{0}{0} \\
+	\ganttmilestone[milestone height=0.0,
+	milestone/.style={draw=none}]{Building blocks ready}{0.5} \\
+	\ganttgroup{Implementation of
+	E-Voting Application of Android}{1}{13} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Design of
+	storyboard}{0}{0}\\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the User
+	Interface}{0}{0}\\
+	\ganttbar{Implementation of the E-Voting logic}{1}{13}\\
+	\ganttgroup{Testing}{7}{19} \\
+	\ganttgroup{Documentation / Report}{14}{24.5} \\
+	\ganttmilestone{Hand in}{24.5}
+	\end{ganttchart}
+	\end{tikzpicture}
+}
 \caption{Planning part 2}
 \label{fig:planningpart2}
 \end{sidewaysfigure}
