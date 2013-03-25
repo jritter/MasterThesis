@@ -5,6 +5,9 @@ footsepline, oneside, draft=off]{scrreprt}
 % Setting heading fonts to serif
 \addtokomafont{disposition}{\rmfamily}
 
+% Setting description label fonts to serif
+\addtokomafont{descriptionlabel}{\rmfamily}
+
 \usepackage[english]{babel} 
 \usepackage[utf8]{inputenc}
 \usepackage[backend=bibtex8]{biblatex}
@@ -44,6 +47,7 @@ footsepline, oneside, draft=off]{scrreprt}
 % Draft watermark
 \usepackage{draftwatermark}
 \SetWatermarkScale{5}
+\SetWatermarkLightness{0.9}
 
 % definitions of own commands
 %\newcommand{\myref}[1]{(see section \ref{#1} on page \pageref{#1})}
@@ -146,7 +150,9 @@ The projects mentioned above will be discussed in more detail in the section
 ``Background and related work'' \myref{cha:brw}.
 
 The time budget of this Master Thesis is one year, although the project will be
-implemented part time. It is equivalent to 27 ECTS credits. 
+implemented part time. It is equivalent to 27 ECTS credits. Chapter
+\vref{cha:expectedresults} gives a more in-depth specification about the results
+which are expected at the end of this master thesis.
 
 \chapter{Background and related work}
 \label{cha:brw}
@@ -156,7 +162,7 @@ project.
 
 \section{E-Voting in 2013}
 \label{sec:evoting}
-In todays internet world, many tasks such as sending mail, doing bank
+In today's internet world, many tasks such as sending mail, doing bank
 transactions, booking flights etc. can be done using the internet. Instead of
 going to the post office, to the bank or the travel agency, one can complete
 these tasks in a very comfortable fashion at home in front of the computer. Not
@@ -171,7 +177,7 @@ identify the properties that we expect from an E-Voting system. Over the time,
 some properties and their definitions have emerged.
 
 \begin{description}
-  \item[Democracy:] Only eligible voters can a vote, and each voter can
+  \item[Democracy:] Only eligible voters can vote, and each voter can
   cast at most one ballot which will be included in the result.
   \item[Accuracy:] The result is derived only from \emph{all} valid
   votes as they were cast, i.e. cast votes can not be modified.
@@ -186,7 +192,7 @@ some properties and their definitions have emerged.
   \item[Coercion-resistance:] Noone can force a voter to vote in a
   particular way, or prevent a voter to vote at all.
   \item[Robustness:] An attacker is not able to disrupt an election
-  process or change the outcome by dammaging a small set of system components. 
+  process or change the outcome by damaging a small set of system components. 
 \end{description}
 
 All these properties are discussed in detail in \cite{HS11} and \cite{Jonker09}.
@@ -196,7 +202,7 @@ requirements, for example the verifiability is not given in a classic voting
 scenario. Researchers are trying to develop schemes towards these requirements
 using cryptographic building blocks. The robustness property is probably the
 biggest factor that prevents the breakthrough of E-Voting on large scales.
-E-Voting systems are the perfect targets for an intended mainpulation or a
+E-Voting systems are the perfect targets for an intended manipulation or a
 boycott of an election. That's why many governments use E-Voting only on small
 scales so that the electorate is small enough that it is statistically unlikely
 to decide the outcome of the election.
@@ -205,8 +211,12 @@ to decide the outcome of the election.
 \label{sec:CGS97}
 In 1997, Ronald Cramer, Rosario Gennaro and Berry Schoenmakers proposed a scheme
 \cite{CGS97} which allows to do E-Voting in a secure and verifiable manner. The participants of
-the protocol can be divided into three different categories:
+the protocol can be divided into four different roles:
 \begin{itemize}
+  \item \textbf{Administrator:} The administrator is responsible for setting up
+  the election by defining the question and the possible options, the
+  electorate and the voting period. The administrator is also responsible for
+  orchestrating the activities during a voting cycle.
   \item \textbf{Voter:} A voter is somebody who is eligible to participate on
   an election or a poll. 
   \item \textbf{Trustee:} A trustee is somebody who helps setting up the
@@ -219,8 +229,9 @@ the protocol can be divided into three different categories:
 \end{itemize}
 
 In the scenario of an ad-hoc voting system as we are going to develop during
-this project, the three roles can be combined, meaning that all voters are also
-acting as a trustee. 
+this project, the voter, trustee and observer roles can be combined and all
+participant impersonate these roles. The administrator role needs to be assigned
+to one particular participant.
 
 \subsection{Cryptographic Building Blocks}
 \label{sec:buildingblocks}
@@ -365,7 +376,7 @@ they generate a polynomial function with random coefficients of degree $t-1$ and
 calculate a point for each trustee in the system. These points are then
 \textit{secretly} communicated individually to each trustee.
 
-\subsubsection{Zero-Knowledge proofs}
+\subsubsection{Zero-knowledge proofs}
 \label{sec:zeroknowledgeproofs}
 Zero-knowledge proofs (ZKPs) in their sense are conversations between a
 \textit{prover} and a \textit{verifier}. They allow the prover to demonstrate,
@@ -376,12 +387,12 @@ kind of conversations are also known as $\Sigma$-protocols. Of course, the
 prover could just guess the correct answer to the question and cheat, but if the
 verifier repeats the challenge process with a different input, chances are
 almost zero that the prover can guess all the correct answers if he is not in
-fact in possession of the secret. Zero knowledge proofs offer therefore a
+fact in possession of the secret. Zero-knowledge proofs offer therefore a
 \textit{probabilistic} security. In the context of E-Voting, these Zero
 Knowledge Proofs are used to make sure that none of the participants are
 cheating.
 
-\paragraph{Non-Interactive Zero-Knowledge proofs.}
+\paragraph{Non-interactive zero-knowledge proofs.}
 Zero-knowledge proofs as described above are \textit{interactive} conversations
 between a prover and a verifier. This also means that the prover proofs only to
 the verifier that she has knowledge of the secret. Of course, any observer could
@@ -391,19 +402,19 @@ the prover has the knowledge of the secret, but that would require a trust
 relationship between the observer and the verifier. In an E-Voting scenario, we
 need a proof which can be verified by anybody and doesn't require an interactive
 conversation between the verifier and the prover. Such proofs are called
-\textit{Non-Interactive Zero-Knowledge proofs} or \textit{NIZKPs}. The
+\textit{Non-Interactive zero-knowledge proofs} or \textit{NIZKPs}. The
 foundation of these NIZKPs were introduced by Amos Fiat and Adi Shamir in 1986
 \cite{FS87}, later known as the \textit{Fiat-Shamir heuristic}. Instead of the
 verifer challenging the prover, the prover challenges himself by using a
-\textit{hashfunction} such as SHA-1. The result of such a Non-interactive
-Zero-Knowledge Proof is similar to a digital signature. Once published,
+\textit{hashfunction} such as SHA-1. The result of such a non-interactive
+zero-knowledge Proof is similar to a digital signature. Once published,
 everybody can verify the integrity of the data over which the signature has been
-calculated. In a similar way, Non-interactive Zero-Knowlege proofs can be
+calculated. In a similar way, non-interactive zero-knowledge proofs can be
 verified, with the important difference that the secret of course remains
 secret. So far, we didn't specify what a secret actually is. There are multiple
-types of secrets and therefore also multiple types of Zero-Knowledge proofs, but
+types of secrets and therefore also multiple types of zero-knowledge proofs, but
 due to the work of Ueli Maurer \cite{Maurer09} we can formulate a general
-recipie how such a NIZKP is assembled:
+recipe how such a NIZKP is assembled:
 
 Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups and
 $f:X \rightarrow Y$ be a one-way homomorphic function. The prover wants to prove
@@ -441,8 +452,8 @@ predefined generator $g$ of the group $G_q$ as follows:
 \end{equation} 
 
 Since $g$ and $y$ are publicly known values, the knowledge of the value $r$
-implies the knowlege of $m$, therefore the prover only needs to prove the
-knowlege of $r$, which can be done by substituting the following variables in
+implies the knowledge of $m$, therefore the prover only needs to prove the
+knowledge of $r$, which can be done by substituting the following variables in
 the generic scheme above:
 \begin{align}
   X &= \mathbb{Z}_q \notag \\
@@ -517,19 +528,74 @@ can verify that all the participants are following the protocol or that
 dishonest participants are excluded from the voting process. A voter can verify
 that his/her own ballot is counted properly and also reflects in the final
 result. In theory, it is not possible to delete anything from a bulletin board
-(append only). Since the bulletin board is a good target for a denial-of-service
-attack, it is a good idea to replicate the content of the bulletin board to
-multiple systems.
-
+(append only). There are several approaches on how to create such an
+append-only bulletin board. The CGS97 protocol itself only assumes this
+append-only property. Append-only bulletin boards are discussed in more detail
+in \cite{HL09}. Since the bulletin board is a good target for a
+denial-of-service attack, it is a good idea to replicate the content of the bulletin board to multiple systems.
 
 \subsection{Security properties}
 \label{sec:secproperties}
 The in section \vref{sec:evoting} we discussed some security requirements which
-are desirable for an E-Voting system.
+are desirable for an E-Voting system. The following paragraph assess the CGS97
+procotol against these requirements.
+
+\subparagraph{Democracy.} The CGS97 protocol doesn't specify how the access to
+the virtual voting both is controlled. The E-Voting system which implements the
+CGS97 protocol needs a sufficiently secure authentication mechanism in order to
+fulfill the democracy requirement. The criteria that only one valid vote can be
+cast is also tied to the authentication mechanism.
+
+\subparagraph{Accuracy.} A zero-knowledge proof is used to prove that all valid
+vodes are tallied correctly. Since the bulletin board is publicly available,
+this can be verified by anybody.
+
+\subparagraph{Universal verifiability.} The bulletin board which is publicly
+available (for voters as well as for observers who don't participate at the
+election or poll) assures verifiability for anybody. The bulletin board can also
+be seen as a transcript of the conversation between the actors during a voting
+cycle. 
+
+\subparagraph{Individual verifiability.} The voter can identify her own vote on
+the bulletin board along with the other votes. By verifying the zero-knowledge
+proofs of the trustees which have been created during the tallying and
+decryption of the result, the voter can be sure that her vote has been included
+in the final result.
+
+\subparagraph{Privacy.} The ballot which has been encrypted and cast by the
+voter always remains encrypted unless a sufficient amount of trustees decide
+conspire and decrypt single votes and reveal information on how the participants
+voted.
+
+\subparagraph{Receipt-freeness.} This property is one of the weak points of the
+CGS97 voting scheme. A voter is able to derive a proof which shows how she
+voted.
+
+\subparagraph{Coercion-resistance.} Coercion resistant protocols have mechanisms
+to allow the voter to lie about the vote when under coercion. The voter pretends
+to vote according to the wish of the coercer while voting in fact according to
+her intention. Unfortunately, CGS97 does not offer this possibility.
+
+\subparagraph{Robustness.} The CGS97 offers robustness by including a
+threshold secret sharing mechanism that assures a working system as long as a
+certain number of properly behaving trustees remain in the system. The other
+crucial part which requires robustness is the bulletin board, which should be
+replicated for achieving robustness. The CGS97 scheme doesn't specify in detail
+how this should be achieved. A possible approach can be found in \cite{HL09}.
 
 \subsection{Usability properties}
 \label{sec:usabilityproperties}
-This section needs to be written. 
+It is a generally know fact that high security measure have a negative impact on
+the usability of a certain application. In E-Voting, usability is a crucial
+factor since the potential average voter is not expected to have a high
+expertise in cryptography and information security. In the CGS97 scheme, casting
+a vote is surprisingly easy and also the computation costs are fairly low,
+regardless of how many trustees the election has or how big the electorate is.
+
+A similar property is also valid for the trustees, the complexity of verifying
+votes, tallying and decrypting always remains linear which is a huge advantage
+compared to other E-Voting schemes.
+
 
 \section{UniCrypt}
 \label{sec:unicrypt}
@@ -581,7 +647,7 @@ people carry such devices, which allows setting up spontaneous polls. The
 implementation can be split up in several packages, which are shortly explained
 in the following section.
 
-\section{Threshold Secret Sharing}
+\section{Implementation of a Threshold Secret Sharing scheme in UniCrypt}
 \label{sec:thresholdsecretsharing}
 In order to ensure privacy of the ballots, the CGS97 \cite{CGS97} E-Voting
 protocol uses a threshold secret sharing mechanism which splits up the secret
@@ -604,18 +670,33 @@ all participants. This is because of the following reasons:
   subset of participants means that the handling of the application would be the
   same for all the participants (except for one special participant who defines
   the question and the allowed options of the poll). That simplifies the design
-  of the User interface and avoids confusion about who has to do what during the
+  of the user interface and avoids confusion about who has to do what during the
   poll.
 \end{itemize}
 
 The CGS97 protocol suggests to use threshold secret sharing scheme due to Torben
 Pryds Pedersen \cite{PED91}, which adds a distributed key generation mechanism to the
-scheme proposed by Adi Shamir \cite{Shamir79}. Especially the key generation
-part of the protocol involves a lot of steps and interaction between participants.
+scheme proposed by Adi Shamir \cite{Shamir79}. 
 
-The secret sharing mechanism is currently not part of the InstaCircle library
-and has to be implemented. The implementation such a threshold mechanism in
-InstaCircle is a goal for this project.
+We are considering replacing the secret sharing scheme with a variant that
+requires less steps during the distributed key generation phase. So far this
+scheme was only subject to some discussions and has to be analyzed and specified
+in more detail. This work is also done as a part of this master thesis.
+
+There is currently no threshold secret sharing mechanism implemented in
+UniCrypt. The implementation such a mechanism in InstaCircle is a goal
+for this project.
+
+
+\section{Implementation of a Proof of Validity in UniCrypt}
+\label{sec:proofofvalidity}
+In \vref{sec:zeroknowledgeproofs} we have seen three types of zero-knowledge
+proofs which are required as a building block of CGS97. The InstaCircle library
+currently implements two types, namely the proof of knowledge of discrete
+logarithm and the proof of equality of discrete logarithm. What's currently
+missing is the proof of validity, which allows to create a proof proving that
+a given image of a homomorphic one-way function corresponds to a preimage which
+belongs to a given set of allowed preimages. 
 
 \section{Graphical User Interface}
 \label{sec:gui}
@@ -652,7 +733,12 @@ application and tie it to the user interface and to InstaCircle for communicatin
 participants. This part is heavily based on already existing components, namely
 InstaCircle which provides the decentralized communication infrastructure and
 UniCrypt which provides the implementation of the cryptographic building blocks
-which are used in CGS97.
+which are used in CGS97 \myref{sec:buildingblocks}. The final product needs to
+be able to handle a voting scenario $1-n$ meaning that a user can choose exactly
+one option out of $n$ options. This allows to set up polls which are more
+complex than a simple \emph{Yes-No} poll. At the other end of the spectrum would
+be the $m-n$ scenario, that means that $m$ options can be picked out of $n$
+options. The $m-n$ scenario is not a must for this project.
 
 \chapter{Organization}
 \label{cha:organization}
@@ -782,10 +868,10 @@ In order to track the progress of the project, we define some milestones
 throughout the project period.
 \begin{itemize}
   \item \textbf{Kickoff:} The project is set up and the goals of the project
-  are clear.
+  are clear. All involved persons know their role and their responsibilities.
   \item \textbf{Building blocks ready:} At this stage, all the components we
   need (e.g. UniCrypt) are prepared and tested on the Android platform.
-  \item \textbf{Hand in:} The implemenation and the documentation are finished
+  \item \textbf{Hand in:} The implementation and the documentation are finished
   and the work is handed over to the advisor.
 \end{itemize}
 
