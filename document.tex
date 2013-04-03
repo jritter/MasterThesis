@@ -8,17 +8,16 @@ footsepline, oneside, draft=off]{scrreprt}
 % Setting description label fonts to serif
 \addtokomafont{descriptionlabel}{\rmfamily}
 
+
 \usepackage[english]{babel} 
 \usepackage[utf8]{inputenc}
+
+% biblatex
 \usepackage[backend=bibtex8]{biblatex}
 \bibliography{bib/bibliography.bib}
 
-% Using links in PDFs, but without the ugly borders
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=false,
-    pdfborder={0 0 0},
-}
+% switch last names in bibliography to small caps
+\renewcommand*{\mkbibnamelast}[1]{\textsc{#1}}
 
 % we need these packages for the gantt chart
 \usepackage{pgfgantt}
@@ -45,7 +44,7 @@ footsepline, oneside, draft=off]{scrreprt}
 \usepackage{varioref} 
 
 % Draft watermark
-\usepackage{draftwatermark}
+\usepackage[firstpage]{draftwatermark}
 \SetWatermarkScale{5}
 \SetWatermarkLightness{0.9}
 
@@ -53,10 +52,25 @@ footsepline, oneside, draft=off]{scrreprt}
 %\newcommand{\myref}[1]{(see section \ref{#1} on page \pageref{#1})}
 \newcommand{\myref}[1]{(see section \vref{#1})}
 
+% improve word spacing
+\usepackage{microtype}
+
+% Using links in PDFs, but without the ugly borders
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+    pdfauthor={Juerg Ritter},
+    pdftitle={Decentralized E-Voting on Android Devices using Homomorphic
+    Tallying},
+    pdfsubject={Master Thesis},
+    pdfkeywords={E-Voting;Android;Master Thesis},
+}
+
 \begin{document}
 
-\title{\bf E-Voting on Android Devices using the CGS97 Protocol}
-\subject{Master Thesis Proposal}
+\title{\bf Decentralized E-Voting on Android Devices using Homomorphic Tallying}
+\subject{Master Thesis}
 \author{Juerg Ritter (\url{rittj1@bfh.ch})\\
 \\
 Bern University of Applied Sciences\\
@@ -74,7 +88,7 @@ Stephan Neumann, Technical University of Darmstadt}
 
 
 \begin{abstract}
-The E-Voting group of the Bern University of Applied Sciences is planning to
+The E-Voting Group of the Bern University of Applied Sciences is planning to
 evaluate decentralized E-Voting systems for practical use. The term
 ``decentralized'' in that context means that there is no central server
 infrastructure involved in the voting process. The main application of such
@@ -128,7 +142,7 @@ polls on mobile Android devices under the following terms:
   poll.
   \item The voting scheme is based on the CGS97 approach proposed by Cramer et
   al.~\cite{CGS97}.
-  \item It must be possible to perform elections or polls with the type $1-n$,
+  \item It must be possible to perform elections or polls with the type \emph{one-out-of-n},
   meaning the voter can choose exactly one option out of $n$ possible options.
   It will not be possible to perform elections where multiple candidates can be
   elected for example.
@@ -154,7 +168,7 @@ implemented part time. It is equivalent to 27 ECTS credits. Chapter
 \vref{cha:expectedresults} gives a more in-depth specification about the results
 which are expected at the end of this master thesis.
 
-\chapter{Background and related work}
+\chapter{Background and Related Work}
 \label{cha:brw}
 This section gives an overview of the theoretical foundations and some projects
 which have been implemented earlier in order to serve as a foundation for this
@@ -207,38 +221,12 @@ boycott of an election. That's why many governments use E-Voting only on small
 scales so that the electorate is small enough that it is statistically unlikely
 to decide the outcome of the election.
 
-\section{The voting scheme CGS97}
-\label{sec:CGS97}
-In 1997, Ronald Cramer, Rosario Gennaro and Berry Schoenmakers proposed a scheme
-\cite{CGS97} which allows to do E-Voting in a secure and verifiable manner. The participants of
-the protocol can be divided into four different roles:
-\begin{itemize}
-  \item \textbf{Administrator:} The administrator is responsible for setting up
-  the election by defining the question and the possible options, the
-  electorate and the voting period. The administrator is also responsible for
-  orchestrating the activities during a voting cycle.
-  \item \textbf{Voter:} A voter is somebody who is eligible to participate on
-  an election or a poll. 
-  \item \textbf{Trustee:} A trustee is somebody who helps setting up the
-  election by creating an asymmetric key pair in cooperation with other
-  trustees.
-  At the end of the election phase, the trustees have to cooperate in order to
-  reveal the result of the election or the poll.
-  \item \textbf{Observer:} An observer is somebody who wants to verify that all
-  the participants of an election or a poll behave as they are supposed to.
-\end{itemize}
-
-In the scenario of an ad-hoc voting system as we are going to develop during
-this project, the voter, trustee and observer roles can be combined and all
-participant impersonate these roles. The administrator role needs to be assigned
-to one particular participant.
-
-\subsection{Cryptographic Building Blocks}
+\section{Cryptographic Building Blocks}
 \label{sec:buildingblocks}
 The CGS97 voting scheme is assembled from some well known cryptographic building
 blocks which are shortly explained in this section.
 
-\subsubsection{ElGamal Cryptosystem}
+\subsection{ElGamal Cryptosystem}
 \label{sec:elgamal}
 The ElGamal cryptosystem \cite{EG84}, proposed by Taher El Gamal in 1984, is the
 asymmetric cryptosystem which is mostly used in the context of E-Voting. An
@@ -254,30 +242,45 @@ the resulting ciphertext is always different. That's why ElGamal is also called
 a \textit{randomized} cryptosystem.
 
 In order to define an ElGamal cryptosystem, three parameters are required. Let
-$p$ and $q$ be large prime numbers such that $q|p-1$. $p$ and $q$ are so called
-save primes. $q$ defines the order of a subgroup $G_q$ of the multiplicative
-modular group $\mathbb{Z}^*_p$. The last parameter needed is a random generator
-$g$ of the group $G_q$. We can now derive the asymmetric key pair containing the
-secret key $x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message
-$m \in G_q$ can be encrypted by first choosing a random value $r \in_R
-\mathbb{Z}_q$, and then calculating $(a, b)=Enc_y(m, r)=(g^r, y^r \cdot m)$. The
-tuple $(a, b)$ is the ciphertext of the message $m$. $m$ can be recovered using
-the secret key $x$ by calculating $m=Dec_x(a, b)=a^{-x} \cdot b$.
+$p$ and $q$ be large prime numbers such that $q|p-1$\footnote{In the case of
+$p=2q+1$ where $p$ and $q$ are primes, $p$ is called \emph{save prime} and $q$
+is called \emph{Sophie Germain prime}}.
+$q$ defines the order of a subgroup $G_q$ of the multiplicative modular group
+$\mathbb{Z}^*_p$. The last parameter needed is a random generator $g$ of the
+group $G_q$. We can now derive the asymmetric key pair containing the secret key
+$x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message $m \in G_q$
+can be encrypted by first choosing a random value $r \in_R \mathbb{Z}_q$, and
+then applying the following function:
+\begin{equation}
+Enc_y : G_q \times \mathbb{Z}_q \rightarrow G_q \times G_q,
+(a, b)=Enc_y(m, r)=(g^r, y^r \cdot m) \notag
+\end{equation}
+The tuple $(a, b)$ is the ciphertext of the message $m$. $m$ can be recovered using the secret key $x$
+by applying the decryption function:
+\begin{equation}
+Dec_x : G_q \times G_q \rightarrow G_q,
+m=Dec_x(a, b)=a^{-x} \cdot b \notag
+\end{equation}
 
-\subsubsection{Subgroup Encoding}
+\subsubsection{Exponential ElGamal}
+In the area of E-Voting, we often find a slight variation of ElGamal which is
+called \emph{exponential ElGamal}. In exponential ElGamal, we encode a message
+$\hat{m}$ by using a generator $\hat{g}$ of $G_q$ and raise it to the power of
+the message $\hat{m} \in \mathbb{Z}_q$. Note that the message $\hat{m}$ is an
+element of the additional group $\mathbb{Z}_q$ as opposed to the classical
+ElGamal where $m$ is an element of the multiplicative group $G_q$. Note
+that elements of the group $\mathbb{Z}_q$ are much easier to find as all
+integers between $0$ and $p-1$ belong to this group. The modified
+encryption function of exponential ElGamal looks as follows:
+\begin{equation}
+\hat{Enc_y} : \mathbb{Z}_q \times \mathbb{Z}_q \rightarrow G_q \times G_q,
+(a, b)=\hat{Enc_y}(\hat{m}, r)=(g^r, y^r \cdot \hat{g}^{\hat{m}}) \notag
+\end{equation}
+
+
+\subsection{Subgroup Encoding}
 \label{sec:subgroupencoding}
-In the previous section, we have seen that the ElGamal encryption function takes
-a message $m \in G_q$ and a random value $r \in_R \mathbb{Z}_q$ as a function
-parameter. Since the group $G_q$ contains a non-continuous set of integer numbers
-between $1$ and $p-1$, we need a mechanism to make sure that $m$ is an element
-of $G_q$ We call this operation \textit{encoding}.
-Assuming $g$ is a generator of the group $G_q$, we could just calculate
-$m=g^{m'}$, where $m' \in \mathbb{Z}_q$. This works because $G_q = \{g^0, g^1,
-g^2, \ldots, g^{q-1}\}$. While the encoding process is quite simple, the
-decoding part is more difficult because in order to find $m'$, we need to
-calculate the discrete logarithm which cannot be done in an efficient manner.
-Thus, this encoding scheme is only applicable to a small set of possible
-plaintexts.
+
 
 There is also a more efficient mechanism which allows to
 map values between the groups $\mathbb{Z}_q$ and $G_q$. The encoding can be done
@@ -300,7 +303,7 @@ The decoding function on the other hand looks as follows:
 	\end{cases} \notag
 \end{equation}
 
-\subsubsection{Homomorphic encryption}
+\subsection{Homomorphic encryption}
 \label{sec:homenc}
 The ElGamal cryptosystem has a property
 which is important for building verifiable E-Voting schemes, namely the property
@@ -343,7 +346,7 @@ iterate through all the possible solutions and stop as soon as it matches with
 the decrypted product.
 
 
-\subsubsection{Secret sharing}
+\subsection{Secret sharing}
 \label{sec:secretsharing}
 In E-Voting scenarios it is crucial that not a
 single entity can manipulate the result or reveal single votes. This
@@ -376,7 +379,7 @@ they generate a polynomial function with random coefficients of degree $t-1$ and
 calculate a point for each trustee in the system. These points are then
 \textit{secretly} communicated individually to each trustee.
 
-\subsubsection{Zero-knowledge proofs}
+\subsection{Zero-knowledge proofs}
 \label{sec:zeroknowledgeproofs}
 Zero-knowledge proofs (ZKPs) in their sense are conversations between a
 \textit{prover} and a \textit{verifier}. They allow the prover to demonstrate,
@@ -392,7 +395,7 @@ fact in possession of the secret. Zero-knowledge proofs offer therefore a
 Knowledge Proofs are used to make sure that none of the participants are
 cheating.
 
-\paragraph{Non-interactive zero-knowledge proofs.}
+\subsubsection{Non-interactive zero-knowledge proofs.}
 Zero-knowledge proofs as described above are \textit{interactive} conversations
 between a prover and a verifier. This also means that the prover proofs only to
 the verifier that she has knowledge of the secret. Of course, any observer could
@@ -426,7 +429,7 @@ performs the following steps:
   \item Compute $t=f(\omega)$
   \item Compute $c=H(b,t)$, where $H$ represents a \textit{hashfunction} such as
   SHA-1
-  \item Compute $s=\omega \oplus c \otimes a$
+  \item Compute $s=\omega \oplus c \cdot a$
   \item Publish the proof $\pi = (t,s)$
 \end{enumerate}
 
@@ -439,7 +442,7 @@ condition holds:
  In the following paragraphs, the different types of proofs are briefly
  explained and we also make the adaption of the schema above.
  
-\subparagraph{Proving the Knowledge of discrete logarithm.}
+\subsubsection{Proving the Knowledge of discrete logarithm.}
 This type of Proof was first presented by Claus Peter Schnorr in 1991
 \cite{Schnorr91}. We have seen that the ElGamal encryption function has the
 homomorphic property \myref{sec:homenc}. Therefore, it is possible to prove the
@@ -481,7 +484,7 @@ $c=H(a,t)$ and check whether the following condition holds:
 	g^s \stackrel{?}{=} t \cdot a^c \notag
 \end{equation}
 
-\subparagraph{Proving the Equality of Discrete Logarithms.}
+\subsubsection{Proving the Equality of Discrete Logarithms.}
 This type of proof due to David Chaum and Torben Pryds Pedersen \cite{CP93}
 that proofs the relation $log_{g_1} c_1 = log_{g_2} c_2 $ for two values $c_1 =
 g_1^m$ and $c_2 = g_2^m$, where $g_1$ and $g_2$ are generators of the
@@ -513,11 +516,11 @@ $c=H((c_1,c_2),t)$ and check whether the following condition holds:
 \end{equation}
 
 
-\subparagraph{Proving Validity.}
+\subsubsection{Proving Validity.}
 This section needs to be written. 
 
 
-\subsubsection{Bulletin Board}
+\subsection{Bulletin Board}
 \label{sec:bulletinboard}
 The so called bulletin board is the public communication channel which is used
 to communicate between the participants of the election or poll. It is a
@@ -534,9 +537,36 @@ append-only property. Append-only bulletin boards are discussed in more detail
 in \cite{HL09}. Since the bulletin board is a good target for a
 denial-of-service attack, it is a good idea to replicate the content of the bulletin board to multiple systems.
 
+
+\section{The voting scheme CGS97}
+\label{sec:CGS97}
+In 1997, Ronald Cramer, Rosario Gennaro and Berry Schoenmakers proposed a scheme
+\cite{CGS97} which allows to do E-Voting in a secure and verifiable manner. The participants of
+the protocol can be divided into four different roles:
+\begin{itemize}
+  \item \textbf{Administrator:} The administrator is responsible for setting up
+  the election by defining the question and the possible options, the
+  electorate and the voting period. The administrator is also responsible for
+  orchestrating the activities during a voting cycle.
+  \item \textbf{Voter:} A voter is somebody who is eligible to participate on
+  an election or a poll. 
+  \item \textbf{Trustee:} A trustee is somebody who helps setting up the
+  election by creating an asymmetric key pair in cooperation with other
+  trustees.
+  At the end of the election phase, the trustees have to cooperate in order to
+  reveal the result of the election or the poll.
+  \item \textbf{Observer:} An observer is somebody who wants to verify that all
+  the participants of an election or a poll behave as they are supposed to.
+\end{itemize}
+
+In the scenario of an ad-hoc voting system as we are going to develop during
+this project, the voter, trustee and observer roles can be combined and all
+participant impersonate these roles. The administrator role needs to be assigned
+to one particular participant.
+
 \subsection{Security properties}
 \label{sec:secproperties}
-The in section \vref{sec:evoting} we discussed some security requirements which
+In section \vref{sec:evoting} we discussed some security requirements which
 are desirable for an E-Voting system. The following paragraph assess the CGS97
 procotol against these requirements.
 
@@ -734,8 +764,8 @@ participants. This part is heavily based on already existing components, namely
 InstaCircle which provides the decentralized communication infrastructure and
 UniCrypt which provides the implementation of the cryptographic building blocks
 which are used in CGS97 \myref{sec:buildingblocks}. The final product needs to
-be able to handle a voting scenario $1-n$ meaning that a user can choose exactly
-one option out of $n$ options. This allows to set up polls which are more
+be able to handle a voting scenario \emph{one-out-of-n}, meaning that a user can
+choose exactly one option out of $n$ options. This allows to set up polls which are more
 complex than a simple \emph{Yes-No} poll. At the other end of the spectrum would
 be the $m-n$ scenario, that means that $m$ options can be picked out of $n$
 options. The $m-n$ scenario is not a must for this project.
@@ -744,7 +774,7 @@ options. The $m-n$ scenario is not a must for this project.
 \label{cha:organization}
 This project is implemented as a master thesis project as a graduation project
 during the Master of Science in Engineering studies (MSE) at the Bern University
-of applied Sciences. This project values 27 ECTS credits and is spread among two
+of Applied Sciences. This project values 27 ECTS credits and is spread among two
 semesters. The hand in of the project is planned for February 7, 2014.
 
 During the same period, a fellow master student is working on a very similar
