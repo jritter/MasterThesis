@@ -27,11 +27,6 @@ footsepline, oneside, draft=off]{scrreprt}
 \usepackage{amssymb}
 \usepackage{amsmath}
 
-\usepackage{menukeys}
-\usepackage{smartdiagram}
-
-
-
 % activate the headings
 \pagestyle{headings}
 \setkomafont{pagehead}{\scshape}
@@ -61,7 +56,7 @@ footsepline, oneside, draft=off]{scrreprt}
     colorlinks=false,
     pdfborder={0 0 0},
     pdfauthor={Juerg Ritter},
-    pdftitle={Decentralized E-Voting on Android Devices using Homomorphic
+    pdftitle={Decentralized E-Voting on Android Devices Using Homomorphic
     Tallying},
     pdfsubject={Master Thesis},
     pdfkeywords={E-Voting;Android;Master Thesis},
@@ -69,7 +64,7 @@ footsepline, oneside, draft=off]{scrreprt}
 
 \begin{document}
 
-\title{\bf Decentralized E-Voting on Android Devices using Homomorphic Tallying}
+\title{\bf Decentralized E-Voting on Android Devices Using Homomorphic Tallying}
 \subject{Master Thesis}
 \author{Juerg Ritter (\url{rittj1@bfh.ch})\\
 \\
@@ -89,13 +84,13 @@ Stephan Neumann, Technical University of Darmstadt}
 
 \begin{abstract}
 The E-Voting Group of the Bern University of Applied Sciences is planning to
-evaluate decentralized E-Voting systems for practical use. The term
+evaluate decentralized e-voting systems for practical use. The term
 ``decentralized'' in that context means that there is no central server
 infrastructure involved in the voting process. The main application of such
-E-Voting systems are polls with a low number of participants, for example the
+e-voting systems are polls with a low number of participants, for example the
 board of directors in a company. The idea is, that the participants create an
 ad-hoc network with mobile devices. The goal of this project is to implement a
-decentralized E-Voting system for Android devices. The communications scheme among
+decentralized e-voting system for Android devices. The communications scheme among
 the voting participants will rely on the proposal made by Ronald Cramer,
 Rosario Gennaro and Berry Schoenmakers in 1997 \cite{CGS97}. The cryptographic
 library UniCrypt and InstaCircle which is an ad-hoc decentralized communication infrastructure are
@@ -108,9 +103,9 @@ projects which have been implemented at the Bern University of Applied Sciences.
 \chapter{Introduction}
 \label{cha:introduction}
 One of the research fields of the Bern University of Applied Sciences is the
-area of E-Voting. E-Voting has become a big field of research in the past couple
+area of e-voting. e-voting has become a big field of research in the past couple
 years. Still, there is no generic approach which meets all the criteria such as
-privacy, transparency, etc. which we want in E-Voting. The E-Voting research
+privacy, transparency, etc. which we want in e-voting. The e-voting research
 group of the Bern University of Applied Sciences \cite{www:EVG} tries to
 improve this situation with the following approaches:
 \begin{itemize}
@@ -121,12 +116,12 @@ improve this situation with the following approaches:
 
 The evaluation of these approaches is usually done by implementing them into a
 prototype level application to show that the approach actually works. The
-E-Voting group would like to gain some experience on how decentralized E-Voting
+E-Voting Group would like to gain some experience on how decentralized e-voting
 systems could be implemented and how they behave in practice. There are some
-approaches which focus explicitly on decentralized E-Voting systems, such as the
+approaches which focus explicitly on decentralized e-voting systems, such as the
 proposal of Khader et al. \cite{HKRS12}. In this project, we would like to adapt
 the protocol proposed by Cramer et. al. \cite{CGS97} in a way that it can be
-used as a decentralized E-Voting system.
+used as a decentralized e-voting system.
 
 A possible use case of such a system could be an executive board or any other
 committee that would like to vote on some matters without having their members
@@ -181,13 +176,13 @@ transactions, booking flights etc. can be done using the internet. Instead of
 going to the post office, to the bank or the travel agency, one can complete
 these tasks in a very comfortable fashion at home in front of the computer. Not
 surprisingly, people have thought about replace the way to the voting station
-with an internet based solution. This so called E-Voting has appeared on the
+with an internet based solution. This so called e-voting has appeared on the
 surface soon after the quick rise of the internet, but so far the big
 breakthrough has not happened, which might be surprising at the first sight.
-Instead, the area of E-Voting has become a big research area, tightly related to
-the area of cryptography. Let's have a closer look at the reasons why E-Voting
+Instead, the area of e-voting has become a big research area, tightly related to
+the area of cryptography. Let's have a closer look at the reasons why e-voting
 couldn't find it's way to success so far. For a better understanding, we should
-identify the properties that we expect from an E-Voting system. Over the time,
+identify the properties that we expect from an e-voting system. Over the time,
 some properties and their definitions have emerged.
 
 \begin{description}
@@ -215,9 +210,9 @@ desired requirements. Not even the classic paper based voting meets all the
 requirements, for example the verifiability is not given in a classic voting
 scenario. Researchers are trying to develop schemes towards these requirements
 using cryptographic building blocks. The robustness property is probably the
-biggest factor that prevents the breakthrough of E-Voting on large scales.
-E-Voting systems are the perfect targets for an intended manipulation or a
-boycott of an election. That's why many governments use E-Voting only on small
+biggest factor that prevents the breakthrough of e-voting on large scales.
+e-voting systems are the perfect targets for an intended manipulation or a
+boycott of an election. That's why many governments use e-voting only on small
 scales so that the electorate is small enough that it is statistically unlikely
 to decide the outcome of the election.
 
@@ -229,14 +224,14 @@ blocks which are shortly explained in this section.
 \subsection{ElGamal Cryptosystem}
 \label{sec:elgamal}
 The ElGamal cryptosystem \cite{EG84}, proposed by Taher El Gamal in 1984, is the
-asymmetric cryptosystem which is mostly used in the context of E-Voting. An
+asymmetric cryptosystem which is mostly used in the context of e-voting. An
 asymmetric cryptosystem uses two keys to operate, one which is used to encrypt a
 certain message (the public key) and another to decrypt the message (the secret
 key). The security of this cryptosystem is based on the fact that it is hard to
 compute the logarithm in discrete modular groups and hence making the
 exponentiation in modular groups a one way function. A major advantage of the
 ElGamal cryptosystem is the fact, that the encryption function includes a random
-value. Especially in the context of E-Voting this is a crucial property, because
+value. Especially in the context of e-voting this is a crucial property, because
 when encrypting a value (for example the value $1$ which means \textit{Yes}),
 the resulting ciphertext is always different. That's why ElGamal is also called
 a \textit{randomized} cryptosystem.
@@ -244,7 +239,7 @@ a \textit{randomized} cryptosystem.
 In order to define an ElGamal cryptosystem, three parameters are required. Let
 $p$ and $q$ be large prime numbers such that $q|p-1$\footnote{In the case of
 $p=2q+1$ where $p$ and $q$ are primes, $p$ is called \emph{save prime} and $q$
-is called \emph{Sophie Germain prime}}.
+is called \emph{Sophie Germain prime}.}.
 $q$ defines the order of a subgroup $G_q$ of the multiplicative modular group
 $\mathbb{Z}^*_p$. The last parameter needed is a random generator $g$ of the
 group $G_q$. We can now derive the asymmetric key pair containing the secret key
@@ -263,84 +258,77 @@ m=Dec_x(a, b)=a^{-x} \cdot b \notag
 \end{equation}
 
 \subsubsection{Exponential ElGamal}
-In the area of E-Voting, we often find a slight variation of ElGamal which is
+\label{sec:expelgamal}
+In the area of e-voting, we often find a slight variation of ElGamal which is
 called \emph{exponential ElGamal}. In exponential ElGamal, we encode a message
-$\hat{m}$ by using a generator $\hat{g}$ of $G_q$ and raise it to the power of
-the message $\hat{m} \in \mathbb{Z}_q$. Note that the message $\hat{m}$ is an
-element of the additional group $\mathbb{Z}_q$ as opposed to the classical
-ElGamal where $m$ is an element of the multiplicative group $G_q$. Note
-that elements of the group $\mathbb{Z}_q$ are much easier to find as all
-integers between $0$ and $p-1$ belong to this group. The modified
-encryption function of exponential ElGamal looks as follows:
+$\hat{m}$ by using a generator $\hat{g}$ of $G_q$ and raise it to
+the power of the message $\hat{m} \in \mathbb{Z}_q$. In many cases, the
+ElGamal parameter $g$ is used as $\hat{g}$, which makes it unnecessary to
+define an fourth predefined parameter. Note that the message $\hat{m}$ is an
+element of the additive group $\mathbb{Z}_q$ as opposed to the classical
+ElGamal where $m$ is an element of the multiplicative group $G_q$. Note that
+elements of the group $\mathbb{Z}_q$ are much easier to find as all integers
+between $0$ and $p-1$ belong to this group. The modified encryption function of
+exponential ElGamal looks as follows:
 \begin{equation}
 \hat{Enc_y} : \mathbb{Z}_q \times \mathbb{Z}_q \rightarrow G_q \times G_q,
 (a, b)=\hat{Enc_y}(\hat{m}, r)=(g^r, y^r \cdot \hat{g}^{\hat{m}}) \notag
 \end{equation}
+In order to decrypt a given ciphertext, we apply the ordinary ElGamal decryption
+function and obtain the value $\hat{g}^{\hat{m}} \in G_q$. To reveal $\hat{m}$,
+we would have to compute the discrete logarithm, which is a hard problem in
+general. If we have knowledge about all the possible plaintexts (e.g. we know
+that a ballot either contains 0 for \emph{no} or 1 for \emph{yes}), we can just try all
+possible plaintexts. 
 
-
-\subsection{Subgroup Encoding}
-\label{sec:subgroupencoding}
-
-
-There is also a more efficient mechanism which allows to
-map values between the groups $\mathbb{Z}_q$ and $G_q$. The encoding can be done
-as follows:
-\begin{equation}
-\text{Encode} : \mathbb{Z}_q \rightarrow G_q, \text{Encode}(m') = 
-	\begin{cases}
-	m'+1 & \text{if } (m'+1)^q = 1 \text{ mod } p \\
-	p-m'-1 & \text{else}
-	\end{cases} \notag
-\end{equation}
-
-The decoding function on the other hand looks as follows:
-
-\begin{equation}
-\text{Decode} : G_q \rightarrow \mathbb{Z}_q, \text{Decode}(m) = 
-	\begin{cases}
-	m-1 & \text{if } m \leq q \\
-	p-m-1 & \text{else}
-	\end{cases} \notag
-\end{equation}
+Exponential ElGamal has another property which is important in the context of
+e-voting: It transforms ElGamal from a multiplicative homomorphic function into
+an additive homomorphic function. Homomorphic encrpytion is discussed in detail in
+section \ref{sec:homenc}.
 
 \subsection{Homomorphic encryption}
 \label{sec:homenc}
 The ElGamal cryptosystem has a property
-which is important for building verifiable E-Voting schemes, namely the property
-of homomorphism. Given two mathematical groups $(X,\oplus)$ and $(Y,\otimes)$, a
-mathematical function $f:X \rightarrow Y$ is $(\oplus, \otimes)$-homomorphic if
+which is important for building verifiable e-voting schemes, namely the property
+of \emph{homomorphism}. Given two mathematical groups $(X,\oplus)$ and
+$(Y,\otimes)$, a mathematical function $f:X \rightarrow Y$ is $(\oplus, \otimes)$-homomorphic if
 the following condition holds:
 \begin{equation}
 f(m_1) \otimes f(m_2) = f(m_1 \oplus m_2) \notag
 \end{equation}
-The ElGamal function offers exactly that property with respect to the
-multiplication operation for its encryption function $Enc_y:G_q \times
-\mathbb{Z}_q \rightarrow G_q \times G_q$ using the same public key $y$:
+The ElGamal function offers exactly that property for its encryption function
+$Enc_y:G_q \times \mathbb{Z}_q \rightarrow G_q \times G_q$ using the same public key $y$:
 \begin{equation}
-Enc_y(m_1, r_1) \cdot Enc_y(m_2, r_2) = Enc_y(m_1 \cdot m_2, r_1 \cdot r_2)
+Enc_y(m_1, r_1) \cdot Enc_y(m_2, r_2) = Enc_y(m_1 \cdot m_2, r_1 + r_2)
 \notag
 \end{equation}
 This property allows to calculate the encrypted product of all messages out of
-the encrypted messages and decrypt only the result. Applied to E-Voting, the
-result can be calculated out of the encrypted ballots and only the final result
+the encrypted messages and decrypt only the result. Applied to e-voting, the
+result can be computed out of the encrypted ballots and only the final result
 needs to be decrypted. The ballots themselves can remain encrypted, which is
 important for maintaining privacy. The ElGamal cryptosystem is homomorphic
-respective to multiplication, which is not very fortunate for counting votes.
-Votes should be summed up in order to get the final result. In order to reach
-this, we use the following mathematical property:
+respective to the multiplication operation in the message part, which is not
+very fortunate for counting votes. Votes should be summed up in order to get the
+final result. In order to reach this, we use the following mathematical property:
 \begin{equation}
 x^a \cdot x^b = x^{a+b} \notag
 \end{equation}
 
-Applied to ElGamal, this transforms to the following equation:
+This is exactly the property that we obtain by using exponential ElGamal as
+discussed in section \vref{sec:expelgamal}. The product of all ciphertext
+values results in the encrypted sum of the cast ballots, encrypted using the
+exponential ElGamal encryption function $\hat{Enc_y}:\mathbb{Z}_q \times
+\mathbb{Z}_q \rightarrow G_q \times G_q$:
 
 \begin{equation}
-Enc_y(g^{m_1}) \cdot Enc_y(g^{m_2}) = Enc_y(g^{m_1 + m_2}) \notag
+\hat{Enc_y}(m_1, r_1) \cdot \hat{Enc_y}(m_2, r_2) = \hat{Enc_y}(m_1 + m_2, r_1 +
+r_2)
+\notag
 \end{equation}
 
 In order to obtain the sum of $m_1$ and $m_2$, the computation of a discrete
 logarithm is required, which is considered as a hard problem. In the scenario of
-E-Voting, we know what the possible solutions are. The number of possible
+e-voting, we know what the possible solutions are. The number of possible
 solution is merely the number of ballots which have been cast, so we can just
 iterate through all the possible solutions and stop as soon as it matches with
 the decrypted product.
@@ -348,7 +336,7 @@ the decrypted product.
 
 \subsection{Secret sharing}
 \label{sec:secretsharing}
-In E-Voting scenarios it is crucial that not a
+In e-voting scenarios it is crucial that not a
 single entity can manipulate the result or reveal single votes. This
 responsibility, or in our case the secret key which is needed to obtain the
 final result, has to be spread across a set of trustees. In the CGS97 scheme,
@@ -391,7 +379,7 @@ prover could just guess the correct answer to the question and cheat, but if the
 verifier repeats the challenge process with a different input, chances are
 almost zero that the prover can guess all the correct answers if he is not in
 fact in possession of the secret. Zero-knowledge proofs offer therefore a
-\textit{probabilistic} security. In the context of E-Voting, these Zero
+\textit{probabilistic} security. In the context of e-voting, these Zero
 Knowledge Proofs are used to make sure that none of the participants are
 cheating.
 
@@ -402,7 +390,7 @@ the verifier that she has knowledge of the secret. Of course, any observer could
 observe the conversation, but there is no way to determine whether the verifier
 actually accepts the the proof or not. The verifier could of course testify that
 the prover has the knowledge of the secret, but that would require a trust
-relationship between the observer and the verifier. In an E-Voting scenario, we
+relationship between the observer and the verifier. In an e-voting scenario, we
 need a proof which can be verified by anybody and doesn't require an interactive
 conversation between the verifier and the prover. Such proofs are called
 \textit{Non-Interactive zero-knowledge proofs} or \textit{NIZKPs}. The
@@ -541,7 +529,7 @@ denial-of-service attack, it is a good idea to replicate the content of the bull
 \section{The voting scheme CGS97}
 \label{sec:CGS97}
 In 1997, Ronald Cramer, Rosario Gennaro and Berry Schoenmakers proposed a scheme
-\cite{CGS97} which allows to do E-Voting in a secure and verifiable manner. The participants of
+\cite{CGS97} which allows to do e-voting in a secure and verifiable manner. The participants of
 the protocol can be divided into four different roles:
 \begin{itemize}
   \item \textbf{Administrator:} The administrator is responsible for setting up
@@ -567,11 +555,11 @@ to one particular participant.
 \subsection{Security properties}
 \label{sec:secproperties}
 In section \vref{sec:evoting} we discussed some security requirements which
-are desirable for an E-Voting system. The following paragraph assess the CGS97
+are desirable for an e-voting system. The following paragraph assess the CGS97
 procotol against these requirements.
 
 \subparagraph{Democracy.} The CGS97 protocol doesn't specify how the access to
-the virtual voting both is controlled. The E-Voting system which implements the
+the virtual voting both is controlled. The e-voting system which implements the
 CGS97 protocol needs a sufficiently secure authentication mechanism in order to
 fulfill the democracy requirement. The criteria that only one valid vote can be
 cast is also tied to the authentication mechanism.
@@ -616,7 +604,7 @@ how this should be achieved. A possible approach can be found in \cite{HL09}.
 \subsection{Usability properties}
 \label{sec:usabilityproperties}
 It is a generally know fact that high security measure have a negative impact on
-the usability of a certain application. In E-Voting, usability is a crucial
+the usability of a certain application. In e-voting, usability is a crucial
 factor since the potential average voter is not expected to have a high
 expertise in cryptography and information security. In the CGS97 scheme, casting
 a vote is surprisingly easy and also the computation costs are fairly low,
@@ -624,19 +612,19 @@ regardless of how many trustees the election has or how big the electorate is.
 
 A similar property is also valid for the trustees, the complexity of verifying
 votes, tallying and decrypting always remains linear which is a huge advantage
-compared to other E-Voting schemes.
+compared to other e-voting schemes.
 
 
 \section{UniCrypt}
 \label{sec:unicrypt}
 UniCrypt is the name of a cryptographic library which has been developed by the
-E-Voting group of the Bern University of Applied Sciences. The main goal of this
+E-Voting Group of the Bern University of Applied Sciences. The main goal of this
 project was to create a platform on which upcoming projects can be built on.
 UniCrypt tries to look at cryptographic functions such as cryptosystems,
 signature systems, hash functions etc. from a mathematical point of view. Cipher
 text, plain text, signatures, etc. are treated as elements of mathematical
 groups, the cryptographic functions are treated as mathematical functions. This
-is required because in secure protocols as we use in the area of E-Voting, we
+is required because in secure protocols as we use in the area of e-voting, we
 depend on the plain textbook implementation of the cryptographic functions
 without functions like automatic padding, encoding, etc. This is the main
 difference between UniCrypt and other cryptographic libraries.
@@ -670,7 +658,7 @@ about InstaCircle can be found in \cite{ritter13a}.
 
 \chapter{Expected Results}
 \label{cha:expectedresults}
-The final result of this project is a fully-fledged decentralized E-Voting
+The final result of this project is a fully-fledged decentralized e-voting
 application which runs on Android devices and does not require any equipment
 other than the Android smartphones or tablets. Since a considerable amount of
 people carry such devices, which allows setting up spontaneous polls. The
@@ -679,12 +667,12 @@ in the following section.
 
 \section{Implementation of a Threshold Secret Sharing scheme in UniCrypt}
 \label{sec:thresholdsecretsharing}
-In order to ensure privacy of the ballots, the CGS97 \cite{CGS97} E-Voting
+In order to ensure privacy of the ballots, the CGS97 \cite{CGS97} e-voting
 protocol uses a threshold secret sharing mechanism which splits up the secret
 key which will later be used for decrypting the result among an certain number
 of trustees. Since the protocol allows participants to impersonate multiple
 rules, all participants could also be trustees. In the scenario of an ad-hoc
-E-Voting setup, it certainly makes sense to assign the role of the trustee to
+e-voting setup, it certainly makes sense to assign the role of the trustee to
 all participants. This is because of the following reasons:
 \begin{itemize}
   \item In many cases, the number of participants in an ad-hoc poll can be so
@@ -731,7 +719,7 @@ belongs to a given set of allowed preimages.
 \section{Graphical User Interface}
 \label{sec:gui}
 In many cases, cryptographic functions which are heavily used in the context of
-E-Voting have a negative impact on the usability. Many steps such as key
+e-voting have a negative impact on the usability. Many steps such as key
 generation, decryption, etc. have to be done in order to guarantee a poll which
 can't be compromised, and these steps bring a certain complexity into the
 handling of the application. Therefore it is crucial to guide the user
@@ -752,7 +740,7 @@ following components:
   \cite{CGS97} is the so called bulletin board where the whole transcript of
   messages between the participants is saved. All these information needs to be displayed on the
   user interface so that the participant has the possibility to verify the
-  validity of the whole E-Voting process \myref{sec:bulletinboard}.
+  validity of the whole e-voting process \myref{sec:bulletinboard}.
 \end{itemize}
 
 \section{E-Voting Functionality}
@@ -778,7 +766,7 @@ of Applied Sciences. This project values 27 ECTS credits and is spread among two
 semesters. The hand in of the project is planned for February 7, 2014.
 
 During the same period, a fellow master student is working on a very similar
-topic, namely the implementation of the decentralized E-Voting system proposed by
+topic, namely the implementation of the decentralized e-voting system proposed by
 Dalia Khader et al. \cite{HKRS12}. This project will also be based on the
 InstaCircle communication infrastructure \cite{ritter13a} and the UniCrypt
 cryptographic library \cite{ritter12} which have been developed earlier during
@@ -795,10 +783,10 @@ during the project period. At the first stage, we define the project setup,
 later on the cryptographic components will be put in place and will be tested on
 the Android platform. At some point a detailed story board for the graphical
 user interface will be created. Especially this project will be done in a strong
-collaboration with the other project which deals with decentralized E-Voting
+collaboration with the other project which deals with decentralized e-voting
 systems. At this stage, we have prepared all the components we need in order to
-implement the actual E-Voting system. The part which will consume most of the
-time budget will be the implementation and the testing of the actual E-Voting
+implement the actual e-voting system. The part which will consume most of the
+time budget will be the implementation and the testing of the actual e-voting
 logic. The last part will be dedicated to writing the project report of this
 master thesis project.
 
@@ -823,11 +811,11 @@ master thesis project.
 	\ganttbar{Testing out Example code on Android}{14}{14} \\
 	\ganttbar{Integration of code into Android project}{15}{15} \\
 	\ganttmilestone{Building blocks ready}{15.5} \\
-	\ganttgroup{Implementation of E-Voting Application of Android}{20}{26} \\
+	\ganttgroup{Implementation of e-voting Application of Android}{20}{26} \\
 	\ganttbar{Design of storyboard}{20}{24}\\
 	\ganttbar{Implementation of the User Interface}{23}{26}\\
 	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the
-	E-Voting logic}{0}{0}\\
+	e-voting logic}{0}{0}\\
 	\ganttgroup[group height=0.0, group/.style={draw=none}]{Testing}{0}{0} \\
 	\ganttgroup{Documentation / Report}{1}{8} \\
 	\ganttmilestone[milestone height=0.0, milestone/.style={draw=none}]{Hand in}{0}	
@@ -876,12 +864,12 @@ master thesis project.
 	\ganttmilestone[milestone height=0.0,
 	milestone/.style={draw=none}]{Building blocks ready}{0.5} \\
 	\ganttgroup{Implementation of
-	E-Voting Application of Android}{1}{13} \\
+	e-voting Application of Android}{1}{13} \\
 	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Design of
 	storyboard}{0}{0}\\
 	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the User
 	Interface}{0}{0}\\
-	\ganttbar{Implementation of the E-Voting logic}{1}{13}\\
+	\ganttbar{Implementation of the e-voting logic}{1}{13}\\
 	\ganttgroup{Testing}{7}{19} \\
 	\ganttgroup{Documentation / Report}{14}{24.5} \\
 	\ganttmilestone{Hand in}{24.5}
