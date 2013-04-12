@@ -35,6 +35,8 @@ footsepline, oneside, draft=off]{scrreprt}
 \usepackage{tikz}
 \usepackage{tikz-uml}
 
+\usetikzlibrary{matrix, arrows}
+
 % Intelligent references
 \usepackage{varioref} 
 
@@ -89,25 +91,40 @@ evaluate decentralized e-voting systems for practical use. The term
 infrastructure involved in the voting process. The main application of such
 e-voting systems are polls with a low number of participants, for example the
 board of directors in a company. The idea is, that the participants create an
-ad-hoc network with mobile devices. The goal of this project is to implement a
-decentralized e-voting system for Android devices. The communications scheme among
-the voting participants will rely on the proposal made by Ronald Cramer,
-Rosario Gennaro and Berry Schoenmakers in 1997 \cite{CGS97}. The cryptographic
-library UniCrypt and InstaCircle which is an ad-hoc decentralized communication infrastructure are
-other foundation blocks of this project. UniCrypt and InstaCircle are both
-projects which have been implemented at the Bern University of Applied Sciences.
+ad-hoc network with mobile devices. The main goal of this master thesis is to
+implement a decentralized e-voting system for Android based mobile devices. We
+are using a voting scheme that uses homomorphic tallying and secret sharing to
+guarantee privacy and verifiability. It also provides robustness in the sense
+that it is not possible for a single party to break the voting process just by
+refusing the collaboration at a certain step throughout the voting process. A
+big focus area is also the usability of this system, it should be possible for
+participants without extensive knowledge in the area of information security to
+use this e-voting system.
 \end{abstract}
 
 \tableofcontents
 
 \chapter{Introduction}
 \label{cha:introduction}
+The history of voting on a particular question in order determine the will of a
+group of people goes far back to the ancient greeks, who layed the groundwork of
+today's democratic societies. Over the years, the purpose of holding elections
+remained the same, while the procedures on how this is done has changed
+significantly. The most ancient way of expressing the will by a hand sign has
+been replaced by modern technologies. The 20th century has seen a lot of changes
+in this area. Paper based voting has been introduced, and with the
+industrialization the first machines appeared which should help counting
+the votes appeared on the surface. In today's internet society where a lot of
+tasks such as banking, shopping, mailing, etc. has been revolutionized by the
+internet, it is not surprising that there are a lot of efforts going on to
+revolutionize the process of voting as well.
+
 One of the research fields of the Bern University of Applied Sciences is the
 area of e-voting. e-voting has become a big field of research in the past couple
 years. Still, there is no generic approach which meets all the criteria such as
 privacy, transparency, etc. which we want in e-voting. The e-voting research
-group of the Bern University of Applied Sciences \cite{www:EVG} tries to
-improve this situation with the following approaches:
+group of the Bern University of Applied Sciences \cite{www:EVG} tries to improve
+this situation with the following approaches:
 \begin{itemize}
   \item Develop new approaches and provide them to the community for review
   \item Take existing approaches and evaluate them in terms of practicability.
@@ -163,11 +180,120 @@ implemented part time. It is equivalent to 27 ECTS credits. Chapter
 \vref{cha:expectedresults} gives a more in-depth specification about the results
 which are expected at the end of this master thesis.
 
+\section{Contribution and Goals}
+\label{cha:contributiongoals}
+The final result of this project is a fully-fledged decentralized e-voting
+application which runs on Android devices and does not require any equipment
+other than the Android smartphones or tablets. Since a considerable amount of
+people carry such devices, which allows setting up spontaneous polls. The
+implementation can be split up in several packages, which are shortly explained
+in the following section.
+
+\subsection{Implementation of a Threshold Secret Sharing scheme in UniCrypt}
+\label{sec:thresholdsecretsharing}
+In order to ensure privacy of the ballots, the CGS97 \cite{CGS97} e-voting
+protocol uses a threshold secret sharing mechanism which splits up the secret
+key which will later be used for decrypting the result among an certain number
+of trustees. Since the protocol allows participants to impersonate multiple
+rules, all participants could also be trustees. In the scenario of an ad-hoc
+e-voting setup, it certainly makes sense to assign the role of the trustee to
+all participants. This is because of the following reasons:
+\begin{itemize}
+  \item In many cases, the number of participants in an ad-hoc poll can be so
+  small that it would be hard to find an even smaller subset of participants
+  which will act as trustees.
+  \item In classical large-scale elections or polls, the role of the trustee
+  will probably be assigned to organizations such as political parties,
+  governmental authorities, election observation organizations, etc. In
+  spontaneous ad-hoc polls, the question of who gets to be a trustee is not an
+  obvious one, so it is probably the best choice to assign this role to all
+  participants.
+  \item Assigning the role of a trustee to all participants other than just to a
+  subset of participants means that the handling of the application would be the
+  same for all the participants (except for one special participant who defines
+  the question and the allowed options of the poll). That simplifies the design
+  of the user interface and avoids confusion about who has to do what during the
+  poll.
+\end{itemize}
+
+The CGS97 protocol suggests to use threshold secret sharing scheme due to Torben
+Pryds Pedersen \cite{PED91}, which adds a distributed key generation mechanism to the
+scheme proposed by Adi Shamir \cite{Shamir79}. 
+
+We are considering replacing the secret sharing scheme with a variant that
+requires less steps during the distributed key generation phase. So far this
+scheme was only subject to some discussions and has to be analyzed and specified
+in more detail. This work is also done as a part of this master thesis.
+
+There is currently no threshold secret sharing mechanism implemented in
+UniCrypt. The implementation such a mechanism in InstaCircle is a goal
+for this project.
+
+
+\subsection{Implementation of a Proof of Validity in UniCrypt}
+\label{sec:proofofvalidity}
+In \vref{sec:zeroknowledgeproofs} we have seen three types of zero-knowledge
+proofs which are required as a building block of CGS97. The InstaCircle library
+currently implements two types, namely the proof of knowledge of discrete
+logarithm and the proof of equality of discrete logarithm. What's currently
+missing is the proof of validity, which allows to create a proof proving that
+a given image of a homomorphic one-way function corresponds to a preimage which
+belongs to a given set of allowed preimages. 
+
+\subsection{Graphical User Interface}
+\label{sec:gui}
+In many cases, cryptographic functions which are heavily used in the context of
+e-voting have a negative impact on the usability. Many steps such as key
+generation, decryption, etc. have to be done in order to guarantee a poll which
+can't be compromised, and these steps bring a certain complexity into the
+handling of the application. Therefore it is crucial to guide the user
+through the process, and this can only be done by providing them a carefully
+crafted user interface. We can divide the required user interface into the
+following components:
+\begin{itemize}
+  \item \textbf{Administration:} The very first step in a poll would be to
+  define the question of the poll and the allowed options. Also, some sort of
+  access credential has to be defined. This step has to be performed by one
+  special participant, let's define this special participant as the
+  \textit{initiator} of the poll. Functionality in order to open and close the
+  voting period is also necessary in this part.
+  \item \textbf{Voting:} One part of the interface has to deal with the
+  functionality of casting a vote. It basically displays the question of the
+  poll and provides functionality to choose one of the available options.
+  \item \textbf{Bulletin board:} One building block of the CGS97 protocol
+  \cite{CGS97} is the so called bulletin board where the whole transcript of
+  messages between the participants is saved. All these information needs to be displayed on the
+  user interface so that the participant has the possibility to verify the
+  validity of the whole e-voting process \myref{sec:bulletinboard}.
+\end{itemize}
+
+\subsection{E-Voting Functionality}
+\label{sec:evotingfunctionality}
+The main challenge of this project is the implementation of the logic of CGS97 
+\cite{CGS97}, namely assemble the cryptographic building blocks to a working
+application and tie it to the user interface and to InstaCircle for communicating to the other
+participants. This part is heavily based on already existing components, namely
+InstaCircle which provides the decentralized communication infrastructure and
+UniCrypt which provides the implementation of the cryptographic building blocks
+which are used in CGS97 \myref{sec:buildingblocks}. The final product needs to
+be able to handle a voting scenario \emph{one-out-of-n}, meaning that a user can
+choose exactly one option out of $n$ options. This allows to set up polls which are more
+complex than a simple \emph{Yes-No} poll. At the other end of the spectrum would
+be the $m-n$ scenario, that means that $m$ options can be picked out of $n$
+options. The $m-n$ scenario is not a must for this project.
+
+\section{Outline}
+Chapter \vref{cha:brw} gives an overview of the work on which this project has
+been based on. The cryptographic building blocks which are used are discussed,
+as well as the e-voting scheme on which this work is based on. We also discuss
+projects which have been implemented as a preparation of this master thesis.
+Chapter \vref{cha:results} explains the resulting implementation in detail.
+
 \chapter{Background and Related Work}
 \label{cha:brw}
 This section gives an overview of the theoretical foundations and some projects
 which have been implemented earlier in order to serve as a foundation for this
-project.
+project. 
 
 \section{E-Voting in 2013}
 \label{sec:evoting}
@@ -241,8 +367,8 @@ $p$ and $q$ be large prime numbers such that $q|p-1$\footnote{In the case of
 $p=2q+1$ where $p$ and $q$ are primes, $p$ is called \emph{save prime} and $q$
 is called \emph{Sophie Germain prime}.}.
 $q$ defines the order of a subgroup $G_q$ of the multiplicative modular group
-$\mathbb{Z}^*_p$. The last parameter needed is a random generator $g$ of the
-group $G_q$. We can now derive the asymmetric key pair containing the secret key
+$\mathbb{Z}^*_p$. $\mathbb{Z}_q$ is an additive modular group of order $q$. The
+last parameter needed is a random generator $g$ of the group $G_q$. We can now derive the asymmetric key pair containing the secret key
 $x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message $m \in G_q$
 can be encrypted by first choosing a random value $r \in_R \mathbb{Z}_q$, and
 then applying the following function:
@@ -383,7 +509,7 @@ fact in possession of the secret. Zero-knowledge proofs offer therefore a
 Knowledge Proofs are used to make sure that none of the participants are
 cheating.
 
-\subsubsection{Non-interactive zero-knowledge proofs.}
+\subsubsection{Non-interactive zero-knowledge proofs}
 Zero-knowledge proofs as described above are \textit{interactive} conversations
 between a prover and a verifier. This also means that the prover proofs only to
 the verifier that she has knowledge of the secret. Of course, any observer could
@@ -397,7 +523,7 @@ conversation between the verifier and the prover. Such proofs are called
 foundation of these NIZKPs were introduced by Amos Fiat and Adi Shamir in 1986
 \cite{FS87}, later known as the \textit{Fiat-Shamir heuristic}. Instead of the
 verifer challenging the prover, the prover challenges himself by using a
-\textit{hashfunction} such as SHA-1. The result of such a non-interactive
+\emph{hashfunction} such as SHA-256. The result of such a non-interactive
 zero-knowledge Proof is similar to a digital signature. Once published,
 everybody can verify the integrity of the data over which the signature has been
 calculated. In a similar way, non-interactive zero-knowledge proofs can be
@@ -415,13 +541,13 @@ performs the following steps:
 \begin{enumerate}
   \item Choose a uniformly random value $\omega \in_R X$
   \item Compute $t=f(\omega)$
-  \item Compute $c=H(b,t)$, where $H$ represents a \textit{hashfunction} such as
-  SHA-1
+  \item Compute $c=H(b||t)$, where $H$ represents a \emph{hashfunction} such
+  as SHA-256
   \item Compute $s=\omega \oplus c \cdot a$
   \item Publish the proof $\pi = (t,s)$
 \end{enumerate}
 
-A verifier can now calculate $c=H(b,t)$ and check whether the following
+A verifier can now calculate $c=H(b||t)$ and check whether the following
 condition holds:
 \begin{equation}
 	f(s) \stackrel{?}{=} t \otimes b^c \notag
@@ -430,7 +556,7 @@ condition holds:
  In the following paragraphs, the different types of proofs are briefly
  explained and we also make the adaption of the schema above.
  
-\subsubsection{Proving the Knowledge of discrete logarithm.}
+\subsubsection{Proving the Knowledge of discrete logarithm}
 This type of Proof was first presented by Claus Peter Schnorr in 1991
 \cite{Schnorr91}. We have seen that the ElGamal encryption function has the
 homomorphic property \myref{sec:homenc}. Therefore, it is possible to prove the
@@ -460,19 +586,19 @@ This translates to the following steps:
 \begin{enumerate}
   \item Choose a uniformly random value $\omega \in_R \mathbb{Z}_q$
   \item Compute $t=g^\omega$
-  \item Compute $c=H(a,t)$, where $H$ represents a \textit{hashfunction} such as
-  SHA-1
+  \item Compute $c=H(a||t)$, where $H$ represents a \emph{hashfunction} such
+  as SHA-256
   \item Compute $s=\omega + c \cdot r$
   \item Publish the proof $\pi = (t,s)$
 \end{enumerate}
 
 A verifier can now verify the knowledge of $r$ and therefore $m$ by calculating
-$c=H(a,t)$ and check whether the following condition holds:
+$c=H(a||t)$ and check whether the following condition holds:
 \begin{equation}
 	g^s \stackrel{?}{=} t \cdot a^c \notag
 \end{equation}
 
-\subsubsection{Proving the Equality of Discrete Logarithms.}
+\subsubsection{Proving the Equality of Discrete Logarithms}
 This type of proof due to David Chaum and Torben Pryds Pedersen \cite{CP93}
 that proofs the relation $log_{g_1} c_1 = log_{g_2} c_2 $ for two values $c_1 =
 g_1^m$ and $c_2 = g_2^m$, where $g_1$ and $g_2$ are generators of the
@@ -491,21 +617,50 @@ This translates to the following steps:
 \begin{enumerate}
   \item Choose a uniformly random value $\omega \in_R \mathbb{Z}_q$
   \item Compute $t=(g_1^\omega, g_2^\omega)$
-  \item Compute $c=H((c_1,c_2),t)$, where $H$ represents a \textit{hashfunction}
-  such as SHA-1
+  \item Compute $c=H(c_1||c_2||t)$, where $H$ represents a
+  \emph{hashfunction} such as SHA-256
   \item Compute $s=\omega + c \cdot m$
   \item Publish the proof $\pi = (t,s)$
 \end{enumerate}
 
 A verifier can now verify the relation by calculating
-$c=H((c_1,c_2),t)$ and check whether the following condition holds:
+$c=H(c_1||c_2||t)$ and check whether the following condition holds:
 \begin{equation}
 	(g_1^s, g_2^s) \stackrel{?}{=} t \cdot (c_1, c_2)^c \notag
 \end{equation}
 
 
-\subsubsection{Proving Validity.}
-This section needs to be written. 
+\subsubsection{Proving Validity}
+Proofs of validity are used to prove that a certain image of a homomorphic one
+way function is in fact the image of a preimage and the preimage is an element
+of a set of possible preimages. The proof however does not reveal which preimage
+it actually is. This type of prove is not a straight forward application of the
+generalzed schema of Maurer \cite{Maurer09}, it is rather an OR-combination
+knowledge proofs. The idea is to \emph{simulate} accepting conversations for the
+preimages which do not correspond to the calculated image and combine those
+simulated proofs with the actual proof from the image we calculated.
+
+Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups, $f:X
+\rightarrow Y$ a one-way homomorphic function and $A=\{a_1, a_2, \ldots,
+a_{n-1}, a_n\}$ a set of $n$ possible preimages. Assuming that we would like to prove
+that the image $b=f(a_i)$ is indeed an image of the preimage $a_i \in A$ we
+proceed as follows:
+\begin{enumerate}
+  \item Calculate $b_i=f(\frac{a_i}{a_j}) \in Y$ for $j=(1,\ldots,n)$
+  \item Choose a uniformly random challenge $(c_1, c_2, \ldots, c_{i-1}, c_{i+1},\ldots,
+  c_{n-1}, c_n) \in_R X$ for each preimage that we need to simulate
+  \item Choose a uniformly random value signature $(s_1, s_2, \ldots, s_{i-1}, s_{i+1},\ldots,
+  s_{n-1}, s_n) \in_R X$ for each preimage that we need to simulate
+  \item Calculate the simulations $t_j=\frac{f(s_j)}{b_j^{c_j}} \in Y$ for
+  $j=(1, 2, \ldots, i-1, i+1, \ldots, n-1, n)$
+  \item Choose a uniformly random value $\omega_i \in_R X$
+  \item Compute $t_i=f(\omega_i) \in Y$
+  \item Compute $c=H(b_1||\ldots||b_n||t_1||\ldots||t_n)$, where $H$ represents
+  a \emph{hashfunction} such as SHA-256
+  \item Compute $c_i=c-\sum_{j=1, j \neq i}^n c_j \in X$
+  \item Compute $s_i=\omega_i \oplus c_i \cdot a_i \in X$
+  \item Publish the proof $\pi = (t_1,\ldots,t_n,c_1,\ldots,c_n,s_1,\ldots,s_n)$
+\end{enumerate}
 
 
 \subsection{Bulletin Board}
@@ -558,43 +713,43 @@ In section \vref{sec:evoting} we discussed some security requirements which
 are desirable for an e-voting system. The following paragraph assess the CGS97
 procotol against these requirements.
 
-\subparagraph{Democracy.} The CGS97 protocol doesn't specify how the access to
+\paragraph{Democracy.} The CGS97 protocol doesn't specify how the access to
 the virtual voting both is controlled. The e-voting system which implements the
 CGS97 protocol needs a sufficiently secure authentication mechanism in order to
 fulfill the democracy requirement. The criteria that only one valid vote can be
 cast is also tied to the authentication mechanism.
 
-\subparagraph{Accuracy.} A zero-knowledge proof is used to prove that all valid
+\paragraph{Accuracy.} A zero-knowledge proof is used to prove that all valid
 vodes are tallied correctly. Since the bulletin board is publicly available,
 this can be verified by anybody.
 
-\subparagraph{Universal verifiability.} The bulletin board which is publicly
+\paragraph{Universal verifiability.} The bulletin board which is publicly
 available (for voters as well as for observers who don't participate at the
 election or poll) assures verifiability for anybody. The bulletin board can also
 be seen as a transcript of the conversation between the actors during a voting
 cycle. 
 
-\subparagraph{Individual verifiability.} The voter can identify her own vote on
+\paragraph{Individual verifiability.} The voter can identify her own vote on
 the bulletin board along with the other votes. By verifying the zero-knowledge
 proofs of the trustees which have been created during the tallying and
 decryption of the result, the voter can be sure that her vote has been included
 in the final result.
 
-\subparagraph{Privacy.} The ballot which has been encrypted and cast by the
+\paragraph{Privacy.} The ballot which has been encrypted and cast by the
 voter always remains encrypted unless a sufficient amount of trustees decide
 conspire and decrypt single votes and reveal information on how the participants
 voted.
 
-\subparagraph{Receipt-freeness.} This property is one of the weak points of the
+\paragraph{Receipt-freeness.} This property is one of the weak points of the
 CGS97 voting scheme. A voter is able to derive a proof which shows how she
 voted.
 
-\subparagraph{Coercion-resistance.} Coercion resistant protocols have mechanisms
+\paragraph{Coercion-resistance.} Coercion resistant protocols have mechanisms
 to allow the voter to lie about the vote when under coercion. The voter pretends
 to vote according to the wish of the coercer while voting in fact according to
 her intention. Unfortunately, CGS97 does not offer this possibility.
 
-\subparagraph{Robustness.} The CGS97 offers robustness by including a
+\paragraph{Robustness.} The CGS97 offers robustness by including a
 threshold secret sharing mechanism that assures a working system as long as a
 certain number of properly behaving trustees remain in the system. The other
 crucial part which requires robustness is the bulletin board, which should be
@@ -613,6 +768,41 @@ regardless of how many trustees the election has or how big the electorate is.
 A similar property is also valid for the trustees, the complexity of verifying
 votes, tallying and decrypting always remains linear which is a huge advantage
 compared to other e-voting schemes.
+
+\subsection{The Protocol}
+The CGS97 voting scheme has a well defined procedure on how an voting should be
+performed. This procedure is explained in this section. Formally we define the set
+of $n$ trustees as $T=\{t_1, \ldots, t_n\}$ and the set of $l$ voters as
+$V=\{v_1, \ldots, v_l\}$. Furthermore, the role of an \emph{administrator} $A$
+needs to be assigned to a participant. The process of these role assigments
+strongly depends on the political structure of the organization which runs
+this election and is considered as an administrative discussed and is hence not
+further discussed at this point. In order to hold an election, all the involved
+parties collaborate as follows:
+
+\paragraph{Initialization Phase.}
+All the parties need to agree on the ElGamal parameters $p, q,$ and $g$. These
+parameters can be used as fixed parameters and do not need to be redefined for
+each election. The details can be found in section \vref{sec:elgamal}. One
+particular participant of the election, let's define it as the
+\emph{administrator}, defines the question and all the possible options of the
+upcoming election.
+
+\paragraph{Key Generation Phase.}
+All the trustees execte a robust threshold key generation protocol as
+discussed in section \vref{sec:thresholdsecretsharing}. The transcript of this
+proctocol is posted on the bulletin board \myref{sec:bulletinboard}. The outcome
+of this key generation protocol is an ElGamal public key $y$ which needs to be
+communicated to all the voters $V$. 
+
+\paragraph{Voting Phase.}
+During a well defined time window, the voters can now create and cast a ballot.
+To do so, the voter encrypts his ballot using the public key $y$ and posts his
+ballot to the bulletin board. Note that we need to use \emph{exponential
+ElGamal} \myref{sec:expelgamal} so that we can \emph{add} the result in an upcoming
+stage.
+Futhermore, the voter needs to post a proof of validity \myref{sec:proofofvalidity} on the
+bulletin board in order to prove that encrypted ballot indeed contains a valid option of the election.
 
 
 \section{UniCrypt}
@@ -656,107 +846,7 @@ the conversation.
 InstaCircle is currently available for Android devices only. Further information
 about InstaCircle can be found in \cite{ritter13a}.
 
-\chapter{Expected Results}
-\label{cha:expectedresults}
-The final result of this project is a fully-fledged decentralized e-voting
-application which runs on Android devices and does not require any equipment
-other than the Android smartphones or tablets. Since a considerable amount of
-people carry such devices, which allows setting up spontaneous polls. The
-implementation can be split up in several packages, which are shortly explained
-in the following section.
 
-\section{Implementation of a Threshold Secret Sharing scheme in UniCrypt}
-\label{sec:thresholdsecretsharing}
-In order to ensure privacy of the ballots, the CGS97 \cite{CGS97} e-voting
-protocol uses a threshold secret sharing mechanism which splits up the secret
-key which will later be used for decrypting the result among an certain number
-of trustees. Since the protocol allows participants to impersonate multiple
-rules, all participants could also be trustees. In the scenario of an ad-hoc
-e-voting setup, it certainly makes sense to assign the role of the trustee to
-all participants. This is because of the following reasons:
-\begin{itemize}
-  \item In many cases, the number of participants in an ad-hoc poll can be so
-  small that it would be hard to find an even smaller subset of participants
-  which will act as trustees.
-  \item In classical large-scale elections or polls, the role of the trustee
-  will probably be assigned to organizations such as political parties,
-  governmental authorities, election observation organizations, etc. In
-  spontaneous ad-hoc polls, the question of who gets to be a trustee is not an
-  obvious one, so it is probably the best choice to assign this role to all
-  participants.
-  \item Assigning the role of a trustee to all participants other than just to a
-  subset of participants means that the handling of the application would be the
-  same for all the participants (except for one special participant who defines
-  the question and the allowed options of the poll). That simplifies the design
-  of the user interface and avoids confusion about who has to do what during the
-  poll.
-\end{itemize}
-
-The CGS97 protocol suggests to use threshold secret sharing scheme due to Torben
-Pryds Pedersen \cite{PED91}, which adds a distributed key generation mechanism to the
-scheme proposed by Adi Shamir \cite{Shamir79}. 
-
-We are considering replacing the secret sharing scheme with a variant that
-requires less steps during the distributed key generation phase. So far this
-scheme was only subject to some discussions and has to be analyzed and specified
-in more detail. This work is also done as a part of this master thesis.
-
-There is currently no threshold secret sharing mechanism implemented in
-UniCrypt. The implementation such a mechanism in InstaCircle is a goal
-for this project.
-
-
-\section{Implementation of a Proof of Validity in UniCrypt}
-\label{sec:proofofvalidity}
-In \vref{sec:zeroknowledgeproofs} we have seen three types of zero-knowledge
-proofs which are required as a building block of CGS97. The InstaCircle library
-currently implements two types, namely the proof of knowledge of discrete
-logarithm and the proof of equality of discrete logarithm. What's currently
-missing is the proof of validity, which allows to create a proof proving that
-a given image of a homomorphic one-way function corresponds to a preimage which
-belongs to a given set of allowed preimages. 
-
-\section{Graphical User Interface}
-\label{sec:gui}
-In many cases, cryptographic functions which are heavily used in the context of
-e-voting have a negative impact on the usability. Many steps such as key
-generation, decryption, etc. have to be done in order to guarantee a poll which
-can't be compromised, and these steps bring a certain complexity into the
-handling of the application. Therefore it is crucial to guide the user
-through the process, and this can only be done by providing them a carefully
-crafted user interface. We can divide the required user interface into the
-following components:
-\begin{itemize}
-  \item \textbf{Administration:} The very first step in a poll would be to
-  define the question of the poll and the allowed options. Also, some sort of
-  access credential has to be defined. This step has to be performed by one
-  special participant, let's define this special participant as the
-  \textit{initiator} of the poll. Functionality in order to open and close the
-  voting period is also necessary in this part.
-  \item \textbf{Voting:} One part of the interface has to deal with the
-  functionality of casting a vote. It basically displays the question of the
-  poll and provides functionality to choose one of the available options.
-  \item \textbf{Bulletin board:} One building block of the CGS97 protocol
-  \cite{CGS97} is the so called bulletin board where the whole transcript of
-  messages between the participants is saved. All these information needs to be displayed on the
-  user interface so that the participant has the possibility to verify the
-  validity of the whole e-voting process \myref{sec:bulletinboard}.
-\end{itemize}
-
-\section{E-Voting Functionality}
-\label{sec:evotingfunctionality}
-The main challenge of this project is the implementation of the logic of CGS97 
-\cite{CGS97}, namely assemble the cryptographic building blocks to a working
-application and tie it to the user interface and to InstaCircle for communicating to the other
-participants. This part is heavily based on already existing components, namely
-InstaCircle which provides the decentralized communication infrastructure and
-UniCrypt which provides the implementation of the cryptographic building blocks
-which are used in CGS97 \myref{sec:buildingblocks}. The final product needs to
-be able to handle a voting scenario \emph{one-out-of-n}, meaning that a user can
-choose exactly one option out of $n$ options. This allows to set up polls which are more
-complex than a simple \emph{Yes-No} poll. At the other end of the spectrum would
-be the $m-n$ scenario, that means that $m$ options can be picked out of $n$
-options. The $m-n$ scenario is not a must for this project.
 
 \chapter{Organization}
 \label{cha:organization}
@@ -892,6 +982,18 @@ throughout the project period.
   \item \textbf{Hand in:} The implementation and the documentation are finished
   and the work is handed over to the advisor.
 \end{itemize}
+
+\chapter{Results}
+\label{cha:results}
+This chapter will be written in a later phase of the project.
+
+\chapter{Discussion}
+\label{cha:discussion}
+This chapter will be written in a later phase of the project.
+
+\chapter{Conclusion}
+\label{cha:conclusion}
+This chapter will be written in a later phase of the project.
 
 \printbibliography
 
