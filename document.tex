@@ -27,6 +27,8 @@ footsepline, oneside, draft=off]{scrreprt}
 \usepackage{amssymb}
 \usepackage{amsmath}
 
+\usepackage{upgreek}
+
 % activate the headings
 \pagestyle{headings}
 \setkomafont{pagehead}{\scshape}
@@ -40,14 +42,13 @@ footsepline, oneside, draft=off]{scrreprt}
 % Intelligent references
 \usepackage{varioref} 
 
+
 % Draft watermark
 \usepackage[firstpage]{draftwatermark}
 \SetWatermarkScale{5}
 \SetWatermarkLightness{0.9}
 
-% definitions of own commands
-%\newcommand{\myref}[1]{(see section \ref{#1} on page \pageref{#1})}
-\newcommand{\myref}[1]{(see section \vref{#1})}
+
 
 % improve word spacing
 \usepackage{microtype}
@@ -63,6 +64,13 @@ footsepline, oneside, draft=off]{scrreprt}
     pdfsubject={Master Thesis},
     pdfkeywords={E-Voting;Android;Master Thesis},
 }
+
+\usepackage{cleveref}
+
+
+% definitions of own commands
+%\newcommand{\myref}[1]{(see section \ref{#1} on page \pageref{#1})}
+\newcommand{\myref}[1]{(see \Vref{#1})}
 
 \begin{document}
 
@@ -81,7 +89,6 @@ Prof. Dr. Rolf Haenni, Bern University of Applied Sciences\\
 Expert:\\
 Stephan Neumann, Technical University of Darmstadt}
 \maketitle
-
 
 
 \begin{abstract}
@@ -107,12 +114,12 @@ use this e-voting system.
 \chapter{Introduction}
 \label{cha:introduction}
 The history of voting on a particular question in order determine the will of a
-group of people goes far back to the ancient greeks, who layed the groundwork of
+group of people goes far back to the ancient Greeks, who laid the groundwork of
 today's democratic societies. Over the years, the purpose of holding elections
 remained the same, while the procedures on how this is done has changed
 significantly. The most ancient way of expressing the will by a hand sign has
-been replaced by modern technologies. The 20th century has seen a lot of changes
-in this area. Paper based voting has been introduced, and with the
+been replaced by modern technologies. The 20th century has
+seen a lot of changes in this area. Paper based voting has been introduced, and with the
 industrialization the first machines appeared which should help counting
 the votes appeared on the surface. In today's internet society where a lot of
 tasks such as banking, shopping, mailing, etc. has been revolutionized by the
@@ -120,15 +127,15 @@ internet, it is not surprising that there are a lot of efforts going on to
 revolutionize the process of voting as well.
 
 One of the research fields of the Bern University of Applied Sciences is the
-area of e-voting. e-voting has become a big field of research in the past couple
+area of e-voting. E-voting has become a big field of research in the past couple
 years. Still, there is no generic approach which meets all the criteria such as
 privacy, transparency, etc. which we want in e-voting. The e-voting research
 group of the Bern University of Applied Sciences \cite{www:EVG} tries to improve
 this situation with the following approaches:
 \begin{itemize}
-  \item Develop new approaches and provide them to the community for review
+  \item Develop new approaches and provide them to the community for review.
   \item Take existing approaches and evaluate them in terms of practicability.
-  These approaches are usually available as scientific papers
+  These approaches are usually available as scientific papers.
 \end{itemize}
 
 The evaluation of these approaches is usually done by implementing them into a
@@ -144,9 +151,10 @@ A possible use case of such a system could be an executive board or any other
 committee that would like to vote on some matters without having their members
 to reveal what exactly they voted for. The architecture of our system requires
 that all the participants are in a confined space and are able to exchange some
-sort of credential using a non-electronic channel.
+sort of credential using a communication channel which relies on physical
+proximity (e.g. Near Field Communication) or visual contact (e.g. QR Codes).
 
-The goal of this project is to build Systems which allows perform elections and
+The goal of this project is to build systems which allows perform elections and
 polls on mobile Android devices under the following terms:
 \begin{itemize}
   \item Voting needs to be done ad-hoc, meaning that no infrastructure other
@@ -166,19 +174,18 @@ previously implemented projects are the following:
 \begin{itemize}
   \item \textbf{UniCrypt:} Unicrypt is a cryptographic library developed by the
   members of the E-Voting Group of the Bern University of Applied Sciences. It
-  provides cryptographic building blocks such as the ElGamal crypto system, Zero
-  Knowledge Proofs, digital Signatures, etc. 
+  provides cryptographic building blocks such as the ElGamal cryptosystem, zero
+  knowledge proofs, digital signatures, etc. 
   \item \textbf{InstaCircle: } InstaCircle provides a decentralized
   communication platform for Android devices. It allows to exchange messages
   using Wi-Fi among a closed user group.
 \end{itemize}
-The projects mentioned above will be discussed in more detail in the section
-``Background and related work'' \myref{cha:brw}.
+The projects mentioned above will be discussed in more detail in the Chapter
+``Background and Related Work'' \myref{cha:brw}.
 
-The time budget of this Master Thesis is one year, although the project will be
-implemented part time. It is equivalent to 27 ECTS credits. Chapter
-\vref{cha:expectedresults} gives a more in-depth specification about the results
-which are expected at the end of this master thesis.
+The time budget of this master thesis is one year, although the project will be
+implemented part time. It is equivalent to 27 ECTS credits.
+\Vref{cha:expectedresults} gives a more in-depth specification about the results which are expected at the end of this master thesis.
 
 \section{Contribution and Goals}
 \label{cha:contributiongoals}
@@ -187,7 +194,7 @@ application which runs on Android devices and does not require any equipment
 other than the Android smartphones or tablets. Since a considerable amount of
 people carry such devices, which allows setting up spontaneous polls. The
 implementation can be split up in several packages, which are shortly explained
-in the following section.
+in the following Section.
 
 \subsection{Implementation of a Threshold Secret Sharing scheme in UniCrypt}
 \label{sec:thresholdsecretsharing}
@@ -232,7 +239,7 @@ for this project.
 
 \subsection{Implementation of a Proof of Validity in UniCrypt}
 \label{sec:proofofvalidity}
-In \vref{sec:zeroknowledgeproofs} we have seen three types of zero-knowledge
+In \Vref{sec:zeroknowledgeproofs} we have seen three types of zero-knowledge
 proofs which are required as a building block of CGS97. The InstaCircle library
 currently implements two types, namely the proof of knowledge of discrete
 logarithm and the proof of equality of discrete logarithm. What's currently
@@ -279,15 +286,15 @@ which are used in CGS97 \myref{sec:buildingblocks}. The final product needs to
 be able to handle a voting scenario \emph{one-out-of-n}, meaning that a user can
 choose exactly one option out of $n$ options. This allows to set up polls which are more
 complex than a simple \emph{Yes-No} poll. At the other end of the spectrum would
-be the $m-n$ scenario, that means that $m$ options can be picked out of $n$
-options. The $m-n$ scenario is not a must for this project.
+be the \emph{m-out-of-n} scenario, that means that $m$ options can be picked out
+of $n$ options. The \emph{m-out-of-n} scenario is not a must for this project.
 
 \section{Outline}
-Chapter \vref{cha:brw} gives an overview of the work on which this project has
+\Vref{cha:brw} gives an overview of the work on which this project has
 been based on. The cryptographic building blocks which are used are discussed,
 as well as the e-voting scheme on which this work is based on. We also discuss
 projects which have been implemented as a preparation of this master thesis.
-Chapter \vref{cha:results} explains the resulting implementation in detail.
+\Vref{cha:results} explains the resulting implementation in detail.
 
 \chapter{Background and Related Work}
 \label{cha:brw}
@@ -368,10 +375,10 @@ $p=2q+1$ where $p$ and $q$ are primes, $p$ is called \emph{save prime} and $q$
 is called \emph{Sophie Germain prime}.}.
 $q$ defines the order of a subgroup $G_q$ of the multiplicative modular group
 $\mathbb{Z}^*_p$. $\mathbb{Z}_q$ is an additive modular group of order $q$. The
-last parameter needed is a random generator $g$ of the group $G_q$. We can now derive the asymmetric key pair containing the secret key
-$x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message $m \in G_q$
-can be encrypted by first choosing a random value $r \in_R \mathbb{Z}_q$, and
-then applying the following function:
+last parameter needed is a random generator $g$ of the group $G_q$. Futher
+information concerning group theory can be found in Chapter 2 of the Handbook of
+Applied Cryptography by Alfred Menezes et. al. \cite{book:hac}. We can now
+derive the asymmetric key pair containing the secret key $x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message $m \in G_q$ can be encrypted by first choosing a random value $r \in_R \mathbb{Z}_q$, and then applying the following function:
 \begin{equation}
 Enc_y : G_q \times \mathbb{Z}_q \rightarrow G_q \times G_q,
 (a, b)=Enc_y(m, r)=(g^r, y^r \cdot m) \notag
@@ -410,7 +417,7 @@ possible plaintexts.
 Exponential ElGamal has another property which is important in the context of
 e-voting: It transforms ElGamal from a multiplicative homomorphic function into
 an additive homomorphic function. Homomorphic encrpytion is discussed in detail in
-section \ref{sec:homenc}.
+Section \ref{sec:homenc}.
 
 \subsection{Homomorphic encryption}
 \label{sec:homenc}
@@ -441,7 +448,7 @@ x^a \cdot x^b = x^{a+b} \notag
 \end{equation}
 
 This is exactly the property that we obtain by using exponential ElGamal as
-discussed in section \vref{sec:expelgamal}. The product of all ciphertext
+discussed in \Vref{sec:expelgamal}. The product of all ciphertext
 values results in the encrypted sum of the cast ballots, encrypted using the
 exponential ElGamal encryption function $\hat{Enc_y}:\mathbb{Z}_q \times
 \mathbb{Z}_q \rightarrow G_q \times G_q$:
@@ -556,7 +563,7 @@ condition holds:
  In the following paragraphs, the different types of proofs are briefly
  explained and we also make the adaption of the schema above.
  
-\subsubsection{Proving the Knowledge of discrete logarithm}
+\subsubsection{Proving the Knowledge of Discrete Logarithm}
 This type of Proof was first presented by Claus Peter Schnorr in 1991
 \cite{Schnorr91}. We have seen that the ElGamal encryption function has the
 homomorphic property \myref{sec:homenc}. Therefore, it is possible to prove the
@@ -681,7 +688,7 @@ in \cite{HL09}. Since the bulletin board is a good target for a
 denial-of-service attack, it is a good idea to replicate the content of the bulletin board to multiple systems.
 
 
-\section{The voting scheme CGS97}
+\section{The Voting Scheme CGS97}
 \label{sec:CGS97}
 In 1997, Ronald Cramer, Rosario Gennaro and Berry Schoenmakers proposed a scheme
 \cite{CGS97} which allows to do e-voting in a secure and verifiable manner. The participants of
@@ -707,11 +714,11 @@ this project, the voter, trustee and observer roles can be combined and all
 participant impersonate these roles. The administrator role needs to be assigned
 to one particular participant.
 
-\subsection{Security properties}
+\subsection{Security Properties}
 \label{sec:secproperties}
-In section \vref{sec:evoting} we discussed some security requirements which
-are desirable for an e-voting system. The following paragraph assess the CGS97
-procotol against these requirements.
+In \Vref{sec:evoting} we discussed some security requirements which
+are desirable for an e-voting system. The following paragraph assesses the CGS97
+protocol against these requirements.
 
 \paragraph{Democracy.} The CGS97 protocol doesn't specify how the access to
 the virtual voting both is controlled. The e-voting system which implements the
@@ -720,7 +727,7 @@ fulfill the democracy requirement. The criteria that only one valid vote can be
 cast is also tied to the authentication mechanism.
 
 \paragraph{Accuracy.} A zero-knowledge proof is used to prove that all valid
-vodes are tallied correctly. Since the bulletin board is publicly available,
+ballots are tallied correctly. Since the bulletin board is publicly available,
 this can be verified by anybody.
 
 \paragraph{Universal verifiability.} The bulletin board which is publicly
@@ -756,7 +763,7 @@ crucial part which requires robustness is the bulletin board, which should be
 replicated for achieving robustness. The CGS97 scheme doesn't specify in detail
 how this should be achieved. A possible approach can be found in \cite{HL09}.
 
-\subsection{Usability properties}
+\subsection{Usability Properties}
 \label{sec:usabilityproperties}
 It is a generally know fact that high security measure have a negative impact on
 the usability of a certain application. In e-voting, usability is a crucial
@@ -772,28 +779,30 @@ compared to other e-voting schemes.
 \subsection{The Protocol}
 The CGS97 voting scheme has a well defined procedure on how an voting should be
 performed. This procedure is explained in this section. Formally we define the set
-of $n$ trustees as $T=\{t_1, \ldots, t_n\}$ and the set of $l$ voters as
-$V=\{v_1, \ldots, v_l\}$. Furthermore, the role of an \emph{administrator} $A$
-needs to be assigned to a participant. The process of these role assigments
+of $n$ trustees as $T=\{\tau_1, \ldots, \tau_n\}$ and the set of $l$
+voters as $V=\{v_1, \ldots, v_l\}$. Furthermore, the role of an
+\emph{administrator} $A$ needs to be assigned to a participant. The process of these role assignments
 strongly depends on the political structure of the organization which runs
-this election and is considered as an administrative discussed and is hence not
+this election and is considered as an administrative task and is hence not
 further discussed at this point. In order to hold an election, all the involved
 parties collaborate as follows:
 
 \paragraph{Initialization Phase.}
 All the parties need to agree on the ElGamal parameters $p, q,$ and $g$. These
 parameters can be used as fixed parameters and do not need to be redefined for
-each election. The details can be found in section \vref{sec:elgamal}. One
+each election. The details can be found in \Vref{sec:elgamal}. One
 particular participant of the election, let's define it as the
 \emph{administrator}, defines the question and all the possible options of the
 upcoming election.
 
 \paragraph{Key Generation Phase.}
-All the trustees execte a robust threshold key generation protocol as
-discussed in section \vref{sec:thresholdsecretsharing}. The transcript of this
-proctocol is posted on the bulletin board \myref{sec:bulletinboard}. The outcome
-of this key generation protocol is an ElGamal public key $y$ which needs to be
-communicated to all the voters $V$. 
+All the trustees execute a robust threshold key generation protocol as discussed
+in \Vref{sec:thresholdsecretsharing}. At this stage, a \emph{threshold}
+$t\leq|T|$ must be defined. This parameter defines the minimal number of
+trustees which are required to decrypt the final result in the tallying phase.
+The transcript of the key generation protocol is posted on the bulletin board
+\myref{sec:bulletinboard}. The outcome of this key generation protocol is an
+ElGamal public key $y$ which needs to be communicated to all the voters $V$.
 
 \paragraph{Voting Phase.}
 During a well defined time window, the voters can now create and cast a ballot.
@@ -804,6 +813,20 @@ stage.
 Futhermore, the voter needs to post a proof of validity \myref{sec:proofofvalidity} on the
 bulletin board in order to prove that encrypted ballot indeed contains a valid option of the election.
 
+\paragraph{Tallying Phase.}
+The tallying phase can start as soon as the voting period has come to an end. In
+order to tally an election, the ciphertexts of the valid ballots are multiplied
+and posted to the bulletin board. Since all the encrypted ballots are publicly
+available, this multiplication step can be verified easily by doing the
+multiplication individually and compare the result to the values on the
+bulletin board. The product of all the valid ballots now represents the
+\emph{encrypted result} of the election, which has to be decrypted by the
+trustees. In order to do so, the trustees execute a threshold decryption
+protocol in order to reveal the result of the election. Note that we only need a
+subset $\Lambda \subseteq T$ with minimal order $t$ in order to execute the
+protocol properly. The transcript of the protocol and the result are posted on
+the bulletin board. Furthermore, each participating trustee has to provide a
+proof that he performed his decryption step in a correct fashion.
 
 \section{UniCrypt}
 \label{sec:unicrypt}
