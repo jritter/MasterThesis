@@ -542,22 +542,22 @@ recipe how such a NIZKP is assembled:
 
 Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups and
 $f:X \rightarrow Y$ be a one-way homomorphic function. The prover wants to prove
-that she knows the preimage $a \in X$ of the publicly known value $b \in Y$,
-where $b=f(a)$. In order to prove the knowledge of the value $a$, the prover
-performs the following steps:
+that she knows the preimage $\alpha \in X$ of the publicly known value $\beta \in
+Y$, where $\beta=f(\alpha)$. In order to prove the knowledge of the value
+$\alpha$, the prover performs the following steps:
 \begin{enumerate}
   \item Choose a uniformly random value $\omega \in_R X$
   \item Compute $t=f(\omega)$
-  \item Compute $c=H(b||t)$, where $H$ represents a \emph{hashfunction} such
+  \item Compute $c=H(\beta||t)$, where $H$ represents a \emph{hashfunction} such
   as SHA-256
-  \item Compute $s=\omega \oplus c \cdot a$
+  \item Compute $s=\omega \oplus c \cdot \alpha$
   \item Publish the proof $\pi = (t,s)$
 \end{enumerate}
 
-A verifier can now calculate $c=H(b||t)$ and check whether the following
+A verifier can now calculate $c=H(\beta||t)$ and check whether the following
 condition holds:
 \begin{equation}
-	f(s) \stackrel{?}{=} t \otimes b^c \notag
+	f(s) \stackrel{?}{=} t \otimes \beta^c \notag
 \end{equation}
 
  In the following paragraphs, the different types of proofs are briefly
@@ -582,8 +582,8 @@ the generic scheme above:
 \begin{align}
   X &= \mathbb{Z}_q \notag \\
   Y &= G_q \notag \\
-  a &=m \notag \\
-  b &=r \notag \\
+  \alpha &=r \notag \\
+  \beta &=r \notag \\
   f(x) &= g^x \notag
 \end{align} 
 
@@ -614,8 +614,8 @@ substitute the variables in the scheme above:
 \begin{align}
   X &= \mathbb{Z}_q \notag \\
   Y &= G_q \times G_q \notag \\
-  a &=m \notag \\
-  b &=(c_1, c_2) \notag \\
+  \alpha &=m \notag \\
+  \beta &=(c_1, c_2) \notag \\
   f(x) &= (g_1^x, g_2^x) \notag
 \end{align} 
 
@@ -645,30 +645,70 @@ it actually is. This type of prove is not a straight forward application of the
 generalzed schema of Maurer \cite{Maurer09}, it is rather an OR-combination
 knowledge proofs. The idea is to \emph{simulate} accepting conversations for the
 preimages which do not correspond to the calculated image and combine those
-simulated proofs with the actual proof from the image we calculated.
+simulated proofs with the actual proof from the image we calculated. 
 
-Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups, $f:X
-\rightarrow Y$ a one-way homomorphic function and $A=\{a_1, a_2, \ldots,
-a_{n-1}, a_n\}$ a set of $n$ possible preimages. Assuming that we would like to prove
-that the image $b=f(a_i)$ is indeed an image of the preimage $a_i \in A$ we
-proceed as follows:
+Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups, $f:X \rightarrow
+Y$ be a one-way homomorphic function and $A=\{\alpha_1,\ldots,\alpha_n\} \subseteq X$
+be a set of $n$ possible preimages. The prover wants to prove that the publicly known
+image $\beta=f(\alpha_i) \in Y$ belongs to a preimage $\alpha_i$ without
+revealing which preimage it actually is. 
+
+\paragraph{Simulation.} In this phase, we are simulating an accepting
+conversation for all the possible preimages without the the preimage for which
+the proof is being created. This can be done by executing the following step:
+
 \begin{enumerate}
-  \item Calculate $b_i=f(\frac{a_i}{a_j}) \in Y$ for $j=(1,\ldots,n)$
-  \item Choose a uniformly random challenge $(c_1, c_2, \ldots, c_{i-1}, c_{i+1},\ldots,
-  c_{n-1}, c_n) \in_R X$ for each preimage that we need to simulate
-  \item Choose a uniformly random value signature $(s_1, s_2, \ldots, s_{i-1}, s_{i+1},\ldots,
-  s_{n-1}, s_n) \in_R X$ for each preimage that we need to simulate
-  \item Calculate the simulations $t_j=\frac{f(s_j)}{b_j^{c_j}} \in Y$ for
-  $j=(1, 2, \ldots, i-1, i+1, \ldots, n-1, n)$
-  \item Choose a uniformly random value $\omega_i \in_R X$
+  \item Compute $\beta_j = f(\alpha_i \otimes \alpha_j^{-1})$ for $j=(1, \ldots,
+  i-1, i+1, \ldots, n)$
+\end{enumerate}
+ 
+\paragraph{Proof Generation.} Now the proof can be created using the
+values $b_j$ created in the simulation phase, the chosen preimage $a_i$ and the
+index $i$.
+ 
+\begin{enumerate}  
+  \item Select challenges $(c_1, \ldots, c_{i-1}, c_{i+1}, \ldots, c_n) \in_R
+  X^{n-1}$
+  \item Select responses $(s_1, \ldots, s_{i-1}, s_{i+1}, \ldots, s_n) \in_R
+  X^{n-1}$
+  \item Compute commitments $t_j=f(s_j) \cdot \beta_j^{-c_j} \in Y$ for
+  $j=(1, \ldots, i-1, i+1, \ldots, n)$
+  \item Select $\omega_i \in_R X$
   \item Compute $t_i=f(\omega_i) \in Y$
-  \item Compute $c=H(b_1||\ldots||b_n||t_1||\ldots||t_n)$, where $H$ represents
-  a \emph{hashfunction} such as SHA-256
-  \item Compute $c_i=c-\sum_{j=1, j \neq i}^n c_j \in X$
-  \item Compute $s_i=\omega_i \oplus c_i \cdot a_i \in X$
+  \item Compute challenge $c\in X$ with hashfunction\footnote{Usually a
+  hashfunction such as SHA-256 is used, which does not necessary produce an
+  element of $X$. Some sort of mapping is required.} $H$:
+  $c=H(\beta_1||\ldots||\beta_n||t_1||\ldots||t_n)$
+  \item Compute $c_i=c\oplus(\sum_{j=1, j \neq i}^n c_j)^{-1} \in X$
+  \item Compute $s_i=\omega_i \oplus c_i \cdot \alpha \in X$
   \item Publish the proof $\pi = (t_1,\ldots,t_n,c_1,\ldots,c_n,s_1,\ldots,s_n)$
 \end{enumerate}
 
+\paragraph{Verification.} A verifier can verify a published proof $\pi$ by
+verifying that the following conditions hold:
+\begin{align}
+	f(s_j) &\stackrel{?}{=} t_j \cdot \beta_j^{c_j} \text{ for } j=(1...n)
+	\notag \\
+	 \sum_{j=1,}^n c_j &\stackrel{?}{=}
+	 H(\beta_1||\ldots||\beta_n||t_1||\ldots||t_n)
+	 \notag
+\end{align}
+The formal description above depicts how a general OR-proof is assembled. The
+cryptographic building block we need for our implementation is a proof of
+validity, which proves that the plaintext $m$ of a certain ElGamal ciphertext
+$(a, b)$ is an element of a set of possible plaintexts $M=\{m_1, \ldots, m_n\}$. This
+scenario can be seen as an instance of an OR-proof. We can show this relation by
+substituting the variables in the generalized schema above as follows:
+\begin{align}
+  X &= \mathbb{Z}_q \notag \\
+  Y &= G_q \times G_q \notag \\
+  \alpha &=r \notag \\
+  \beta &=(a, b) \notag \\
+  f(x) &= (g^x, y^x) \notag
+\end{align} 
+Note that as a function $f(x)$, we use the \emph{identity function} of ElGamal,
+which encrypts the identity element of the domain (in the case of the
+multiplicative cyclic group $G_q$, the identity element is $1$).
 
 \subsection{Bulletin Board}
 \label{sec:bulletinboard}
