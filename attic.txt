@@ -1,0 +1,111 @@
+The goal of this project is to build systems which allows perform elections and
+polls on mobile Android devices under the following terms:
+\begin{itemize}
+  \item Voting needs to be done ad-hoc, meaning that no infrastructure other
+  than the participants' mobile devices are required to perform an election or
+  poll.
+  \item The voting scheme is based on the CGS97 approach proposed by Cramer et
+  al.~\cite{CGS97}.
+  \item It must be possible to perform elections or polls with the type \emph{one-out-of-n},
+  meaning the voter can choose exactly one option out of $n$ possible options.
+  It will not be possible to perform elections where multiple candidates can be
+  elected for example.
+\end{itemize}
+
+
+The time budget of this master thesis is one year, although the project will be
+implemented part time. It is equivalent to 27 ECTS credits.
+\Vref{cha:expectedresults} gives a more in-depth specification about the results which are expected at the end of this master thesis.
+
+
+\subsection{Implementation of a Threshold Secret Sharing scheme in UniCrypt}
+\label{sec:thresholdsecretsharing}
+In order to ensure privacy of the ballots, the CGS97 \cite{CGS97} e-voting
+protocol uses a threshold secret sharing mechanism which splits up the secret
+key which will later be used for decrypting the result among an certain number
+of trustees. Since the protocol allows participants to impersonate multiple
+rules, all participants could also be trustees. In the scenario of an ad-hoc
+e-voting setup, it certainly makes sense to assign the role of the trustee to
+all participants. This is because of the following reasons:
+\begin{itemize}
+  \item In many cases, the number of participants in an ad-hoc poll can be so
+  small that it would be hard to find an even smaller subset of participants
+  which will act as trustees.
+  \item In classical large-scale elections or polls, the role of the trustee
+  will probably be assigned to organizations such as political parties,
+  governmental authorities, election observation organizations, etc. In
+  spontaneous ad-hoc polls, the question of who gets to be a trustee is not an
+  obvious one, so it is probably the best choice to assign this role to all
+  participants.
+  \item Assigning the role of a trustee to all participants other than just to a
+  subset of participants means that the handling of the application would be the
+  same for all the participants (except for one special participant who defines
+  the question and the allowed options of the poll). That simplifies the design
+  of the user interface and avoids confusion about who has to do what during the
+  poll.
+\end{itemize}
+
+The CGS97 protocol suggests to use threshold secret sharing scheme due to Torben
+Pryds Pedersen \cite{PED91}, which adds a distributed key generation mechanism to the
+scheme proposed by Adi Shamir \cite{Shamir79}. 
+
+We are considering replacing the secret sharing scheme with a variant that
+requires less steps during the distributed key generation phase. So far this
+scheme was only subject to some discussions and has to be analyzed and specified
+in more detail. This work is also done as a part of this master thesis.
+
+There is currently no threshold secret sharing mechanism implemented in
+UniCrypt. The implementation such a mechanism in InstaCircle is a goal
+for this project.
+
+
+\subsection{Implementation of a Proof of Validity in UniCrypt}
+\label{sec:proofofvalidity}
+In \Vref{sec:zeroknowledgeproofs} we have seen three types of zero-knowledge
+proofs which are required as a building block of CGS97. The InstaCircle library
+currently implements two types, namely the proof of knowledge of discrete
+logarithm and the proof of equality of discrete logarithm. What's currently
+missing is the proof of validity, which allows to create a proof proving that
+a given image of a homomorphic one-way function corresponds to a preimage which
+belongs to a given set of allowed preimages. 
+
+\paragraph{Graphical User Interface.}
+In many cases, cryptographic functions which are heavily used in the context of
+e-voting have a negative impact on the usability. Many steps such as key
+generation, decryption, etc. have to be done in order to guarantee a poll which
+can't be compromised, and these steps bring a certain complexity into the
+handling of the application. Therefore it is crucial to guide the user
+through the process, and this can only be done by providing them a carefully
+crafted user interface. We can divide the required user interface into the
+following components:
+\begin{itemize}
+  \item \textbf{Administration:} The very first step in a poll would be to
+  define the question of the poll and the allowed options. Also, some sort of
+  access credential has to be defined. This step has to be performed by one
+  special participant, let's define this special participant as the
+  \textit{initiator} of the poll. Functionality in order to open and close the
+  voting period is also necessary in this part.
+  \item \textbf{Voting:} One part of the interface has to deal with the
+  functionality of casting a vote. It basically displays the question of the
+  poll and provides functionality to choose one of the available options.
+  \item \textbf{Bulletin board:} One building block of the CGS97 protocol
+  \cite{CGS97} is the so called bulletin board where the whole transcript of
+  messages between the participants is saved. All these information needs to be displayed on the
+  user interface so that the participant has the possibility to verify the
+  validity of the whole e-voting process \myref{sec:bulletinboard}.
+\end{itemize}
+
+\subsection{E-Voting Functionality}
+\label{sec:evotingfunctionality}
+The main challenge of this project is the implementation of the logic of CGS97 
+\cite{CGS97}, namely assemble the cryptographic building blocks to a working
+application and tie it to the user interface and to InstaCircle for communicating to the other
+participants. This part is heavily based on already existing components, namely
+InstaCircle which provides the decentralized communication infrastructure and
+UniCrypt which provides the implementation of the cryptographic building blocks
+which are used in CGS97 \myref{sec:buildingblocks}. The final product needs to
+be able to handle a voting scenario \emph{one-out-of-n}, meaning that a user can
+choose exactly one option out of $n$ options. This allows to set up polls which are more
+complex than a simple \emph{Yes-No} poll. At the other end of the spectrum would
+be the \emph{m-out-of-n} scenario, that means that $m$ options can be picked out
+of $n$ options. The \emph{m-out-of-n} scenario is not a must for this project.
