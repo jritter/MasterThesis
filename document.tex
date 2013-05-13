@@ -143,7 +143,7 @@ use this e-voting system.
 The history of voting on a particular question in order determine the will of a
 group of people goes far back to the ancient Greeks, who laid the groundwork of
 today's democratic societies. Over the years, the purpose of holding elections
-remained the same, while the procedures on how this is done has changed
+remained the same, while the procedures on how voting is done has changed
 significantly. The most ancient way of expressing the will by a hand sign has
 been replaced by modern technologies. The 20th century has seen a lot of changes
 in this area. Paper based voting has been introduced, and with the
@@ -166,14 +166,14 @@ University of Applied Sciences \cite{www:EVG} tries to improve this situation wi
 \end{itemize}
 
 The evaluation of these approaches is usually done by implementing them into a
-prototype level application to show that the approach actually works and
-provides a certain usability.
-The E-Voting Group would like to gain some experience on how decentralized e-voting
-systems could be implemented and how they behave in practice. There are some
-approaches which focus explicitly on decentralized e-voting systems, such as the
-proposal of Khader et al. \cite{HKRS12}. In this project however, we would like
-to adapt the voting scheme proposed by Cramer et. al. \cite{CGS97} in a way that
-it can be used as a decentralized e-voting system.
+prototype level application. This implementation is used to show that the
+approach actually works and provides a certain usability. The E-Voting Group
+would like to gain some experience on how decentralized e-voting systems could
+be implemented and how they behave in practice. There are some approaches which
+focus explicitly on decentralized e-voting systems, such as the proposal of
+Dalia Khader et al. \cite{HKRS12}. In this project however, we would like to adapt the
+voting scheme proposed by Cramer et. al. \cite{CGS97} in a way that it can be
+used as a decentralized e-voting system.
 
 A possible use case of such a system could be an executive board or any other
 committee that would like to vote on some matters without having their members
@@ -297,10 +297,12 @@ these tasks in a very comfortable fashion at home in front of the computer. Not
 surprisingly, people have thought about replace the way to the voting station
 with an internet based solution. This so called e-voting has appeared on the
 surface soon after the quick rise of the internet, but so far the big
-breakthrough has not happened, which might be surprising at the first sight.
+breakthrough has not happened, which might be surprising at first sight.
 Instead, the area of e-voting has become a big research area, tightly related to
-the area of cryptography. Let's have a closer look at the reasons why e-voting
-couldn't find it's way to success so far. For a better understanding, we should
+the area of cryptography.
+
+Let us have a closer look at the reasons why e-voting
+could not find it's way to success so far. For a better understanding, we should
 identify the properties that we expect from an e-voting system. Over the time,
 some properties and their definitions have emerged.
 
@@ -337,8 +339,20 @@ to decide the outcome of the election.
 
 \section{Cryptographic Building Blocks}
 \label{sec:buildingblocks}
-The CGS97 voting scheme is assembled from some well known cryptographic building
-blocks which are shortly explained in this section.
+The voting scheme that will be used in our system is assembled from some well
+known cryptographic building blocks which are briefly explained in this section.
+All these cryptographic building blocks belong to the area of \emph{asymmetric}
+cryptography, which is based usually based on key pair, containing a
+\emph{public key} and a \emph{secret key}.
+
+\subsection{Discrete Logarithm Problem}
+Asymmetric cryptography relies on a mathematical problem, which is nowadays
+considered to be hard to solve, meaning that so far there is no known algorithm
+to find a solution for a given problem efficiently. An example of such a problem
+is the prime factorization of large numbers on which the security of the famous
+RSA cryptosystem \cite{RSA78} is based on. The other hard problem of this kind
+is know as the \emph{Discrete Logarithm Problem}. The security of most of the
+building blocks we are using in this project is based on this problem. 
 
 \subsection{ElGamal Cryptosystem}
 \label{sec:elgamal}
@@ -352,19 +366,22 @@ exponentiation in modular groups a one way function. A major advantage of the
 ElGamal cryptosystem is the fact, that the encryption function includes a random
 value. Especially in the context of e-voting this is a crucial property, because
 when encrypting a value (for example the value $1$ which means \textit{Yes}),
-the resulting ciphertext is always different. That's why ElGamal is also called
+the resulting ciphertext is always different. That is why ElGamal is also called
 a \textit{randomized} cryptosystem.
 
 In order to define an ElGamal cryptosystem, three parameters are required. Let
-$p$ and $q$ be large prime numbers such that $q|p-1$\footnote{In the case of
+$p$ and $q$ be large prime numbers such that $q|p-1$.\footnote{In the case of
 $p=2q+1$ where $p$ and $q$ are primes, $p$ is called \emph{save prime} and $q$
-is called \emph{Sophie Germain prime}.}.
-$q$ defines the order of a subgroup $G_q$ of the multiplicative modular group
-$\mathbb{Z}^*_p$. $\mathbb{Z}_q$ is an additive modular group of order $q$. The
-last parameter needed is a random generator $g$ of the group $G_q$. Futher
-information concerning group theory can be found in Chapter 2 of the Handbook of
-Applied Cryptography by Alfred Menezes et. al. \cite{book:hac}. We can now
-derive the asymmetric key pair containing the secret key $x \in_R \mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message $m \in G_q$ can be encrypted by first choosing a random value $r \in_R \mathbb{Z}_q$, and then applying the following function:
+is called \emph{Sophie Germain prime}.}
+The prime number $q$ defines the order of a subgroup $G_q$ of the multiplicative
+modular group $\mathbb{Z}^*_p$. $\mathbb{Z}_q$ is an additive modular group of order $q$. The
+last parameter needed is an arbitrarily chosen generator $g$ of the group $G_q$.
+Further information concerning group theory can be found in Chapter 2 of the
+Handbook of Applied Cryptography by Alfred Menezes et. al. \cite{book:hac}. We
+can now derive the asymmetric key pair containing the secret key $x \in_R
+\mathbb{Z}_q$ and the public key $y=g^x \in G_q$. A message $m \in G_q$ can be
+encrypted by first choosing a random value $r \in_R \mathbb{Z}_q$, and then
+applying the following function:
 \begin{equation}
 Enc_y : G_q \times \mathbb{Z}_q \rightarrow G_q \times G_q,
 (a, b)=Enc_y(m, r)=(g^r, y^r \cdot m) \notag
@@ -380,15 +397,14 @@ m=Dec_x(a, b)=a^{-x} \cdot b \notag
 \label{sec:expelgamal}
 In the area of e-voting, we often find a slight variation of ElGamal which is
 called \emph{exponential ElGamal}. In exponential ElGamal, we encode a message
-$\hat{m}$ by using a generator $\hat{g}$ of $G_q$ and raise it to
-the power of the message $\hat{m} \in \mathbb{Z}_q$. In many cases, the
-ElGamal parameter $g$ is used as $\hat{g}$, which makes it unnecessary to
-define an fourth predefined parameter. Note that the message $\hat{m}$ is an
-element of the additive group $\mathbb{Z}_q$ as opposed to the classical
-ElGamal where $m$ is an element of the multiplicative group $G_q$. Note that
-elements of the group $\mathbb{Z}_q$ are much easier to find as all integers
-between $0$ and $p-1$ belong to this group. The modified encryption function of
-exponential ElGamal looks as follows:
+$\hat{m}$ by using a generator $\hat{g}$ of $G_q$ and raise it to the power of
+the message $\hat{m} \in \mathbb{Z}_q$. In many cases, the ElGamal parameter $g$
+is used as $\hat{g}$, which makes it unnecessary to define a fourth predefined
+parameter. Note that the message $\hat{m}$ is an element of the additive group
+$\mathbb{Z}_q$ as opposed to the classical ElGamal where $m$ is an element of
+the multiplicative group $G_q$. Elements of the group $\mathbb{Z}_q$ are much
+easier to find as all integers between $0$ and $q-1$ belong to this group. The
+modified encryption function of exponential ElGamal looks as follows:
 \begin{equation}
 \hat{Enc_y} : \mathbb{Z}_q \times \mathbb{Z}_q \rightarrow G_q \times G_q,
 (a, b)=\hat{Enc_y}(\hat{m}, r)=(g^r, y^r \cdot \hat{g}^{\hat{m}}) \notag
@@ -401,9 +417,9 @@ that a ballot either contains 0 for \emph{no} or 1 for \emph{yes}), we can just 
 possible plaintexts. 
 
 Exponential ElGamal has another property which is important in the context of
-e-voting: It transforms ElGamal from a multiplicative homomorphic function into
-an additive homomorphic function. Homomorphic encrpytion is discussed in detail in
-Section \ref{sec:homenc}.
+e-voting: It transforms the right part of the ElGamal encryption function from a
+multiplicative homomorph function into an additive homomorph function.
+Homomorphic encrpytion is discussed in detail in \Cref{sec:homenc}.
 
 \subsection{Homomorphic encryption}
 \label{sec:homenc}
@@ -643,18 +659,18 @@ be a set of $n$ possible preimages. The prover wants to prove that the publicly 
 image $\beta=f(\alpha_i) \in Y$ belongs to a preimage $\alpha_i$ without
 revealing which preimage it actually is. 
 
-\paragraph{Simulation.} In this phase, we are simulating an accepting
-conversation for all the possible preimages without the the preimage for which
-the proof is being created. This can be done by executing the following step:
+\paragraph{Value Precomputation.} In this phase, we need to compute a specially
+crafted image for all the possible preimages without the the
+preimage for which the proof is being created. This can be done by
+executing the following step:
 
 \begin{enumerate}
-  \item Compute $\beta_j = f(\alpha_i \otimes \alpha_j^{-1})$ for $j=(1, \ldots,
-  i-1, i+1, \ldots, n)$
+  \item Compute $\beta_j = \beta \cdot \alpha_j^{-1}$ for $j=(1,...,n)$.
 \end{enumerate}
  
 \paragraph{Proof Generation.} Now the proof can be created using the
-values $b_j$ created in the simulation phase, the chosen preimage $a_i$ and the
-index $i$.
+values $b_j$ created in the precomputation phase, the chosen preimage $a_i$ and
+the index $i$.
  
 \begin{enumerate}  
   \item Select challenges $(c_1, \ldots, c_{i-1}, c_{i+1}, \ldots, c_n) \in_R
@@ -674,8 +690,9 @@ index $i$.
   \item Publish the proof $\pi = (t_1,\ldots,t_n,c_1,\ldots,c_n,s_1,\ldots,s_n)$
 \end{enumerate}
 
-\paragraph{Verification.} A verifier can verify a published proof $\pi$ by
-verifying that the following conditions hold:
+\paragraph{Verification.} The verification step needs the same precomputation
+for all the values $\beta_j$. The proof itself can be verified checking that
+the following conditions hold:
 \begin{align}
 	f(s_j) &\stackrel{?}{=} t_j \cdot \beta_j^{c_j} \text{ for } j=(1...n)
 	\notag \\
@@ -747,12 +764,12 @@ to one particular participant.
 \subsection{Security Properties}
 \label{sec:secproperties}
 In \Vref{sec:evoting} we discussed some security requirements which
-are desirable for an e-voting system. The following paragraph assesses the CGS97
+are desirable for e-voting systems. The following paragraph assesses the CGS97
 protocol against these requirements.
 
 \paragraph{Democracy.} The CGS97 protocol doesn't specify how the access to
-the virtual voting both is controlled. The e-voting system which implements the
-CGS97 protocol needs a sufficiently secure authentication mechanism in order to
+the virtual voting booth is controlled. The e-voting system which implements
+the CGS97 protocol needs a sufficiently secure authentication mechanism in order to
 fulfill the democracy requirement. The criteria that only one valid vote can be
 cast is also tied to the authentication mechanism.
 
@@ -796,8 +813,8 @@ how this should be achieved. A possible approach can be found in \cite{HL09}.
 \subsection{Usability Properties}
 \label{sec:usabilityproperties}
 It is a generally know fact that high security measure have a negative impact on
-the usability of a certain application. In e-voting, usability is a crucial
-factor since the potential average voter is not expected to have a high
+the usability of a certain application. In the area of e-voting, usability is a
+crucial factor since the potential average voter is not expected to have a high
 expertise in cryptography and information security. In the CGS97 scheme, casting
 a vote is surprisingly easy and also the computation costs are fairly low,
 regardless of how many trustees the election has or how big the electorate is.
@@ -819,20 +836,20 @@ parties collaborate as follows:
 
 \paragraph{Initialization Phase.}
 All the parties need to agree on the ElGamal parameters $p, q,$ and $g$. These
-parameters can be used as fixed parameters and do not need to be redefined for
-each election. The details can be found in \Vref{sec:elgamal}. One
-particular participant of the election, let's define it as the
-\emph{administrator}, defines the question and all the possible options of the
-upcoming election.
+parameters can be seen as fixed parameters and do not need to be redefined for
+each election. Further details regarding these parameters can be found in
+\Vref{sec:elgamal}. Futhermore, the administrator $A$ defines the question and
+all the possible options of the upcoming election.
 
 \paragraph{Key Generation Phase.}
 All the trustees execute a robust threshold key generation protocol as discussed
 in \Vref{sec:secretsharing}. At this stage, a \emph{threshold}
 $t\leq|T|$ must be defined. This parameter defines the minimal number of
-trustees which are required to decrypt the final result in the tallying phase.
+trustees which are required to collaborate in order to decrypt the final result
+in the tallying phase.
 The transcript of the key generation protocol is posted on the bulletin board
 \myref{sec:bulletinboard}. The outcome of this key generation protocol is an
-ElGamal public key $y$ which needs to be communicated to all the voters $V$.
+ElGamal public key $y$ which needs to be communicated to all the voters.
 
 \paragraph{Voting Phase.}
 During a well defined time window, the voters can now create and cast a ballot.
