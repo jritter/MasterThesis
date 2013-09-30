@@ -1,4 +1,4 @@
-MasterThesisProposal
+MasterThesis
 ====================
 
-Proposal of the Master Thesis
+This is the documentation of the Master Thesis
