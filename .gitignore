@@ -13,6 +13,7 @@
 *.ilg
 *.ind
 *.ist
+*.lod
 *.lof
 *.log
 *.lot
@@ -21,6 +22,7 @@
 *.mtc0
 *.nav
 *.nlo
+*.nls
 *.out
 *.pdfsync
 *.ps
@@ -33,3 +35,4 @@
 /document-blx.bib
 /document.pdf
 /tmp
+/document.run.xml
