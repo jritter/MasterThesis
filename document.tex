@@ -108,7 +108,7 @@ The E-Voting Group of the Bern University of Applied Sciences is planning to
 evaluate decentralized e-voting systems for practical use. The term
 ``decentralized'' in that context means that there is no central server
 infrastructure involved in the voting process. The main application of such
-e-voting systems are polls with a low number of participants, for example the
+e-voting systems are votes with a low number of participants, for example the
 board of directors in a company. The idea is, that the participants create an
 ad-hoc network with mobile devices. The main goal of this master thesis is to
 implement a decentralized e-voting system for Android based mobile devices. We
@@ -147,8 +147,8 @@ remained the same, while the procedures on how voting is done has changed
 significantly. The most ancient way of expressing the will by a hand sign has
 been replaced by modern technologies. The 20th century has seen a lot of changes
 in this area. Paper based voting has been introduced, and with the
-industrialization, the first voting machines appeared the surface. The purpose
-of these machines was to simplify the counting process. In today's internet
+industrialization, the first voting machines appeared on the surface. The
+purpose of these machines was to simplify the counting process. In today's internet
 society where a lot of tasks such as banking, shopping, mailing, etc. has been
 revolutionized by the internet, it is not surprising that there are a lot of
 efforts going on to revolutionize the process of voting as well.
@@ -167,7 +167,7 @@ University of Applied Sciences \cite{www:EVG} tries to improve this situation wi
 
 The evaluation of these approaches is usually done by implementing them into a
 prototype level application. This implementation is used to show that the
-approach actually works and provides a certain usability. The E-Voting Group
+approach works in practice and provides a certain usability. The E-Voting Group
 would like to gain some experience on how decentralized e-voting systems could
 be implemented and how they behave in practice. There are some approaches which
 focus explicitly on decentralized e-voting systems, such as the proposal of
@@ -176,11 +176,11 @@ voting scheme proposed by Cramer et. al. \cite{CGS97} in a way that it can be
 used as a decentralized e-voting system.
 
 A possible use case of such a system could be an executive board or any other
-committee that would like to vote on some matters without having their members
+commitee that would like to vote on some matters without having their members
 to reveal what exactly they voted for. The architecture of our system requires
 that all the participants are in a confined space and are able to exchange some
 sort of credential using a communication channel which relies on physical
-proximity (e.g. Near Field Communication) or visual contact (e.g. QR Codes).
+proximity (e.g. near field communication) or visual contact (e.g. QR-codes).
 
 In previous projects during the master studies, some groundwork has been
 implemented which can now be used as a foundation for this project. The
@@ -192,7 +192,7 @@ previously implemented projects are the following:
   knowledge proofs, digital signatures, etc. 
   \item \textbf{InstaCircle: } InstaCircle provides a decentralized
   communication platform for Android devices. It allows to exchange messages
-  using Wi-Fi among a closed user group.
+  using Wi-Fi communication among a closed user group.
 \end{itemize}
 The projects mentioned above will be discussed in more detail in \Vref{cha:brw}.
 
@@ -200,11 +200,11 @@ The projects mentioned above will be discussed in more detail in \Vref{cha:brw}.
 \label{cha:goals}
 The final result of this project is a fully-fledged decentralized e-voting
 application which runs on Android devices and does not require any equipment
-other than the Android smartphones or tablets. The CGS97 \cite{CGS97} will be
-used as the theoretical foundation for this project. Having said this, we divide
-the following goals for this project:
+other than the Android smartphones or tablets. The CGS97 e-voting
+scheme \cite{CGS97} will be used as the theoretical foundation for this project.
+Having said this, we divide the following goals for this project:
 \paragraph{E-Voting Functionality.}
-The main challenge of this project is the implementation of the logic of CGS97
+The main goal of this project is the implementation of the logic of CGS97
 \cite{CGS97}, by assembling the cryptographic building blocks to a working
 application. It has to be tied to the user interface and to InstaCircle for
 communicating with the other participants. This part is heavily based on already
@@ -213,8 +213,8 @@ communication infrastructure and UniCrypt which provides the implementation of
 the cryptographic building blocks which are used in CGS97
 \myref{sec:buildingblocks}. The final product needs to be able to handle a
 voting scenario \emph{one-out-of-n}, meaning that a user can choose exactly one
-option out of $n$ options. This allows to set up polls which are more complex
-than a simple \emph{Yes-No} poll. At the other end of the spectrum would be the
+out of $n$ options. This allows to set up votes which are more complex
+than a simple \emph{Yes-No} vote. At the other end of the spectrum would be the
 \emph{m-out-of-n} scenario, that means that $m$ options can be picked out of $n$
 options. The \emph{m-out-of-n} scenario is not a must for this project.
 
@@ -223,11 +223,11 @@ UniCrypt implements many cryptographic building blocks which are necessary in
 order to implement a CGS97 based e-voting system, however two crucial parts are
 missing:
 \begin{itemize}
-  \item \textbf{Proof of Validity:} This type of zero-knowledge proof is used in
-  order to make sure that a ciphertext is an encryption of an element which
-  belongs to a set of possible plaintexts. This type of proof is an instace of
-  of a more generic \emph{OR-composition} of multiple proofs of knowledge. This
-  type of zero-knowledge proof is discussed in detail in
+  \item \textbf{ElGamal Proof of Validity:} This type of zero-knowledge proof is
+  used in order to make sure that a ciphertext is an ElGamal encryption of an
+  element which belongs to a set of possible plaintexts. This type of proof is
+  an instance of of a more generic \emph{OR-composition} of multiple proofs of
+  knowledge. This type of zero-knowledge proof is discussed in detail in
   \Vref{sec:zeroknowledgeproofs}.
   \item \textbf{Threshold Cryptosystem:} In order to ensure privacy of
   the ballots, the CGS97 e-voting scheme uses a so called threshold system. This
@@ -243,9 +243,9 @@ implemented and integrated into the UniCrypt library.
 \paragraph{Graphical User Interface.}
 In many cases, cryptographic functions which are heavily used in the context of
 e-voting have a negative impact on the usability. Many steps such as key
-generation, decryption, etc. have to be done in order to guarantee a poll which
-can't be compromised, and these steps bring a certain complexity into the
-handling of the application. Therefore it is crucial to guide the user
+generation, decryption, etc. have to be done in order to guarantee all the
+desired properties for e-voting. All these steps bring a certain complexity
+into the handling of the application. Therefore it is crucial to guide the user
 through the process, and this can only be done by providing them a carefully
 crafted user interface. A further goal of this project is to implement a user
 interface which provides a good usability.
@@ -257,13 +257,13 @@ implemented part time. It is equivalent to 27 ECTS credits.
 \section{Contribution}
 \label{sec:contribution}
 Currently there are a couple of Android apps available in the Google Play store
-which allow to do simple polls, or else they are clients of e-voting systems of
-a specific organisation. A decentralized e-voting system which offers the
+\cite{www:playstore} which allow to do simple votes, or else they are clients of e-voting
+systems of a specific organisation. A decentralized e-voting system which offers the
 cryptographic level of this project is currently not available. The
 implementation and the evaluation of this project will help to understand
 further strong and weak points of the CGS97 e-voting scheme, especially when
-using it in decentralized configuration. So far, the E-Voting Group of the Bern
-University of Applied Sciences has gained expertise by implementing and
+using it in a decentralized configuration. So far, the E-Voting Group of the
+Bern University of Applied Sciences has gained expertise by implementing and
 operating e-voting systems on centralized systems which are usually operated on
 notebooks or desktop computers. This project will help gaining some experience
 in how e-voting systems can be used on mobile devices.
@@ -309,8 +309,9 @@ some properties and their definitions have emerged.
 \begin{description}
   \item[Democracy:] Only eligible voters can vote, and each voter can
   cast at most one ballot which will be included in the result.
-  \item[Accuracy:] The result is derived only from \emph{all} valid
-  votes as they were cast, i.e. cast votes can not be modified.
+  \item[Accuracy:] The result is derived from \emph{all} valid
+  votes as they were cast, i.e. cast votes can not be modified. No other factors
+  than valid votes can influence the result.
   \item[Universal verifiability:] Anyone can verify the correctness of
   the result.
   \item[Individual verifiability:] A voter can can verify that her vote
@@ -332,10 +333,10 @@ requirements, for example the verifiability is not given in a classic voting
 scenario. Researchers are trying to develop schemes towards these requirements
 using cryptographic building blocks. The robustness property is probably the
 biggest factor that prevents the breakthrough of e-voting on large scales.
-e-voting systems are the perfect targets for an intended manipulation or a
+E-voting systems are the perfect targets for an intended manipulation or a
 boycott of an election. That's why many governments use e-voting only on small
 scales so that the electorate is small enough that it is statistically unlikely
-to decide the outcome of the election.
+to tip the scale to one side or the other.
 
 \section{Cryptographic Building Blocks}
 \label{sec:buildingblocks}
@@ -351,8 +352,20 @@ considered to be hard to solve, meaning that so far there is no known algorithm
 to find a solution for a given problem efficiently. An example of such a problem
 is the prime factorization of large numbers on which the security of the famous
 RSA cryptosystem \cite{RSA78} is based on. The other hard problem of this kind
-is know as the \emph{Discrete Logarithm Problem}. The security of most of the
-building blocks we are using in this project is based on this problem. 
+is know as the \emph{Discrete Logarithm Problem}. The formal definition of
+the problem is as follows: 
+
+Given a prime $p$, a generator $g$ of a multiplicative modular group
+$\mathbb{Z}^*_p$ and an element $b \in \mathbb{Z}^*_p$, find the integer
+$x,0 \leq x \leq p - 2$, such that $a^x \equiv b \mod p$.
+
+Currently there is no efficient way of solving this equation in an efficient
+manner. There are some more sophisticated approaches than the naive way of
+iterating over all elements of the group, for example the baby-step giant-step
+algorithm. The security of most of the building blocks we are using in this
+project is based on this problem. Further information concerning the discrete
+logarithm problem can be found in Chapter 3 of the Handbook of Applied
+Cryptography by Alfred Menezes et. al. \cite{book:hac}.
 
 \subsection{ElGamal Cryptosystem}
 \label{sec:elgamal}
@@ -419,7 +432,7 @@ possible plaintexts.
 Exponential ElGamal has another property which is important in the context of
 e-voting: It transforms the right part of the ElGamal encryption function from a
 multiplicative homomorph function into an additive homomorph function.
-Homomorphic encrpytion is discussed in detail in \Cref{sec:homenc}.
+Homomorphic encryption is discussed in detail in \Cref{sec:homenc}.
 
 \subsection{Homomorphic encryption}
 \label{sec:homenc}
@@ -483,18 +496,19 @@ $(t-n)$-threshold scheme, where $n$ defines the number of shares which are
 issued at the beginning and $t$ defines the number of participants needed to
 recover the secret. In a first step, a trusted dealer defines a polynomial
 function $f(x)$ with degree $t-1$ and random coefficients. Each trustee $A_{i |
-1 \leq i \leq n}$ gets its share $s_i=f(i)$. Secret itself, at this stage only
-known by the trusted dealer, is defined by $s=f(0)$. In order to reproduce the
-secret using the shares distributed among all trustees, we can interpolate the
-shares in order to reproduce the coefficients and therefore also $f(x)$. Since a
-polynomial function of degree $t-1$ needs at least $t$ points to reproduce using
-an interpolation technique such as Lagrange interpolation, the secret can only
-be reproduced if at least $t$ trustees are collaborating. 
+1 \leq i \leq n}$ gets its share $s_i=f(i)$. The secret itself, at this stage
+only known by the trusted dealer, is defined by $s=f(0)$. In order to reproduce the
+secret using the shares distributed among all trustees, we can use an
+interpolation technique such as Lagrange interpolation, which allows us to
+reproduce the secret $f(0)$. Since a polynomial function of degree $t-1$ is
+defined by at least $t$ points, the secret can only be reproduced if at least
+$t$ trustees are collaborating and contribute their shares to the decryption
+process.
 
 The approach of Shamir is quite simple, has one major drawback though: It
-requires a trusted authority which has the knowledge of the shared key. It it
+requires a trusted dealer which has the knowledge of the shared key. It it
 would be nice to have a scheme where the group of trustees collaborate to create
-the shares in a way that nobody can derive the private key unless a sufficient
+the shares in a way that nobody can derive the secret key unless a sufficient
 amount of trustees collaborate. In 1991, Torben Pryds Pedersen proposed a scheme
 where this trusted dealer is no longer needed \cite{PED91}. In this scheme, all the
 trustees perform the steps of the trusted dealer in the scheme of Shamir, namely
@@ -720,7 +734,7 @@ multiplicative cyclic group $G_q$, the identity element is $1$).
 \subsection{Bulletin Board}
 \label{sec:bulletinboard}
 The so called bulletin board is the public communication channel which is used
-to communicate between the participants of the election or poll. It is a
+to communicate between the participants of the vote. It is a
 transcript of all the communication steps between the participants and therefore
 contains encrypted ballots, zero knowledge proofs, etc. The bulletin board is
 also available for observers. Using the content of the bulletin board, everybody
@@ -746,14 +760,14 @@ the protocol can be divided into four different roles:
   electorate and the voting period. The administrator is also responsible for
   orchestrating the activities during a voting cycle.
   \item \textbf{Voter:} A voter is somebody who is eligible to participate on
-  an election or a poll. 
+  a vote. 
   \item \textbf{Trustee:} A trustee is somebody who helps setting up the
   election by creating an asymmetric key pair in cooperation with other
   trustees.
   At the end of the election phase, the trustees have to cooperate in order to
-  reveal the result of the election or the poll.
+  reveal the result of the vote.
   \item \textbf{Observer:} An observer is somebody who wants to verify that all
-  the participants of an election or a poll behave as they are supposed to.
+  the participants of a voting cycle behave as they are supposed to.
 \end{itemize}
 
 In the scenario of an ad-hoc voting system as we are going to develop during
@@ -779,7 +793,7 @@ this can be verified by anybody.
 
 \paragraph{Universal verifiability.} The bulletin board which is publicly
 available (for voters as well as for observers who don't participate at the
-election or poll) assures verifiability for anybody. The bulletin board can also
+vote) assures verifiability for anybody. The bulletin board can also
 be seen as a transcript of the conversation between the actors during a voting
 cycle. 
 
@@ -877,20 +891,22 @@ proof that he performed his decryption step in a correct fashion.
 
 \section{UniCrypt}
 \label{sec:unicrypt}
-UniCrypt is the name of a cryptographic library which has been developed by the
-E-Voting Group of the Bern University of Applied Sciences. The main goal of this
-project was to create a platform on which upcoming projects can be built on.
+UniCrypt is the name of a cryptographic library which is developed and
+maintained by the E-Voting Group of the Bern University of Applied Sciences. The
+main goal of this project is to create a platform on which upcoming projects can
+be built on.
 UniCrypt tries to look at cryptographic functions such as cryptosystems,
 signature systems, hash functions etc. from a mathematical point of view. Cipher
-text, plain text, signatures, etc. are treated as elements of mathematical
-groups, the cryptographic functions are treated as mathematical functions. This
-is required because in secure protocols as we use in the area of e-voting, we
-depend on the plain textbook implementation of the cryptographic functions
+text, plain text, signatures, etc. are treated as elements of algebraic
+structures, the cryptographic functions are treated as mathematical functions.
+This is necessary because in secure protocols as we use in the area of e-voting,
+we depend on the plain textbook implementation of the cryptographic functions
 without functions like automatic padding, encoding, etc. This is the main
 difference between UniCrypt and other cryptographic libraries.
 
 At the moment, UniCrypt has only been used in classic Java environments, but not
-on mobile devices. Further information about UniCrypt can be found in
+on mobile devices. At this point, a reengineered version of UniCrypt is under
+active development.
 \cite{ritter12}.
 
 \section{InstaCircle}
@@ -937,9 +953,8 @@ approaches and evaluate the advantages and disadvantages of the two approaches.
 
 \section{Planning}
 \label{sec:planning}
-The gantt charts in figure \ref{fig:planningpart1} and figure
-\ref{fig:planningpart2} visualize the steps which are planned on the time axis
-during the project period. At the first stage, we define the project setup,
+The gantt charts in \Vref{fig:planningpart1} and \Vref{fig:planningpart2}
+visualize the steps which are planned on the time axis during the project period. At the first stage, we define the project setup,
 later on the cryptographic components will be put in place and will be tested on
 the Android platform. At some point a detailed story board for the graphical
 user interface will be created. Especially this project will be done in a strong
@@ -1055,7 +1070,134 @@ throughout the project period.
 
 \chapter{Results}
 \label{cha:results}
-\todo{This chapter will be written in a later phase of the project}
+In this chapter we present the outcome of this project. We will discuss the
+development of the graphical user interface, the architecture and implementation
+of the Android application and finally the contributions to related projects.
+
+\section{Graphical User Interface}
+\label{sec:gui}
+A crucial aspect for the success of e-voting is the usability for the end user.
+This becomes even more important when e-voting should be used in an ad-hoc
+manner, where the formality is less visible compared to official elections.
+Also, the time consumption for a voting cycle has to be as short as possible,
+which is also a significant difference to classically held elections.
+
+Before the actual implementation of the Android application, we tried to develop
+a screen design which meets these requirements. This screen design has been
+designed as a storyboard without writing actual code. We have chosen an
+iterative approach where the design has been peer reviewed several times before
+the final draft was available. One major decision point was to decide whether we
+implement a single Android app or whether we should split it into an app for the
+voter and another for the vote administrator. The approach with multiple apps
+turned out to be confusing and was hence dismissed.
+
+The design which has been finally chosen is based on a single Android
+application. A voting cycle can be broken into several phases which are outlined
+in the following, along with the storyboard for this particular phase.
+
+\paragraph{Setup a Vote.}
+The designated administrator of the vote is responsible for setting up a vote,
+namely define the question and the possible options which can be chosen later
+during the voting phase. A vote can also be prepared and saved in advance in
+order to save time at the reunion. From here, the administrator can also
+start the voting process. The screen design of this phase is illustrated in
+\Vref{fig:vote_setup}.
+
+
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=.4\textheight]{img/vote_setup}
+	\caption{Setup a vote}
+	\label{fig:vote_setup}
+\end{figure}
+
+\paragraph{Network Setup.}
+The next step after defining a vote is to define in which network environment
+the voting session will take place. The first person to do so is the vote
+administrator. He can choose a Wi-Fi network in which the network session will
+be started. The information about the choosen network as well as the generated
+session password has to be shared with the participants. To do so, the
+administrator can either just read the information out loud, or share the
+information using either a QR-code or write the information to a NFC token which
+can be passed to all participants. Using this information, the participants can
+join the network session with their devices. Before joining the session, each
+participant (including the administrator) has to define an identification string
+for themselves. The screen design of this phase is illustrated in
+\Vref{fig:network_setup}.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=.4\textheight]{img/network_setup}
+	\caption{Network setup}
+	\label{fig:network_setup}
+\end{figure}
+
+
+\paragraph{Defining the electorate and review of the vote.}
+After joining the network session, a list of all the session participants is
+displayed. At this stage, the administrator can define the electorate, meaning
+he can select the participants which are allowed to vote. This can be done by
+clicking on the the checkboxes next to the participant's identification. The
+participants can see who has been selected on their devices.
+
+Once the administrator has defined the electorate, each participant has to
+confirm that all the parameters of the vote (question, allowed options,
+electorate) are correct. The vote can only be started by the administrator if
+the whole electorate has agreed. If necessary, the administrator can go back and
+do changes on the vote parameters.
+
+The screen design of this phase from the administrator's perspective is
+illustrate in \Vref{fig:admin_review} and from the voter's perspective in
+\Vref{fig:voter_review}.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=.4\textheight]{img/admin_review}
+	\caption{Administrator defining the electorate}
+	\label{fig:admin_review}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=.4\textheight]{img/voter_review}
+	\caption{Review of the vote from voter's perspective}
+	\label{fig:voter_review}
+\end{figure}
+
+\paragraph{Voting phase.}
+Once the vote has passed the review, the vote itself can take place. Each
+participant can choose an option and cast it. The screen transitions to a view
+which illustrates the vote casting state of all the participants. The screen
+design of this phase is illustrated in \Vref{fig:vote}.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=.4\textheight]{img/vote}
+	\caption{Vote casting}
+	\label{fig:vote}
+\end{figure}
+
+\paragraph{Displaying the result.}
+The vote is tallied as soon as the last vote has been cast, or if the
+administrator has ended the voting phase. The result is displayed in the form of
+a piechart and a tabular view. The result of the vote is saved on each devices
+and can be revisited using the archive function in the main screen. The screen
+design of this phase is illustrated in \Vref{fig:result}.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[height=.4\textheight]{img/result}
+	\caption{Result of the vote}
+	\label{fig:result}
+\end{figure}
+
+
+\section{Implementation}
+\label{sec:implementation}
+
+\section{Enhancements to UniCrypt}
+\label{sec:enhancmentsunicrypt}
 
 \chapter{Discussion}
 \label{cha:discussion}
