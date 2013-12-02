@@ -521,21 +521,21 @@ calculate a point for each trustee in the system. These points are then
 Zero-knowledge proofs (ZKPs) in their sense are conversations between a
 \textit{prover} and a \textit{verifier}. They allow the prover to demonstrate,
 that she knows a secret without actually revealing the secret itself. The
-conversation is similar to a challenge-response protocol, the verifier asks the
+conversation is similar to a challenge-response protocol. The verifier asks the
 prover certain questions about the secret and the verifier answers them. This
 kind of conversations are also known as $\Sigma$-protocols. Of course, the
 prover could just guess the correct answer to the question and cheat, but if the
 verifier repeats the challenge process with a different input, chances are
 almost zero that the prover can guess all the correct answers if he is not in
 fact in possession of the secret. Zero-knowledge proofs offer therefore a
-\textit{probabilistic} security. In the context of e-voting, these Zero
-Knowledge Proofs are used to make sure that none of the participants are
+\textit{probabilistic} security. In the context of e-voting, these
+zero-knowledge proofs are used to make sure that none of the participants are
 cheating.
 
 \subsubsection{Non-interactive zero-knowledge proofs}
 \label{sec:nizkp}
-Zero-knowledge proofs as described above are \textit{interactive} conversations
-between a prover and a verifier. This also means that the prover proofs only to
+Zero-knowledge proofs as described earlier are \textit{interactive}
+conversations between a prover and a verifier. This also means that the prover proofs only to
 the verifier that she has knowledge of the secret. Of course, any observer could
 observe the conversation, but there is no way to determine whether the verifier
 actually accepts the the proof or not. The verifier could of course testify that
@@ -543,18 +543,18 @@ the prover has the knowledge of the secret, but that would require a trust
 relationship between the observer and the verifier. In an e-voting scenario, we
 need a proof which can be verified by anybody and doesn't require an interactive
 conversation between the verifier and the prover. Such proofs are called
-\textit{Non-Interactive zero-knowledge proofs} or \textit{NIZKPs}. The
-foundation of these NIZKPs were introduced by Amos Fiat and Adi Shamir in 1986
+\textit{non-interactive zero-knowledge proofs} or \textit{NIZKPs}. The
+foundations of these NIZKPs were introduced by Amos Fiat and Adi Shamir in 1986
 \cite{FS87}, later known as the \textit{Fiat-Shamir heuristic}. Instead of the
 verifer challenging the prover, the prover challenges himself by using a
 \emph{hashfunction} such as SHA-256. The result of such a non-interactive
-zero-knowledge Proof is similar to a digital signature. Once published,
+zero-knowledge proof is similar to a digital signature. Once published,
 everybody can verify the integrity of the data over which the signature has been
 calculated. In a similar way, non-interactive zero-knowledge proofs can be
 verified, with the important difference that the secret of course remains
 secret. So far, we didn't specify what a secret actually is. There are multiple
 types of secrets and therefore also multiple types of zero-knowledge proofs, but
-due to the work of Ueli Maurer \cite{Maurer09} we can formulate a general
+due to the work of Ueli Maurer \cite{Maurer09}, we can formulate a general
 recipe how such a NIZKP is assembled:
 
 Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups and
@@ -582,7 +582,7 @@ condition holds:
  
 \subsubsection{Proving the Knowledge of Discrete Logarithm}
 \label{sec:proofknowledgedlog}
-This type of Proof was first presented by Claus Peter Schnorr in 1991
+This type of proof was first presented by Claus Peter Schnorr in 1991
 \cite{Schnorr91}. We have seen that the ElGamal encryption function has the
 homomorphic property \myref{sec:homenc}. Therefore, it is possible to prove the
 knowledge of the plaintext of a given ciphertext by applying the scheme above.
@@ -601,7 +601,7 @@ the generic scheme above:
   X &= \mathbb{Z}_q \notag \\
   Y &= G_q \notag \\
   \alpha &=r \notag \\
-  \beta &=r \notag \\
+  \beta &=a \notag \\
   f(x) &= g^x \notag
 \end{align} 
 
@@ -626,7 +626,7 @@ $c=H(a||t)$ and check whether the following condition holds:
 \subsubsection{Proving the Equality of Discrete Logarithms}
 \label{sec:proofeqdlog}
 This type of proof due to David Chaum and Torben Pryds Pedersen \cite{CP93}
-that proofs the relation $log_{g_1} c_1 = log_{g_2} c_2 $ for two values $c_1 =
+ proves the relation $log_{g_1} c_1 = log_{g_2} c_2 $ for two values $c_1 =
 g_1^m$ and $c_2 = g_2^m$, where $g_1$ and $g_2$ are generators of the
 mathematical group $G_q$. In order to prove this relation, we can again
 substitute the variables in the scheme above:
@@ -659,10 +659,10 @@ $c=H(c_1||c_2||t)$ and check whether the following condition holds:
 \subsubsection{Proving Validity}
 \label{sec:proofofvalidity}
 Proofs of validity are used to prove that a certain image of a homomorphic one
-way function is in fact the image of a preimage and the preimage is an element
+way function is in fact the image of a preimage, and the preimage is an element
 of a set of possible preimages. The proof however does not reveal which preimage
-it actually is. This type of prove is not a straight forward application of the
-generalzed schema of Maurer \cite{Maurer09}, it is rather an OR-combination
+it actually is. This type of proof is not a straight forward application of the
+generalized scheme of Maurer \cite{Maurer09}, it is rather an OR-combination
 knowledge proofs. The idea is to \emph{simulate} accepting conversations for the
 preimages which do not correspond to the calculated image and combine those
 simulated proofs with the actual proof from the image we calculated. 
@@ -764,7 +764,7 @@ the protocol can be divided into four different roles:
   \item \textbf{Trustee:} A trustee is somebody who helps setting up the
   election by creating an asymmetric key pair in cooperation with other
   trustees.
-  At the end of the election phase, the trustees have to cooperate in order to
+  At the end of the voting phase, the trustees have to cooperate in order to
   reveal the result of the vote.
   \item \textbf{Observer:} An observer is somebody who wants to verify that all
   the participants of a voting cycle behave as they are supposed to.
@@ -772,8 +772,8 @@ the protocol can be divided into four different roles:
 
 In the scenario of an ad-hoc voting system as we are going to develop during
 this project, the voter, trustee and observer roles can be combined and all
-participant impersonate these roles. The administrator role needs to be assigned
-to one particular participant.
+participants impersonate these roles. The administrator role needs to be
+assigned to one particular participant.
 
 \subsection{Security Properties}
 \label{sec:secproperties}
@@ -826,34 +826,34 @@ how this should be achieved. A possible approach can be found in \cite{HL09}.
 
 \subsection{Usability Properties}
 \label{sec:usabilityproperties}
-It is a generally know fact that high security measure have a negative impact on
-the usability of a certain application. In the area of e-voting, usability is a
+It is a generally know fact that high security measures have a negative impact
+on the usability of a certain application. In the area of e-voting, usability is a
 crucial factor since the potential average voter is not expected to have a high
 expertise in cryptography and information security. In the CGS97 scheme, casting
 a vote is surprisingly easy and also the computation costs are fairly low,
-regardless of how many trustees the election has or how big the electorate is.
+regardless of how many trustees the vote has or how big the electorate is.
 
 A similar property is also valid for the trustees, the complexity of verifying
 votes, tallying and decrypting always remains linear which is a huge advantage
 compared to other e-voting schemes.
 
 \subsection{The Protocol}
-The CGS97 voting scheme has a well defined procedure on how an voting should be
+The CGS97 voting scheme has a well defined procedure on how a vote should be
 performed. This procedure is explained in this section. Formally we define the set
 of $n$ trustees as $T=\{\tau_1, \ldots, \tau_n\}$ and the set of $l$
 voters as $V=\{v_1, \ldots, v_l\}$. Furthermore, the role of an
 \emph{administrator} $A$ needs to be assigned to a participant. The process of these role assignments
 strongly depends on the political structure of the organization which runs
-this election and is considered as an administrative task and is hence not
-further discussed at this point. In order to hold an election, all the involved
-parties collaborate as follows:
+the vote and is considered to be an administrative task and is hence not
+further discussed at this point. The procedure how a vote is performed looks as
+follows:
 
 \paragraph{Initialization Phase.}
 All the parties need to agree on the ElGamal parameters $p, q,$ and $g$. These
 parameters can be seen as fixed parameters and do not need to be redefined for
-each election. Further details regarding these parameters can be found in
+each vote. Further details regarding these parameters can be found in
 \Vref{sec:elgamal}. Futhermore, the administrator $A$ defines the question and
-all the possible options of the upcoming election.
+all the possible options of the upcoming vote.
 
 \paragraph{Key Generation Phase.}
 All the trustees execute a robust threshold key generation protocol as discussed
@@ -867,24 +867,23 @@ ElGamal public key $y$ which needs to be communicated to all the voters.
 
 \paragraph{Voting Phase.}
 During a well defined time window, the voters can now create and cast a ballot.
-To do so, the voter encrypts his ballot using the public key $y$ and posts his
-ballot to the bulletin board. Note that we need to use \emph{exponential
+To do so, the voters encrypt their ballots using the public key $y$ and post
+them to the bulletin board. Note that we need to use \emph{exponential
 ElGamal} \myref{sec:expelgamal} so that we can \emph{add} the result in an upcoming
 stage.
-Futhermore, the voter needs to post a proof of validity \myref{sec:proofofvalidity} on the
-bulletin board in order to prove that encrypted ballot indeed contains a valid option of the election.
+Futhermore, each voter needs to post a proof of validity
+\myref{sec:proofofvalidity} on the bulletin board in order to prove that encrypted ballot indeed contains a valid option of the election.
 
 \paragraph{Tallying Phase.}
 The tallying phase can start as soon as the voting period has come to an end. In
-order to tally an election, the ciphertexts of the valid ballots are multiplied
+order to tally a vote, the ciphertexts of the valid ballots are multiplied
 and posted to the bulletin board. Since all the encrypted ballots are publicly
 available, this multiplication step can be verified easily by doing the
 multiplication individually and compare the result to the values on the
 bulletin board. The product of all the valid ballots now represents the
-\emph{encrypted result} of the election, which has to be decrypted by the
-trustees. In order to do so, the trustees execute a threshold decryption
-protocol in order to reveal the result of the election. Note that we only need a
-subset $\Lambda \subseteq T$ with minimal order $t$ in order to execute the
+\emph{encrypted result} of the vote. This result has to be decrypted by the
+trustees. The trustees execute a threshold decryption
+protocol in order to reveal the result of the election. Note that we only need a subset $\Lambda \subseteq T$ with minimal order $t$ in order to execute the
 protocol properly. The transcript of the protocol and the result are posted on
 the bulletin board. Furthermore, each participating trustee has to provide a
 proof that he performed his decryption step in a correct fashion.
@@ -897,8 +896,8 @@ main goal of this project is to create a platform on which upcoming projects can
 be built on.
 UniCrypt tries to look at cryptographic functions such as cryptosystems,
 signature systems, hash functions etc. from a mathematical point of view. Cipher
-text, plain text, signatures, etc. are treated as elements of algebraic
-structures, the cryptographic functions are treated as mathematical functions.
+texts, plain texts, signatures, hashes, etc. are treated as elements of
+algebraic structures, the cryptographic functions are treated as mathematical functions.
 This is necessary because in secure protocols as we use in the area of e-voting,
 we depend on the plain textbook implementation of the cryptographic functions
 without functions like automatic padding, encoding, etc. This is the main
@@ -906,8 +905,7 @@ difference between UniCrypt and other cryptographic libraries.
 
 At the moment, UniCrypt has only been used in classic Java environments, but not
 on mobile devices. At this point, a reengineered version of UniCrypt is under
-active development.
-\cite{ritter12}.
+active development. Further information about UniCrypt can be found in \cite{ritter12}.
 
 \section{InstaCircle}
 \label{sec:instacircle}
@@ -916,17 +914,17 @@ of this master thesis. It is intended as a platform to connect mobile devices
 in a confined space to a Wi-Fi ad-hoc network in order to exchange broadcast
 and unicast messages. In order to keep the network traffic as low as possible,
 the basic communication relies on broadcast messages. Since it is not possible
-implement a reliable protocol using broadcast techniques, mechanisms to
+to implement a reliable protocol using broadcast techniques, mechanisms to
 compensate message losses have been implemented. These resending mechanisms rely
 on a reliable unicast channel.
 
 From a usability perspective, the process on agreeing to a communication channel
 for an ad-hoc network is quite challenging. All the participants need to have
-the know-how to switch their devices to the correct Wi-Fi network and enter the
+to know how to switch their devices to the correct Wi-Fi network and enter the
 correct keys and passwords. InstaCircle tries to improve the usability by
-allowing the users to exchange the configuration by sharing a QR code or a NFC
+allowing the users to exchange the configuration by sharing a QR-code or a NFC
 tag. Once a user has set up a conversation, other participants can join the
-conversation by reading the QR code or the NFC tag shared by the initiator of
+conversation by scanning the QR-code or the NFC tag shared by the initiator of
 the conversation.
 
 InstaCircle is currently available for Android devices only. Further information
@@ -956,9 +954,9 @@ approaches and evaluate the advantages and disadvantages of the two approaches.
 The gantt charts in \Vref{fig:planningpart1} and \Vref{fig:planningpart2}
 visualize the steps which are planned on the time axis during the project period. At the first stage, we define the project setup,
 later on the cryptographic components will be put in place and will be tested on
-the Android platform. At some point a detailed story board for the graphical
-user interface will be created. Especially this project will be done in a strong
-collaboration with the other project which deals with decentralized e-voting
+the Android platform. At some point a detailed storyboard for the graphical
+user interface will be created. Especially this part of the project will be done
+in a strong collaboration with the other project which deals with decentralized e-voting
 systems. At this stage, we have prepared all the components we need in order to
 implement the actual e-voting system. The part which will consume most of the
 time budget will be the implementation and the testing of the actual e-voting
@@ -1097,7 +1095,7 @@ in the following, along with the storyboard for this particular phase.
 
 \paragraph{Setup a Vote.}
 The designated administrator of the vote is responsible for setting up a vote,
-namely define the question and the possible options which can be chosen later
+namely defining the question and the possible options which can be chosen later
 during the voting phase. A vote can also be prepared and saved in advance in
 order to save time at the reunion. From here, the administrator can also
 start the voting process. The screen design of this phase is illustrated in
@@ -1116,7 +1114,7 @@ start the voting process. The screen design of this phase is illustrated in
 The next step after defining a vote is to define in which network environment
 the voting session will take place. The first person to do so is the vote
 administrator. He can choose a Wi-Fi network in which the network session will
-be started. The information about the choosen network as well as the generated
+be started. The information about the chosen network as well as the generated
 session password has to be shared with the participants. To do so, the
 administrator can either just read the information out loud, or share the
 information using either a QR-code or write the information to a NFC token which
@@ -1134,7 +1132,7 @@ for themselves. The screen design of this phase is illustrated in
 \end{figure}
 
 
-\paragraph{Defining the electorate and review of the vote.}
+\paragraph{Defining the Electorate and Review of the Vote.}
 After joining the network session, a list of all the session participants is
 displayed. At this stage, the administrator can define the electorate, meaning
 he can select the participants which are allowed to vote. This can be done by
@@ -1142,13 +1140,12 @@ clicking on the the checkboxes next to the participant's identification. The
 participants can see who has been selected on their devices.
 
 Once the administrator has defined the electorate, each participant has to
-confirm that all the parameters of the vote (question, allowed options,
-electorate) are correct. The vote can only be started by the administrator if
-the whole electorate has agreed. If necessary, the administrator can go back and
-do changes on the vote parameters.
+confirm that all the parameters of the vote (question, allowed options
+and electorate) are correct. The vote can only be started by the administrator
+if the whole electorate has agreed. If necessary, the administrator can go back and do changes on the vote parameters.
 
 The screen design of this phase from the administrator's perspective is
-illustrate in \Vref{fig:admin_review} and from the voter's perspective in
+illustrated in \Vref{fig:admin_review} and from the voter's perspective in
 \Vref{fig:voter_review}.
 
 \begin{figure}[htbp]
@@ -1168,7 +1165,7 @@ illustrate in \Vref{fig:admin_review} and from the voter's perspective in
 \paragraph{Voting phase.}
 Once the vote has passed the review, the vote itself can take place. Each
 participant can choose an option and cast it. The screen transitions to a view
-which illustrates the vote casting state of all the participants. The screen
+which shows the vote casting state of all the participants. The screen
 design of this phase is illustrated in \Vref{fig:vote}.
 
 \begin{figure}[htbp]
@@ -1195,9 +1192,11 @@ design of this phase is illustrated in \Vref{fig:result}.
 
 \section{Implementation}
 \label{sec:implementation}
+\todo{This chapter will be written in a later phase of the project}
 
 \section{Enhancements to UniCrypt}
 \label{sec:enhancmentsunicrypt}
+\todo{This chapter will be written in a later phase of the project}
 
 \chapter{Discussion}
 \label{cha:discussion}
