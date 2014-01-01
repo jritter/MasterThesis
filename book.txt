@@ -1,0 +1,19 @@
+Lead
+
+Unter dem Begriff "Dezentrales E-Voting" versteht man elektronische Abstimmungen bei welchen keine zentrale Infrastruktur benötigt wird. In dieser Arbeit wurde ein solches dezentrales E-Voting System implementiert, welches auf mobilen Geräten wie Smartphones und Tablets lauffähig ist. Dezentrales E-Voting erlaubt spontanes durchführen von Abstimmungen und reduziert die Komplexität. Besondere Beachtung während dieser Arbeit galt der einfachen Benutzbarkeit des Systems.
+
+Ausgangslage
+
+Gleich wie E-Banking oder Einkaufen in Online Shops unseren Alltag erleichtert würde E-Voting das Durchführen von Wahlen und Referenden massiv vereinfachen. Gleichzeitig schürt der Einsatz von E-Voting auch eine gewisse Skepsis. Unsichere E-Voting Systeme bieten eine Plattform für Wahlmanipulation im grossen Stil. Diese Bedenken wurden zusätzlich durch die zahlreichen Schlagzeilen im Bereich Spionage und IT Sicherheit im letzten Jahr genährt. Die Forschung, welche sich seit längerer Zeit mit der Thematik E-Voting befasst, hat einige Kriterien ausgearbeitet welches ein ideales E-Voting System erfüllen sollte. Es wurden auch mehrere Ansätze publiziert welche beschreiben, wie solche E-Voting Systeme aufgebaut sein könnten. Die Praxistauglichkeit dieser Ansätzen wird jedoch nach wie vor erprobt. In der Schweiz wird E-Voting aus diesen Gründen vorerst erst in ein paar wenigen Kantonen eingesetzt, und auch dort nicht für alle wahlberechtigten Personen verfügbar.
+
+Boardroom Voting
+
+Um die Praxistauglichkeit von E-Voting Systemen zu erproben werden in der Forschung oft auch Szenarien angeschaut, welche eine geringere Tragweite haben als Abstimmungen und Wahlen auf kantonaler oder gar nationaler Ebene. Zu diesen Szenarien geören unter Anderem auch Boardroom Voting, welches beispielsweise an einer Verwaltungsratssitzung gebraucht wird. Das Elektorat (Gruppe der wahlberechtigten Personen) ist in diesem Szenario deutlich kleiner. 
+
+E-Voting auf mobilen Geräten
+
+In dieser Masterthesis wurde eine Implementation eines E-Voting Systems gemacht, welches im Jahr 1997 von R. Cramer, R. Gennaro und B. Schoenmakers vorgeschlagen wurde. Dieser Ansatz nutzt eine Eigenschaft namens "Homomorphismus" des ElGamal Verschlüsselungssystems, welche das anonyme Auszählen einer Abstimmung erlaubt. Die Umsetzung wurde auf der für Mobile Geräte populären Plattform "Android" umgesetzt, was das Produkt auf Geräten wie Smartphones und Tablets lauffähig macht. Die Besonderheit dieses Systems ist der Umstand, dass für den Einsatz kein zentraler Server für den Datenaustausch gebraucht wird. Somit können Abstimmungen ohne das Vorhandensein zusätzlicher Hardware spontan aufgesetzt und durchgeführt werden. Ein Sicherheitsfaktor liegt im Beisammensein von allen beteiligten Personen in einem physischen Ort, was manipulationen von Ausserhalb praktisch ausschliesst. Dies würde beispielsweise sicheres, verifizierbares und anonymes Abstimmen an einer Verwaltungsratssitzung ermöglichen. Der Ansatz von Cramer et. al. wurde ursprünglich für zentralisiertes E-Voting entwickelt und musste für den Einsatz in einer dezentralisierten Umgebung leicht angepasst werden.
+
+Benutzerfreundlichkeit
+
+Ein wesentlicher Faktor für den Erfolg von E-Voting ist Einfachheit in der Bedienung. Ein besonderes Augenmerk dieser Arbeit lag auf der Konzeptionierung und Implementation einer intuitiv zu bedienenden Benutzeroberfläche. Die Konzeptionierung und Implementation in diesem Bereich wurde in enger Zusammenarbeit mit Philémon von Bergen gemacht, der in seiner Arbeit ein ähnliches System implementiert hat, jedoch mit grundlegend anderen kryptographischen Ansätzen.
