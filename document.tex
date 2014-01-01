@@ -79,6 +79,9 @@ footsepline, oneside, draft=off]{scrreprt}
 
 \usepackage[enabled]{easy-todo}
 
+% Pretty tables
+\usepackage{tabularx}
+\usepackage{booktabs}
 
 \begin{document}
 
@@ -1193,6 +1196,81 @@ design of this phase is illustrated in \Vref{fig:result}.
 \section{Implementation}
 \label{sec:implementation}
 \todo{This chapter will be written in a later phase of the project}
+
+This chapter outlines the frameworks which have been used for the implementation
+of this project and how they are put together into an application.
+
+\subsection{Android}
+The Android platform serves as the foundation of the whole implementation. The
+Application has been built using existing building blocks such as Activities,
+Services, Fragments, etc. Furthermore, there are existing guidelines and best
+practices which have been employed whenever possible. 
+
+\paragraph{Activities.}
+Android Activities basically represent screens which allow the user to interact
+with the application. An activity is represented as a Java class inheriting from
+the Activity class. For each Activity there is a XML file which represents the
+structure of the screen layout and which elements (buttons, icons, labels,
+textfields, etc.) it contains. \Vref{tab:activities} outlines the activities and
+the corresponding layouts which have been implemented for this application.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabularx}{\textwidth}{llX}
+		\toprule
+		\textbf{Activity}		& \textbf{Layout}				& 	\textbf{Description}			\\
+		\midrule
+		MainActivity			& activity\_main.xml			& 	Startscreen of the application 	\\
+		PollActivity			& activity\_poll.xml			& 	Activity which displays all 
+																	the existing volls in a list	\\
+		PollDetailActivity		& activity\_poll\_detail.xml	&	Activity which is used for
+																	creating and editing votes		\\
+		NetworkConfigActivity	& activity\_network\_config.xml	&	Allows to choose
+																	between different network
+																	configuration methods			\\
+		\bottomrule
+	\end{tabularx}
+	\caption{Activities}
+	\label{tab:activities}
+\end{table}
+
+
+\paragraph{Fragments.}
+Fragments allow to reuse parts of a screen design in multiple activities. They
+are also used to design complex dialog interfaces. Fragments are always embedded
+into an activity or a dialog. Similar to activities,
+fragments also have a corresponding layout which is stored
+in a XML file. \Vref{tab:fragments} outlines the fragments and the corresponding
+layouts which have been implemented for this application.
+
+\begin{table}[htbp]
+	\centering
+	\begin{minipage}{\linewidth}
+	\begin{tabularx}{\textwidth}{llX}
+		\toprule
+		\textbf{Fragment}						& \textbf{Layout}				& 	\textbf{Description}			\\
+		\midrule
+		ConnectNetworkDialogFragment			& dialog\_join\_network.xml				& 	\\
+		HelpDialogFragment						& dialog\_help.xml						& 	\\
+		IdentificationWlanKeyDialogFragment		& dialog\_identification\_wlankey.xml	&	\\
+		NetworkDialogFragment					& dialog\_network\_information.xml		&	\\
+		NetworkInformationFragment				& fragment\_network\_information.xml	&	\\
+		NetworkListFragment						& list\_item\_network.xml\footnote{In
+		\emph{ListFragments} the layout for each row is applied} &
+		\\
+		NetworkOptionsFragment					& fragment\_network\_options.xml		& 	\\
+		NFCFragment								& fragment\_nfc.xml						&	\\
+		PollReviewFragment						& fragment\_poll\_review.xml			&	\\
+		ResultChartDialogFragment				& dialog\_chart.xml						&	\\
+		ResultChartFragment						& fragment\_result\_chart.xml			&	\\
+		WaitForVotesFragment					& fragment\_wait\_for\_votes.xml		&	\\
+		\bottomrule
+	\end{tabularx}
+	\end{minipage}
+	\caption{Fragments}
+	\label{tab:fragments}
+\end{table}
+
 
 \section{Enhancements to UniCrypt}
 \label{sec:enhancmentsunicrypt}
