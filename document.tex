@@ -8,6 +8,8 @@ footsepline, oneside, draft=off]{scrreprt}
 % Setting description label fonts to serif
 \addtokomafont{descriptionlabel}{\rmfamily}
 
+\usepackage[T1]{fontenc}
+
 
 \usepackage[english]{babel} 
 \usepackage[utf8]{inputenc}
@@ -820,7 +822,7 @@ to allow the voter to lie about the vote when under coercion. The voter pretends
 to vote according to the wish of the coercer while voting in fact according to
 her intention. Unfortunately, CGS97 does not offer this possibility.
 
-\paragraph{Robustness.} The CGS97 offers robustness by including a
+\paragraph{Robustness.} The CGS97 protocol offers robustness by including a
 threshold secret sharing mechanism that assures a working system as long as a
 certain number of properly behaving trustees remain in the system. The other
 crucial part which requires robustness is the bulletin board, which should be
@@ -1197,12 +1199,13 @@ design of this phase is illustrated in \Vref{fig:result}.
 \label{sec:implementation}
 \todo{This chapter will be written in a later phase of the project}
 
-This chapter outlines the frameworks which have been used for the implementation
-of this project and how they are put together into an application.
 
-\subsection{Android}
-The Android platform serves as the foundation of the whole implementation. The
-Application has been built using existing building blocks such as Activities,
+\subsection{Used Technologies}
+This Section outlines the frameworks which have been used for the implementation
+of this project and how they are put together into an application.
+\subsubsection{Android}
+The Android\footnote{\url{http://developer.android.com/}} platform serves as the
+foundation of the whole implementation. The Application has been built using existing building blocks such as Activities,
 Services, Fragments, etc. Furthermore, there are existing guidelines and best
 practices which have been employed whenever possible. 
 
@@ -1218,16 +1221,24 @@ the corresponding layouts which have been implemented for this application.
 	\centering
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Activity}		& \textbf{Layout}				& 	\textbf{Description}			\\
+		\textbf{Activity}			& \textbf{Layout}							& 	\textbf{Description}			\\
 		\midrule
-		MainActivity			& activity\_main.xml			& 	Startscreen of the application 	\\
-		PollActivity			& activity\_poll.xml			& 	Activity which displays all 
-																	the existing volls in a list	\\
-		PollDetailActivity		& activity\_poll\_detail.xml	&	Activity which is used for
-																	creating and editing votes		\\
-		NetworkConfigActivity	& activity\_network\_config.xml	&	Allows to choose
-																	between different network
-																	configuration methods			\\
+		CheckElectorateActivity 	& \texttt{activity\_check\_electorate.xml} 				&		\\
+		CreateNetworkActivity		& \texttt{activity\_create\_network.xml}				&		\\
+		DisplayResultActivity		& \texttt{activity\_display\_result.xml}				&		\\
+		ElectorateActivity			& \texttt{activity\_electorate.xml}						&		\\
+		ListTerminatedPollsActivity	& \texttt{activity\_list\_terminated\_polls.xml}		&		\\
+		MainActivity				& \texttt{activity\_main.xml}							& 	 	\\
+		NetworkConfigActivity		& \texttt{activity\_network\_config.xml}				&		\\
+		NetworkInformationActivity	& \texttt{activity\_network\_information.xml}			&		\\
+		PollActivity				& \texttt{activity\_poll.xml}							& 		\\
+		PollDetailActivity			& \texttt{activity\_poll\_detail.xml}					&		\\
+		ReviewPollAdminActivity		& \texttt{activity\_review\_poll.xml}					&		\\
+		ReviewPollVoterActivity		& \texttt{activity\_review\_poll\_voter.xml}			&		\\
+		VoteActivity				& \texttt{activity\_vote.xml}							&		\\
+		WaitForVotesAdminActivity	& \texttt{activity\_admin\_wait\_for\_votes.xml}		&		\\
+		WaitForVotesVoterActivity	& \texttt{activity\_wait\_for\_votes.xml}				&		\\
+		
 		\bottomrule
 	\end{tabularx}
 	\caption{Activities}
@@ -1250,20 +1261,19 @@ layouts which have been implemented for this application.
 		\toprule
 		\textbf{Fragment}						& \textbf{Layout}				& 	\textbf{Description}			\\
 		\midrule
-		ConnectNetworkDialogFragment			& dialog\_join\_network.xml				& 	\\
-		HelpDialogFragment						& dialog\_help.xml						& 	\\
-		IdentificationWlanKeyDialogFragment		& dialog\_identification\_wlankey.xml	&	\\
-		NetworkDialogFragment					& dialog\_network\_information.xml		&	\\
-		NetworkInformationFragment				& fragment\_network\_information.xml	&	\\
-		NetworkListFragment						& list\_item\_network.xml\footnote{In
-		\emph{ListFragments} the layout for each row is applied} &
-		\\
-		NetworkOptionsFragment					& fragment\_network\_options.xml		& 	\\
-		NFCFragment								& fragment\_nfc.xml						&	\\
-		PollReviewFragment						& fragment\_poll\_review.xml			&	\\
-		ResultChartDialogFragment				& dialog\_chart.xml						&	\\
-		ResultChartFragment						& fragment\_result\_chart.xml			&	\\
-		WaitForVotesFragment					& fragment\_wait\_for\_votes.xml		&	\\
+		ConnectNetworkDialogFragment			& \texttt{dialog\_join\_network.xml}			& 	\\
+		HelpDialogFragment						& \texttt{dialog\_help.xml}						& 	\\
+		IdentificationWlanKeyDialogFragment		& \texttt{dialog\_identification\_wlankey.xml}	&	\\
+		NetworkDialogFragment					& \texttt{dialog\_network\_information.xml}		&	\\
+		NetworkInformationFragment				& \texttt{fragment\_network\_information.xml}	&	\\
+		NetworkListFragment						& \texttt{list\_item\_network.xml}\footnote{In
+		\emph{ListFragments} the layout for each row is applied} 								&	\\
+		NetworkOptionsFragment					& \texttt{fragment\_network\_options.xml}		& 	\\
+		NFCFragment								& \texttt{fragment\_nfc.xml}					&	\\
+		PollReviewFragment						& \texttt{fragment\_poll\_review.xml}			&	\\
+		ResultChartDialogFragment				& \texttt{dialog\_chart.xml}					&	\\
+		ResultChartFragment						& \texttt{fragment\_result\_chart.xml}			&	\\
+		WaitForVotesFragment					& \texttt{fragment\_wait\_for\_votes.xml}		&	\\
 		\bottomrule
 	\end{tabularx}
 	\end{minipage}
@@ -1271,10 +1281,121 @@ layouts which have been implemented for this application.
 	\label{tab:fragments}
 \end{table}
 
+\subsubsection{AllJoyn}
+AllJoyn\footnote{\url{https://allseenalliance.org/}} is a library which allows
+peer-to-peer communication between several devices. The library has been
+released as opensource recently by the Qualcomm company. It is available for
+multiple platforms, including Android. AllJoyn serves as a communication layer
+which allows to exchange messages between devices such as smartphones and
+tablets. One device acts as master and starts advertising a group to which other
+devices can join. Once joined into the group, all the devices in the group can
+exchange messages among each other. The communication can happen either in
+broadcast (one to many) or unicast (one to one).
 
-\section{Enhancements to UniCrypt}
+The original intention was to use InstaCircle \cite{ritter13a} as a
+communication layer. It turned out that this type of completely decentralized
+communication layer did not suit our needs and did not work as expected in some
+network configurations. Compared to InstaCircle, AllJoyn bears the drawback that
+the communication is orchestrated on the master device that initiates the group
+communication. In exchange, the communication is reliable.
+
+\subsubsection{ZXing}
+ZXing\footnote{\url{https://code.google.com/p/zxing/}} (pronounced ``Zebra
+Crossing'') is a Java library provided by Google which allows to deal with many
+flavours of barcodes, including QR-codes which we are using in this
+implementation. It provides the logic to encode information into a QR-code and
+display it on the user interface of the application. It also provides the
+functionality to use the camera of a smartphone/tablet as a scanner in order to
+decode the QR-code which is being displayed on the screen of another device.
+
+In this project, we are using this functionality for transmiting the parameters
+of the group to other devices. These parameters include the SSID of the WLAN
+that is being used, the encryption key of the conversation, as well as a group
+identifier in case there are multiple conversations running in the same network.
+
+\subsubsection{AChartEngine}
+AChartEngine\footnote{\url{http://www.achartengine.org/}} is an opensource
+library which can be used to draw all sorts of charts on Android devices. In
+this project, we use this library in order to visualize the result on the
+result screen using a pie chart.
+
+\subsubsection{UniCrypt}
+UniCrypt\footnote{\url{https://github.com/bfh-evg/unicrypt/}} is a cryptographic
+library which provides mathematical and cryptographic primitives which are used
+for implementing the e-voting protocol for this application. The version 2 of
+UniCrypt is currently under active development. The use of this library in this
+project also helped to improve UniCrypt itself. Since UniCrypt is developed at
+the same institute, problems could be adressed and fixed right away. Since this
+project is one of the first projects using UniCrypt, it also served as a test
+bed for UniCrypt. For this project, some non existing extensions for UniCrypt
+have been implemented. The result of this work is discussed in further detail in
+\Vref{sec:enhancmentsunicrypt}.
+
+Since UniCrypt is an essential cornerstone of this project, it is discussed in
+further detail in \Vref{sec:unicrypt}.
+
+\section{UniCrypt Extensions}
 \label{sec:enhancmentsunicrypt}
-\todo{This chapter will be written in a later phase of the project}
+The CGS97 protocol contains a few building blocks which were not part of the
+UniCrypt library by the time this project started. Part of the goals of this
+project was to enhance UniCrypt so that the logic could be used in the
+implementation of this application and make it also reusable in further upcoming
+projects. In the following we describe how this implementation has been done.
+
+\subsection{Shamir Secret Sharing Scheme}
+In 1979, Adi Shamir proposed a scheme \cite{Shamir79} on how a secret can be
+split into several independent pieces which can be distributed among several
+authorities. It is not possible to recover the secret unless a sufficient amout
+of these authorities collaborate in order to recover the secret. Further details
+regarding this scheme can be found in \Vref{sec:secretsharing}.
+
+\paragraph{Implementation.} The implementation has been embedded into the
+existing UniCrypt structure.
+The class in which the implementation has been done is the following:
+
+\texttt{ch.bfh.unicrypt.crypto.schemes.sharing.classes.ShamirSecretSharingScheme}
+\\
+\\
+The instanciation of this scheme requires three parameters:
+\begin{itemize}
+  \item An algebraic field of the type \\
+  \texttt{ch.bfh.unicrypt.math.algebra.dualistic.classes.ZModPrime}. The secret
+  which should be shared later on has to be an element of this field.
+  \item The number of shares which should be produced
+  \item A threshold value which defines how many shares must be reunited in
+  order to recover the secret
+\end{itemize}
+
+A secret can be shared using the method \texttt{share()}, which takes
+a message as an argument. The message must be an element of the field which has
+been specified during the initialisation of the scheme. The method returns an
+array of value pairs. Each pair represents a share.
+
+The secret can be recovered using the method \texttt{recover()}, which takes an
+array of value pairs as an argument. The array must at least contain as many
+value pairs as specified with the threshold value during instantiation. The
+method returns a single element which represents the recovered secret.
+
+\paragraph{Testing.}
+UniCrypt components are tested using the JUnit framework. A JUnit Test for the
+Shamir Secret Sharing scheme has been implemented in order to check the correct
+functionality after each change that is done in the UniCrypt library. The
+following testclass has been implemented:
+
+\texttt{ch.bfh.unicrypt.crypto.schemes.sharing.ShamirSecretSharingSchemeTest}
+
+\subsection{ElGamal Proof of Validity}
+A proof of validity is required if a party wants to prove that an ElGamal
+ciphertext is the encryption of element of a set of possible plaintexts without
+revealing which one it is. \Vref{sec:proofofvalidity} covers this topic in
+further detail.
+
+The implementation of the this proof has been done in a very early stage of this
+project, according to the architecture of UniCrypt 1. In the meantime, UniCrypt
+has been completely reengineered. The validity proof has been reimplemented
+independently of this project in order to fit into the new architecture. Since
+this project is based on UniCrypt 2, the project makes use of the reimplemented
+version of the ElGamal proof of validity.
 
 \chapter{Discussion}
 \label{cha:discussion}
