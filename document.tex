@@ -968,95 +968,7 @@ time budget will be the implementation and the testing of the actual e-voting
 logic. The last part will be dedicated to writing the project report of this
 master thesis project.
 
-\begin{sidewaysfigure}[ph]
-\noindent\resizebox{\textwidth}{!}{
-	\begin{tikzpicture}[x=.5cm, y=1cm]
-	\begin{ganttchart}
-	[vgrid, hgrid,
-	group/.style={draw=black, fill=black!50}, y unit chart=0.8cm]{26}
-	\gantttitle{\textbf{Planning Master Thesis (part 1)}}{26} \\
-	\gantttitlelist{8,...,33}{1} \\
-	\ganttmilestone{Kickoff}{0.5} \\
-	\ganttgroup{Writing of Project Proposal}{1}{6} \\
-	\ganttgroup{Secret Sharing scheme}{6}{10} \\
-	\ganttbar{Analyzing the possibilities of threshold secret sharing}{6}{8} \\
-	\ganttbar{Implementing secret sharing into UniCrypt}{7}{10} \\
-	\ganttbar{Testing the secret sharing scheme}{9}{10} \\
-	\ganttgroup{Proof of Validity}{11}{13} \\
-	\ganttbar{Implementing proof of validity into UniCrypt}{11}{12} \\
-	\ganttbar{Testing of the proof of validity implementation}{12}{13} \\
-	\ganttgroup{Evaluation of UniCrypt on Android}{14}{15} \\
-	\ganttbar{Testing out Example code on Android}{14}{14} \\
-	\ganttbar{Integration of code into Android project}{15}{15} \\
-	\ganttmilestone{Building blocks ready}{15.5} \\
-	\ganttgroup{Implementation of e-voting Application of Android}{20}{26} \\
-	\ganttbar{Design of storyboard}{20}{24}\\
-	\ganttbar{Implementation of the User Interface}{23}{26}\\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the
-	e-voting logic}{0}{0}\\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Testing}{0}{0} \\
-	\ganttgroup{Documentation / Report}{1}{8} \\
-	\ganttmilestone[milestone height=0.0, milestone/.style={draw=none}]{Hand in}{0}	
-	\end{ganttchart}
-	\end{tikzpicture}
-}
-\caption{Planning part 1}
-\label{fig:planningpart1}
-\end{sidewaysfigure}
-	
 
-\begin{sidewaysfigure}[ph]
-\noindent\resizebox{\textwidth}{!}{
-	\begin{tikzpicture}[x=.5cm, y=1cm]
-	\begin{ganttchart}
-	[vgrid, hgrid,
-	group/.style={draw=black, fill=black!50}, y unit chart=0.8cm]{26}
-	\gantttitle{\textbf{Planning Master Thesis (part 2)}}{26} \\
-	\gantttitlelist{34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2,3,4,5,6,7}{1}
-	\\
-	\ganttmilestone[milestone height=0.0,
-	milestone/.style={draw=none}]{Kickoff}{0.5} \\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Writing of Project
-	Proposal}{}{} \\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Secret Sharing
-	scheme}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Analyzing the possibilities
-	of threshold secret sharing}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementing secret sharing
-	into UniCrypt}{0}{0}
-	\\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing the secret sharing
-	scheme}{0}{0} \\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Proof of
-	Validity}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementing proof of
-	validity into UniCrypt}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing of the proof of
-	validity implementation}{0}{0} \\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Evaluation of UniCrypt
-	on Android}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing out Example code on
-	Android}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Integration of code into
-	Android project}{0}{0} \\
-	\ganttmilestone[milestone height=0.0,
-	milestone/.style={draw=none}]{Building blocks ready}{0.5} \\
-	\ganttgroup{Implementation of
-	e-voting Application of Android}{1}{13} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Design of
-	storyboard}{0}{0}\\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the User
-	Interface}{0}{0}\\
-	\ganttbar{Implementation of the e-voting logic}{1}{13}\\
-	\ganttgroup{Testing}{7}{19} \\
-	\ganttgroup{Documentation / Report}{14}{24.5} \\
-	\ganttmilestone{Hand in}{24.5}
-	\end{ganttchart}
-	\end{tikzpicture}
-}
-\caption{Planning part 2}
-\label{fig:planningpart2}
-\end{sidewaysfigure}
 
 \section{Milestones}
 \label{sec:milestones}
@@ -1209,6 +1121,72 @@ foundation of the whole implementation. The Application has been built using exi
 Services, Fragments, etc. Furthermore, there are existing guidelines and best
 practices which have been employed whenever possible. 
 
+
+
+\subsubsection{AllJoyn}
+AllJoyn\footnote{\url{https://allseenalliance.org/}} is a library which allows
+peer-to-peer communication between several devices. The library has been
+released as opensource recently by the Qualcomm company. It is available for
+multiple platforms, including Android. AllJoyn serves as a communication layer
+which allows to exchange messages between devices such as smartphones and
+tablets. One device acts as master and starts advertising a group to which other
+devices can join. Once joined into the group, all the devices in the group can
+exchange messages among each other. The communication can happen either in
+broadcast (one to many) or unicast (one to one).
+
+The original intention was to use InstaCircle \cite{ritter13a} as a
+communication layer. It turned out that this type of completely decentralized
+communication layer did not suit our needs and did not work as expected in some
+network configurations. Compared to InstaCircle, AllJoyn bears the drawback that
+the communication is orchestrated on the master device that initiates the group
+communication. In exchange, the communication is reliable.
+
+Some parts of InstaCircle were used, mainly the WLAN management and the logic
+for transmiting the communication parameters could be adapted from the
+InstaCircle implementation.
+
+\subsubsection{ZXing}
+ZXing\footnote{\url{https://code.google.com/p/zxing/}} (pronounced ``Zebra
+Crossing'') is a Java library provided by Google which allows to deal with many
+flavours of barcodes, including QR-codes which we are using in this
+implementation. It provides the logic to encode information into a QR-code and
+display it on the user interface of the application. It also provides the
+functionality to use the camera of a smartphone/tablet as a scanner in order to
+decode the QR-code which is being displayed on the screen of another device.
+
+In this project, we are using this functionality for transmiting the parameters
+of the group to other devices. These parameters include the SSID of the WLAN
+that is being used, the encryption key of the conversation, as well as a group
+identifier in case there are multiple conversations running in the same network.
+
+\subsubsection{AChartEngine}
+AChartEngine\footnote{\url{http://www.achartengine.org/}} is an opensource
+library which can be used to draw all sorts of charts on Android devices. In
+this project, we use this library in order to visualize the result on the
+result screen using a pie chart.
+
+\subsubsection{UniCrypt}
+UniCrypt\footnote{\url{https://github.com/bfh-evg/unicrypt/}} is a cryptographic
+library which provides mathematical and cryptographic primitives which are used
+for implementing the e-voting protocol for this application. The version 2 of
+UniCrypt is currently under active development. The use of this library in this
+project also helped to improve UniCrypt itself. Since UniCrypt is developed at
+the same institute, problems could be adressed and fixed right away. Since this
+project is one of the first projects using UniCrypt, it also served as a test
+bed for UniCrypt. For this project, some non existing extensions for UniCrypt
+have been implemented. The result of this work is discussed in further detail in
+\Vref{sec:enhancmentsunicrypt}.
+
+Since UniCrypt is an essential cornerstone of this project, it is discussed in
+further detail in \Vref{sec:unicrypt}.
+
+\section{Graphical User Interface}
+\label{sec:graphicaluserinterface}
+
+The Android platform provides a powerful framework which allows to design rich
+user interfaces specifically designed for mobile devices. The User interface was
+built using these techniques.
+
 \paragraph{Activities.}
 Android Activities basically represent screens which allow the user to interact
 with the application. An activity is represented as a Java class inheriting from
@@ -1281,58 +1259,20 @@ layouts which have been implemented for this application.
 	\label{tab:fragments}
 \end{table}
 
-\subsubsection{AllJoyn}
-AllJoyn\footnote{\url{https://allseenalliance.org/}} is a library which allows
-peer-to-peer communication between several devices. The library has been
-released as opensource recently by the Qualcomm company. It is available for
-multiple platforms, including Android. AllJoyn serves as a communication layer
-which allows to exchange messages between devices such as smartphones and
-tablets. One device acts as master and starts advertising a group to which other
-devices can join. Once joined into the group, all the devices in the group can
-exchange messages among each other. The communication can happen either in
-broadcast (one to many) or unicast (one to one).
+\section{Bootstrapping of Group Communication}
+\label{sec:bootstraping}
+A challenge of the 
 
-The original intention was to use InstaCircle \cite{ritter13a} as a
-communication layer. It turned out that this type of completely decentralized
-communication layer did not suit our needs and did not work as expected in some
-network configurations. Compared to InstaCircle, AllJoyn bears the drawback that
-the communication is orchestrated on the master device that initiates the group
-communication. In exchange, the communication is reliable.
 
-\subsubsection{ZXing}
-ZXing\footnote{\url{https://code.google.com/p/zxing/}} (pronounced ``Zebra
-Crossing'') is a Java library provided by Google which allows to deal with many
-flavours of barcodes, including QR-codes which we are using in this
-implementation. It provides the logic to encode information into a QR-code and
-display it on the user interface of the application. It also provides the
-functionality to use the camera of a smartphone/tablet as a scanner in order to
-decode the QR-code which is being displayed on the screen of another device.
+\section{Messaging}
+\label{sec:messaging}
 
-In this project, we are using this functionality for transmiting the parameters
-of the group to other devices. These parameters include the SSID of the WLAN
-that is being used, the encryption key of the conversation, as well as a group
-identifier in case there are multiple conversations running in the same network.
+\section{Datastructures}
+\label{sec:datastructures}
 
-\subsubsection{AChartEngine}
-AChartEngine\footnote{\url{http://www.achartengine.org/}} is an opensource
-library which can be used to draw all sorts of charts on Android devices. In
-this project, we use this library in order to visualize the result on the
-result screen using a pie chart.
+\section{Voting Protocol}
+\label{sec:votingprotocol}
 
-\subsubsection{UniCrypt}
-UniCrypt\footnote{\url{https://github.com/bfh-evg/unicrypt/}} is a cryptographic
-library which provides mathematical and cryptographic primitives which are used
-for implementing the e-voting protocol for this application. The version 2 of
-UniCrypt is currently under active development. The use of this library in this
-project also helped to improve UniCrypt itself. Since UniCrypt is developed at
-the same institute, problems could be adressed and fixed right away. Since this
-project is one of the first projects using UniCrypt, it also served as a test
-bed for UniCrypt. For this project, some non existing extensions for UniCrypt
-have been implemented. The result of this work is discussed in further detail in
-\Vref{sec:enhancmentsunicrypt}.
-
-Since UniCrypt is an essential cornerstone of this project, it is discussed in
-further detail in \Vref{sec:unicrypt}.
 
 \section{UniCrypt Extensions}
 \label{sec:enhancmentsunicrypt}
@@ -1397,6 +1337,7 @@ independently of this project in order to fit into the new architecture. Since
 this project is based on UniCrypt 2, the project makes use of the reimplemented
 version of the ElGamal proof of validity.
 
+
 \chapter{Discussion}
 \label{cha:discussion}
 \todo{This chapter will be written in a later phase of the project}
@@ -1406,6 +1347,123 @@ version of the ElGamal proof of validity.
 \todo{This chapter will be written in a later phase of the project}
 
 \printbibliography
+
+\appendix
+
+\chapter{Planning}
+
+\begin{sidewaysfigure}[ph]
+\noindent\resizebox{\textwidth}{!}{
+	\begin{tikzpicture}[x=.5cm, y=1cm]
+	\begin{ganttchart}
+	[vgrid, hgrid,
+	group/.style={draw=black, fill=black!50}, y unit chart=0.8cm]{26}
+	\gantttitle{\textbf{Planning Master Thesis (part 1)}}{26} \\
+	\gantttitlelist{8,...,33}{1} \\
+	\ganttmilestone{Kickoff}{0.5} \\
+	\ganttgroup{Writing of Project Proposal}{1}{6} \\
+	\ganttgroup{Secret Sharing scheme}{6}{10} \\
+	\ganttbar{Analyzing the possibilities of threshold secret sharing}{6}{8} \\
+	\ganttbar{Implementing secret sharing into UniCrypt}{7}{10} \\
+	\ganttbar{Testing the secret sharing scheme}{9}{10} \\
+	\ganttgroup{Proof of Validity}{11}{13} \\
+	\ganttbar{Implementing proof of validity into UniCrypt}{11}{12} \\
+	\ganttbar{Testing of the proof of validity implementation}{12}{13} \\
+	\ganttgroup{Evaluation of UniCrypt on Android}{14}{15} \\
+	\ganttbar{Testing out Example code on Android}{14}{14} \\
+	\ganttbar{Integration of code into Android project}{15}{15} \\
+	\ganttmilestone{Building blocks ready}{15.5} \\
+	\ganttgroup{Implementation of e-voting Application of Android}{20}{26} \\
+	\ganttbar{Design of storyboard}{20}{24}\\
+	\ganttbar{Implementation of the User Interface}{23}{26}\\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the
+	e-voting logic}{0}{0}\\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Testing}{0}{0} \\
+	\ganttgroup{Documentation / Report}{1}{8} \\
+	\ganttmilestone[milestone height=0.0, milestone/.style={draw=none}]{Hand in}{0}	
+	\end{ganttchart}
+	\end{tikzpicture}
+}
+\caption{Planning part 1}
+\label{fig:planningpart1}
+\end{sidewaysfigure}
+	
+
+\begin{sidewaysfigure}[ph]
+\noindent\resizebox{\textwidth}{!}{
+	\begin{tikzpicture}[x=.5cm, y=1cm]
+	\begin{ganttchart}
+	[vgrid, hgrid,
+	group/.style={draw=black, fill=black!50}, y unit chart=0.8cm]{26}
+	\gantttitle{\textbf{Planning Master Thesis (part 2)}}{26} \\
+	\gantttitlelist{34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2,3,4,5,6,7}{1}
+	\\
+	\ganttmilestone[milestone height=0.0,
+	milestone/.style={draw=none}]{Kickoff}{0.5} \\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Writing of Project
+	Proposal}{}{} \\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Secret Sharing
+	scheme}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Analyzing the possibilities
+	of threshold secret sharing}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementing secret sharing
+	into UniCrypt}{0}{0}
+	\\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing the secret sharing
+	scheme}{0}{0} \\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Proof of
+	Validity}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementing proof of
+	validity into UniCrypt}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing of the proof of
+	validity implementation}{0}{0} \\
+	\ganttgroup[group height=0.0, group/.style={draw=none}]{Evaluation of UniCrypt
+	on Android}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing out Example code on
+	Android}{0}{0} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Integration of code into
+	Android project}{0}{0} \\
+	\ganttmilestone[milestone height=0.0,
+	milestone/.style={draw=none}]{Building blocks ready}{0.5} \\
+	\ganttgroup{Implementation of
+	e-voting Application of Android}{1}{13} \\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Design of
+	storyboard}{0}{0}\\
+	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the User
+	Interface}{0}{0}\\
+	\ganttbar{Implementation of the e-voting logic}{1}{13}\\
+	\ganttgroup{Testing}{7}{19} \\
+	\ganttgroup{Documentation / Report}{14}{24.5} \\
+	\ganttmilestone{Hand in}{24.5}
+	\end{ganttchart}
+	\end{tikzpicture}
+}
+\caption{Planning part 2}
+\label{fig:planningpart2}
+\end{sidewaysfigure}
+
+\chapter{User Handbook}
+This chapter describes how the MobiVote Application can be used in practice.
+
+\section{Requirements}
+In order to run a vote using MobiVote, all the participants need to be in
+posession of a mobile device such as a smartphone or a tablet computer running
+at least Android 4.0 (Ice Cream Sandwich). All the devices also need to be WLAN
+capable and the WLAN adapter has to be activated. Currently is not possible to
+use mobile devices of other flavour as Apple iPhones or devices running Windows
+mobile.
+
+\section{Installation}
+The MobiVote application is available as an APK file which can be installed on
+Android devices. In order to install the APK file, the file needs to be
+transfered the devices. The easiest way is to connect the Device to a computer
+using the USB cable and copy the APK file to the device. Using a filemanager on
+the mobile device, locate the APK file in your filesystem and install it by
+clicking on it. For this to work, the option
+Settings $\rightarrow$ Security $\rightarrow$ Unknown Sources
+must be enabled. 
+
+
 
 \listoftodos
 
