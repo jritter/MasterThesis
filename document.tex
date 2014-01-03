@@ -985,9 +985,17 @@ throughout the project period.
 
 \chapter{Results}
 \label{cha:results}
-In this chapter we present the outcome of this project. We will discuss the
-development of the graphical user interface, the architecture and implementation
-of the Android application and finally the contributions to related projects.
+During the project phase, a working implementation of the CGS97 voting protocol
+running on Android mobile devices has been implemented. As name for the
+application we chose ``MobiVote'', which is related to the name ``UniVote'',
+which is an e-voting system targeted for the use at a desktop computer.
+UniVote\footnote{\url{https://www.univote.ch/}} is developed at the same
+institute, therefore we tried to create this relation.
+
+In this chapter we present further insights of the design of MobiVote. We
+will discuss the development of the graphical user interface, the architecture
+and implementation of the Android application and finally the contributions to
+related projects.
 
 \section{Graphical User Interface}
 \label{sec:gui}
@@ -1106,16 +1114,10 @@ design of this phase is illustrated in \Vref{fig:result}.
 	\label{fig:result}
 \end{figure}
 
-
-\section{Implementation}
-\label{sec:implementation}
-\todo{This chapter will be written in a later phase of the project}
-
-
-\subsection{Used Technologies}
+\section{Used Technologies}
 This Section outlines the frameworks which have been used for the implementation
 of this project and how they are put together into an application.
-\subsubsection{Android}
+\subsection{Android}
 The Android\footnote{\url{http://developer.android.com/}} platform serves as the
 foundation of the whole implementation. The Application has been built using existing building blocks such as Activities,
 Services, Fragments, etc. Furthermore, there are existing guidelines and best
@@ -1123,7 +1125,7 @@ practices which have been employed whenever possible.
 
 
 
-\subsubsection{AllJoyn}
+\subsection{AllJoyn}
 AllJoyn\footnote{\url{https://allseenalliance.org/}} is a library which allows
 peer-to-peer communication between several devices. The library has been
 released as opensource recently by the Qualcomm company. It is available for
@@ -1145,7 +1147,7 @@ Some parts of InstaCircle were used, mainly the WLAN management and the logic
 for transmiting the communication parameters could be adapted from the
 InstaCircle implementation.
 
-\subsubsection{ZXing}
+\subsection{ZXing}
 ZXing\footnote{\url{https://code.google.com/p/zxing/}} (pronounced ``Zebra
 Crossing'') is a Java library provided by Google which allows to deal with many
 flavours of barcodes, including QR-codes which we are using in this
@@ -1159,13 +1161,13 @@ of the group to other devices. These parameters include the SSID of the WLAN
 that is being used, the encryption key of the conversation, as well as a group
 identifier in case there are multiple conversations running in the same network.
 
-\subsubsection{AChartEngine}
+\subsection{AChartEngine}
 AChartEngine\footnote{\url{http://www.achartengine.org/}} is an opensource
 library which can be used to draw all sorts of charts on Android devices. In
 this project, we use this library in order to visualize the result on the
 result screen using a pie chart.
 
-\subsubsection{UniCrypt}
+\subsection{UniCrypt}
 UniCrypt\footnote{\url{https://github.com/bfh-evg/unicrypt/}} is a cryptographic
 library which provides mathematical and cryptographic primitives which are used
 for implementing the e-voting protocol for this application. The version 2 of
@@ -1261,8 +1263,39 @@ layouts which have been implemented for this application.
 
 \section{Bootstrapping of Group Communication}
 \label{sec:bootstraping}
-A challenge of the 
+In order to assure privacy and authenticity of a voting session, the
+communication between the participant's devices needs to be secured using
+cryptographic means. To achieve that, different types of cryptographic keys need
+to be exchanged. When joining a voting session, the user needs to provide a
+conversation password which has been generated on the device of the vote
+administrator. The administrator has several possibilities to distribute this
+password, along with the other information which is needed to connect, namely
+the SSID of the WLAN on which the conversation takes place and the group name to
+identify the conversation. The following possibilities are available:
+\begin{itemize}
+  \item Communicate the password, the groupname and the SSID as text.
+  Participants who want to join the session need to enter these parameters using
+  the soft keyboard of the mobile device.
+  \item Display a QR-code which encodes password, groupname and SSID.
+  Participants who want to join the session can snap a picture of this QR-code
+  using the camera of the mobile device and decode the information on their
+  devices.
+  \item Write password, groupname and SSID to a NFC tag which then can be passed
+  along to all the participants. When tapping this NFC tag on the back of a NFC
+  capable device, the User will be connected to the session.
+\end{itemize}
 
+The applications uses the password to derive an AES key which will be used to
+symmetrically encrypt all the traffic in the conversation. Furthermore, a
+dynamic salt which is generated by the administrator decreases the risk of
+rainbowtable attacks.
+
+In order to guarantee the authenticity and integrity of the messages in the
+conversation, each participant generates an RSA keypair. The public key is 
+broadcast to all the participants. This key setup can then be used for
+signing/verifying all the messages in the conversation, as well as for
+establishing a secure point-to-point channel between two participants in the
+conversation.
 
 \section{Messaging}
 \label{sec:messaging}
