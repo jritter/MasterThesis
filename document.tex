@@ -85,6 +85,12 @@ footsepline, oneside, draft=off]{scrreprt}
 \usepackage{tabularx}
 \usepackage{booktabs}
 
+% menukeys for handbook in appendix
+\usepackage{menukeys}
+\renewmenumacro{\menu}{roundedmenus} % default: menus
+\renewmenumacro{\keys}{roundedkeys}
+
+
 \begin{document}
 
 \title{\bf Decentralized E-Voting on Android Devices Using Homomorphic Tallying}
@@ -1479,13 +1485,18 @@ version of the ElGamal proof of validity.
 \chapter{User Handbook}
 This chapter describes how the MobiVote Application can be used in practice.
 
-\section{Requirements}
+\section{Purpose of this Application}
+The purpose of this application is providing a system for verifiable and secure
+voting for a group of people gathered in the same physical location, for example
+a board meeting. 
+
+\section{Prerequisites}
 In order to run a vote using MobiVote, all the participants need to be in
 posession of a mobile device such as a smartphone or a tablet computer running
 at least Android 4.0 (Ice Cream Sandwich). All the devices also need to be WLAN
 capable and the WLAN adapter has to be activated. Currently is not possible to
-use mobile devices of other flavour as Apple iPhones or devices running Windows
-mobile.
+use mobile devices of other flavours such as Apple iPhones or devices running
+Windows mobile.
 
 \section{Installation}
 The MobiVote application is available as an APK file which can be installed on
@@ -1494,10 +1505,157 @@ transfered the devices. The easiest way is to connect the Device to a computer
 using the USB cable and copy the APK file to the device. Using a filemanager on
 the mobile device, locate the APK file in your filesystem and install it by
 clicking on it. For this to work, the option
-Settings $\rightarrow$ Security $\rightarrow$ Unknown Sources
+\menu[,]{Settings, Security, Unknown Sources}
 must be enabled. 
 
+\section{Start of the Application}
+After a successful installation, the app should be available in the applications
+screen of your Android device. The app can be started by clicking on the icon.
 
+\section{Setup a Vote}
+The group needs to nominate one member as the administrator of the vote. The
+administrator is responsible for the orchestration of the voting process. That
+includes defining the question and the possible options, approving other people
+to be in the electorate and initiating the voting phase.
+
+In order to setup a new vote, the nominated administrator selects the option
+\keys{Votes} on the main screen. The appearing screen shows a list of prepared
+votes, as well as an option to create a new vote. In the ``Vote Setup''
+screen, the properties of the vote can be entered, namely the question of the vote and a
+list of possible answers. The option \menu[,]{Allow blank ballots} can be
+checked if voters should be allowed to cast a blank ballot.
+
+From here you can either go back if you just want to prepare the vote in advance
+for an upcoming session, or you can directly start the vote by clicking on the
+button \keys{Start vote}.
+
+\section{Start a Voting Session}
+In order to establish a voting session, some additional information regarding
+the network is required. First, you need to enter an identification into the
+according textbox at the top of the screen. This value defines how you will be
+represented in the voting session. Most likely you will want to enter your name
+into this box. This value will be saved on the device and will be proposed in
+upcoming sessions, but you can change this representation anytime you want to.
+Moreover, you are required to tell the application in which wireless network the
+voting session should take place. In most cases this will be the network that
+you are currently connected to. If you want to use this network, you can just
+click on the button \keys{Use network ``XYZ''}. In case you want to use a
+different network, you can use the button \keys{Advanced network configuration}. This screen
+lets you choose all currently available network.
+When choosing a network you should consider that all the participants need to be
+allowed to connect to this network.
+
+\section{Share the Session Parameters}
+After selecting the network, a screen containing the voting session parameters
+is displayed. Three parameters are required to connect to a voting session:
+\begin{itemize}
+  \item The network name (SSID)
+  \item The group number
+  \item The group password
+\end{itemize}
+
+These three parameters need to be distributed to all the persons who will be
+allowed to join the electorate of the vote. To do so, MobiVote provides three
+ways.
+\begin{itemize}
+  \item \textbf{Plain text:} All three parameters are communicated visually or
+  orally as plain text. The participants can enter them when joining a voting
+  session.
+  \item \textbf{QR-code:} The three parameters are encoded in a QR-code which is
+  displayed on the same screen. This QR-code can then be scanned using the
+  camera of the participant's devices.
+  \item \textbf{NFC tag:} The three parameters are written to a NFC tag. This
+  tag can then be passed along the participants who can scan the tag by tapping
+  it to the back of their device. Please note that NFC functionality is only
+  available in devices of the latest generation.
+\end{itemize}
+Of course it is also possible to use a combination of these three options. Using
+one of the sharing methods above, the participants can now join the voting
+session.
+
+\section{Join a Voting Session as a Participant}
+Once the administrator has announced the session parameters, the participants
+can join the session using one of the sharing methods outlined in the previous
+section. After starting up the MobiVote app, the participants now chooses the
+option \keys{Join electorate}. First, you need to enter an identification into
+the according textbox at the top of the screen. This value defines how you will be
+represented in the voting session. Most likely you will want to enter your name
+into this box. This value will be saved on the device and will be proposed in
+upcoming sessions, but you can change this representation anytime you want to.
+Next, one of the following methods to join can be chosen:
+\begin{itemize}
+  \item \textbf{Scan QR-code:} Using this method, the QR-code displayed on
+  another device can be captured using the camera of the device. After the
+  successful capture, the device is automatically joined into the voting
+  session. In case the session takes place on a secure WLAN which is not known
+  on the device, the user will be prompted to enter the WLAN key. This method is
+  probably the easiest and fastest way to join a voting session.
+  \item \textbf{Use currently connected network:} When choosing this option, the
+  WLAN to which the device is currently connected will be used. The user will be
+  prompted to enter the password and the group number. These values are both
+  displayed on the device of the administrator who established the voting
+  session.
+  \item \textbf{Advanced network configuration:} This option provides you with a
+  list of currently available WLAN configuration. In order to join the voting
+  session, you need to choose the WLAN which is displayed on the screen of the
+  administrator's device. You will then be prompted to enter the password and
+  the group number according to the parameters provided by the administrator.
+  \item \textbf{Scan NFC tag:} This option can be used if you want to use a NFC
+  tag which has been passed to you from the vote administrator. After tapping
+  the NFC tag to the back of the device, the devices automatically connects to
+  the voting session. In case the session takes place on a secure WLAN which is
+  not known on the device, the user will be prompted to enter the WLAN key.
+  Please note that this option is only available on devices on which NFC
+  functionality is available.
+\end{itemize}
+
+\section{Define the Electorate}
+As soon as all participants were able to join their devices to the voting
+session, the administrator can forward to the next screen by clicking on
+\keys{Next}. In the following screen, the administrator can approve all the
+joined participants by clicking on the checkbox next to the allowed participants. Each
+action automatically reflects immediately on all the joined devices. Please note
+that the administrator can include or exclude himself in the electorate.
+Furthermore, the administrator has to define a so called \emph{threshold} value.
+This value defines how many honest behaving participants need to be available
+when the vote is tallied and decrypted. This value has to lie between two and
+the number of participants in the electorate. The value can be adjusted using
+the slider at the bottom of the screen.
+
+\section{Review the Vote}
+After having defined the electorate, the administrator can move along the
+process by clicking on the \keys{Next} button. This leads to the review screen,
+where all the participants sees a summary of the vote and its electorate. All
+participants have to agree to this setup by clicking on the checkbox next to
+their identification. In case some participants disagree, the administrator can
+always go back and adjust the electorate. Once all the participants have agreed
+to the setup, the administrator can start the actual voting period by clicking
+on the button \keys{Start voting period}.
+
+\section{Voting}
+In the voting screen, each participant can select the prefered option. After
+confirming the choice, the vote is encrypted and cast. The following screen
+summarises which participants cast their votes and which did not. The
+administrator has the option to interrupt by clicking on \keys{Cancel vote}, in
+which case no results are obtained. The administrator can also choose the option
+\keys{Finish vote}, in which case the vote is tallied and the results are
+displayed. The tally of the vote starts automatically as soon as all
+participant have cast their votes.
+
+\section{Display the Result}
+After a successful tally, you will be redirected to the result screen where the
+result of the vote is displayed along with some statistics. The vote is archived
+and can be accessed anytime using the \keys{Vote archive} option on the main
+screen. The administrator has the possibility to repeat the vote. This comes in
+handy if several voting round are required to reach a decision.
+
+\section{Vote Archive}
+The vote archive accessible through the main screen lists all the past votes.
+Unwanted votes can be deleted using the trash icon on the right side. An
+individual vote including the results can be examined in further detail by
+clicking on the according list item. If you want to run the exact election
+again, the \keys{Clone vote} button can be used to recreate an empty vote which
+can then be started in the usual manner.
 
 \listoftodos
 
