@@ -90,12 +90,11 @@ footsepline, oneside, draft=off]{scrreprt}
 \renewmenumacro{\menu}{roundedmenus} % default: menus
 \renewmenumacro{\keys}{roundedkeys}
 
-
 \begin{document}
 
 \title{\bf Decentralized E-Voting on Android Devices Using Homomorphic Tallying}
 \subject{Master Thesis}
-\author{Juerg Ritter (\url{rittj1@bfh.ch})\\
+\author{Juerg Ritter\\
 \\
 Bern University of Applied Sciences\\
 Engineering and Information Technology\\
@@ -136,16 +135,26 @@ use this e-voting system.
 \listoffigures
 \listoftables
 
+\markright{Acknowledgements}
+\chapter*{Acknowledgements}
+I would like to thank the E-Voting Group of the Bern University of Applied
+Sciences for giving me the opportunity to realize this project. A special thanks
+goes to my advisor Prof. Dr. Rolf Haenni who supported me throughout the whole
+time during my master studies. A big thank you also goes to my fellow student
+Philémon von Bergen with whom I worked closely during this master thesis. Coming
+a long way from Germany for serving as an expert for this thesis, I would like
+to mention my expert Stephan Neumann.
+
 % Nomenclature 
 % ------------------------------------------------------------------
-\nomenclature{$p, q, g$}{The ElGamal parameters}
-\nomenclature{$m$}{A cleartext message}
-\nomenclature{$(a, b)$}{An ElGamal ciphertext tuple}
-\nomenclature{$x$}{An ElGamal private key}
-\nomenclature{$y$}{An ElGamal public key}
+%\nomenclature{$p, q, g$}{The ElGamal parameters}
+%\nomenclature{$m$}{A cleartext message}
+%\nomenclature{$(a, b)$}{An ElGamal ciphertext tuple}
+%\nomenclature{$x$}{An ElGamal private key}
+%\nomenclature{$y$}{An ElGamal public key}
 
 
-\printnomenclature
+%\printnomenclature
 % ------------------------------------------------------------------
 
 \chapter{Introduction}
@@ -169,7 +178,8 @@ area of e-voting. E-voting has become a big field of research in the past couple
 years. Still, there is no generic approach which meets all the criteria such as
 privacy, transparency, etc. which we want in e-voting. These properties are
 discussed in \Vref{sec:evoting}. The e-voting research group of the Bern
-University of Applied Sciences \cite{www:EVG} tries to improve this situation with the following approaches:
+University of Applied Sciences\footnote{\url{http://e-voting.bfh.ch/}} tries to
+improve this situation with the following approaches:
 \begin{itemize}
   \item Develop new approaches and provide them to the community for review.
   \item Take existing approaches and evaluate them in terms of practicability.
@@ -267,17 +277,18 @@ implemented part time. It is equivalent to 27 ECTS credits.
 
 \section{Contribution}
 \label{sec:contribution}
-Currently there are a couple of Android apps available in the Google Play store
-\cite{www:playstore} which allow to do simple votes, or else they are clients of e-voting
-systems of a specific organisation. A decentralized e-voting system which offers the
-cryptographic level of this project is currently not available. The
-implementation and the evaluation of this project will help to understand
-further strong and weak points of the CGS97 e-voting scheme, especially when
-using it in a decentralized configuration. So far, the E-Voting Group of the
-Bern University of Applied Sciences has gained expertise by implementing and
-operating e-voting systems on centralized systems which are usually operated on
-notebooks or desktop computers. This project will help gaining some experience
-in how e-voting systems can be used on mobile devices.
+Currently there are a couple of Android apps available in the Google Play
+store\footnote{\url{http://play.google.com/}} which allow to do simple votes, or
+else they are clients of e-voting systems of a specific organisation. A
+decentralized e-voting system which offers the cryptographic level of this
+project is currently not available. The implementation and the evaluation of
+this project will help to understand further strong and weak points of the CGS97
+e-voting scheme, especially when using it in a decentralized configuration. So
+far, the E-Voting Group of the Bern University of Applied Sciences has gained
+expertise by implementing and operating e-voting systems on centralized systems
+which are usually operated on notebooks or desktop computers. This project will
+help gaining some experience in how e-voting systems can be used on mobile
+devices.
 
 Furthermore, the extensions for the UniCrypt library can be used for other
 projects as well. In the area of e-voting, threshold cryptosystems and validity
@@ -299,7 +310,7 @@ This section gives an overview of the theoretical foundations and some projects
 which have been implemented earlier in order to serve as a foundation for this
 project. 
 
-\section{E-Voting in 2013}
+\section{E-Voting in 2014}
 \label{sec:evoting}
 In today's internet world, many tasks such as sending mail, doing bank
 transactions, booking flights etc. can be done using the internet. Instead of
@@ -1307,8 +1318,39 @@ conversation.
 \label{sec:messaging}
 
 
-\section{Datastructures}
+\section{Datastructures} 
 \label{sec:datastructures}
+For the management of the available votes in the system (prepared as well as
+completed votes), a small database structure has been implemented. The Android
+platform embeds the sqlite\footnote{\url{http://www.sqlite.org/}} database in
+its API, hence this was the obvious choice for the database technology. \Vref{fig:erd} depicts the very simple data
+structure which has been chosen for this project.
+
+\begin{figure}[htbp]
+	\centering
+	\tikzumlset{fill class=grey!5} 
+	\begin{tikzpicture} 
+	\umlclass[x=0,y=0]{poll}{
+		+ question : string \\
+		+ starttime : int \\
+		+ is\_terminated : boolean \\
+		+ number\_participants : int \\
+	}{} 
+	\umlclass[x=8,y=0]{option}{
+		+ text : string \\
+		+ nbr\_votes : int \\
+		+ percentage : real \\
+	}{} 
+	\umlassoc[geometry=--,arg1=1,align1=left, pos1=0,arg2=0..*,
+	align2=left]{poll}{option}
+	\end{tikzpicture}
+	\caption{Entity Relationship Diagram}
+	\label{fig:erd}
+\end{figure}
+
+According to the Android best practice, a \texttt{SQLiteOpenHelper} class has
+been implemented which manages all the database communication. It also takes
+care about the mapping between entity objects and database entries.
 
 \section{Voting Protocol}
 \label{sec:votingprotocol}
