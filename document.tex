@@ -136,14 +136,14 @@ use this e-voting system.
 \listoftables
 
 \markright{Acknowledgements}
-\chapter*{Acknowledgements}
-I would like to thank the E-Voting Group of the Bern University of Applied
-Sciences for giving me the opportunity to realize this project. A special thanks
-goes to my advisor Prof. Dr. Rolf Haenni who supported me throughout the whole
-time during my master studies. A big thank you also goes to my fellow student
-Philémon von Bergen with whom I worked closely during this master thesis. Coming
-a long way from Germany for serving as an expert for this thesis, I would like
-to mention my expert Stephan Neumann.
+\chapter*{Acknowledgements} I would like to thank the E-Voting Group of the Bern
+University of Applied Sciences for giving me the opportunity to realize this
+project. Many interesting and inspiring discussions helped driving on this
+project. A special thanks goes to my advisor Prof. Dr. Rolf Haenni who supported
+me throughout the whole time during my master studies. A big thank you also goes
+to my fellow student Philémon von Bergen, with whom I worked closely during this
+master thesis. Coming a long way from Germany for serving as an expert for this
+master thesis, I would like to express my gratitudes to Stephan Neumann.
 
 % Nomenclature 
 % ------------------------------------------------------------------
@@ -1328,7 +1328,7 @@ structure which has been chosen for this project.
 
 \begin{figure}[htbp]
 	\centering
-	\tikzumlset{fill class=grey!5} 
+	\tikzumlset{fill class=lightgray!20} 
 	\begin{tikzpicture} 
 	\umlclass[x=0,y=0]{poll}{
 		+ question : string \\
@@ -1351,6 +1351,51 @@ structure which has been chosen for this project.
 According to the Android best practice, a \texttt{SQLiteOpenHelper} class has
 been implemented which manages all the database communication. It also takes
 care about the mapping between entity objects and database entries.
+\Vref{fig:entities} depicts the implemented entity classes. The entity class
+which represents a participant does not have a corresponding database identity,
+this is because the participants of the vote is defined during the voting cycle.
+It is also not relevant later on when displaying the result of the vote,
+therefore the information about the participants are not stored in the database.
+
+\begin{figure}[htbp]
+	\centering
+	\tikzumlset{fill class=lightgray!20} 
+	\begin{tikzpicture}
+	\umlclass[x=6,y=5]{Poll}{
+		- id : int \\
+		- question : String \\
+		- options : List<Option> \\
+		- participants : Map<String,Participant> \\
+		- numberParticipants : int \\
+		- startTime : long \\
+		- isTerminated : boolean \\
+	}{
+		+ \emph{accessor methods}
+	} 
+	\umlclass[x=0,y=0]{Option}{
+		- id : int \\
+		- pollId : int \\
+		- text : String \\
+		- votes : int \\
+		- pecentage : double \\
+	}{
+		+ \emph{accessor methods}
+	} 
+	\umlclass[x=11,y=0]{Participant}{
+		- identification : String \\
+		- uniqueId : String \\
+		- hasVoted : boolean \\
+		- isSelected : boolean \\
+		- hasAcceptedReview : boolean \\
+	}{
+		+ \emph{accessor methods}
+	} 
+	\umlassoc[geometry=-|,arg1=1,arg2=0..*,pos1=0.1, pos2=1.9]{Poll}{Option}
+	\umlassoc[geometry=-|,arg1=1,arg2=0..*,pos1=0.1, pos2=1.9]{Poll}{Participant}
+	\end{tikzpicture}
+	\caption{Entity Class Diagram}
+	\label{fig:entities}
+\end{figure}
 
 \section{Voting Protocol}
 \label{sec:votingprotocol}
