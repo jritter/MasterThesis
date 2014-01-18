@@ -85,6 +85,7 @@ footsepline, oneside, draft=off]{scrreprt}
 \usepackage{tabularx}
 \usepackage{booktabs}
 
+
 % menukeys for handbook in appendix
 \usepackage{menukeys}
 \renewmenumacro{\menu}{roundedmenus} % default: menus
@@ -143,7 +144,7 @@ project. A special thanks goes to my advisor Prof. Dr. Rolf Haenni who supported
 me throughout the whole time during my master studies. A big thank you also goes
 to my fellow student Philémon von Bergen, with whom I worked closely during this
 master thesis. Coming a long way from Germany for serving as an expert for this
-master thesis, I would like to express my gratitudes to Stephan Neumann.
+master thesis, I would like to express my gratitude to Stephan Neumann.
 
 % Nomenclature 
 % ------------------------------------------------------------------
@@ -181,7 +182,8 @@ discussed in \Vref{sec:evoting}. The e-voting research group of the Bern
 University of Applied Sciences\footnote{\url{http://e-voting.bfh.ch/}} tries to
 improve this situation with the following approaches:
 \begin{itemize}
-  \item Develop new approaches and provide them to the community for review.
+  \item Contribute to the scientific community in the area of e-voting by
+  publishing new approaches.
   \item Take existing approaches and evaluate them in terms of practicability.
   These approaches are usually available as scientific papers.
 \end{itemize}
@@ -192,16 +194,16 @@ approach works in practice and provides a certain usability. The E-Voting Group
 would like to gain some experience on how decentralized e-voting systems could
 be implemented and how they behave in practice. There are some approaches which
 focus explicitly on decentralized e-voting systems, such as the proposal of
-Dalia Khader et al. \cite{HKRS12}. In this project however, we would like to adapt the
-voting scheme proposed by Cramer et. al. \cite{CGS97} in a way that it can be
+D. Khader et al. \cite{HKRS12}. In this project however, we would like to adapt
+the voting scheme proposed by Cramer et. al. \cite{CGS97} in a way that it can be
 used as a decentralized e-voting system.
 
-A possible use case of such a system could be an executive board or any other
-commitee that would like to vote on some matters without having their members
-to reveal what exactly they voted for. The architecture of our system requires
-that all the participants are in a confined space and are able to exchange some
-sort of credential using a communication channel which relies on physical
-proximity (e.g. near field communication) or visual contact (e.g. QR-codes).
+A potential usecase of such a system could be boardroom voting, for example a
+vote held in a board of directors of a company. The architecture of our system
+requires that all the participants are in a confined space and are able to
+exchange some sort of credential using a communication channel which relies on
+physical proximity (e.g. near field communication) or visual contact (e.g.
+QR-codes).
 
 In previous projects during the master studies, some groundwork has been
 implemented which can now be used as a foundation for this project. The
@@ -227,17 +229,19 @@ Having said this, we divide the following goals for this project:
 \paragraph{E-Voting Functionality.}
 The main goal of this project is the implementation of the logic of CGS97
 \cite{CGS97}, by assembling the cryptographic building blocks to a working
-application. It has to be tied to the user interface and to InstaCircle for
-communicating with the other participants. This part is heavily based on already
-existing components, namely InstaCircle which provides the decentralized
-communication infrastructure and UniCrypt which provides the implementation of
-the cryptographic building blocks which are used in CGS97
-\myref{sec:buildingblocks}. The final product needs to be able to handle a
+application. The final product needs to be able to handle a
 voting scenario \emph{one-out-of-n}, meaning that a user can choose exactly one
-out of $n$ options. This allows to set up votes which are more complex
-than a simple \emph{Yes-No} vote. At the other end of the spectrum would be the
-\emph{m-out-of-n} scenario, that means that $m$ options can be picked out of $n$
-options. The \emph{m-out-of-n} scenario is not a must for this project.
+out of $n$ options. 
+
+\paragraph{Graphical User Interface.}
+In many cases, cryptographic functions which are heavily used in the context of
+e-voting have a negative impact on the usability. Many steps such as key
+generation, decryption, etc. have to be done in order to guarantee all the
+desired properties for e-voting. All these steps bring a certain complexity
+into the handling of the application. Therefore it is crucial to guide the user
+through the process, and this can only be done by providing them a carefully
+crafted user interface. A further goal of this project is to implement a user
+interface which provides a good usability.
 
 \paragraph{Extension of UniCrypt.}
 UniCrypt implements many cryptographic building blocks which are necessary in
@@ -260,16 +264,6 @@ missing:
 
 As a goal of this project, these two essential building blocks have to be
 implemented and integrated into the UniCrypt library.
-
-\paragraph{Graphical User Interface.}
-In many cases, cryptographic functions which are heavily used in the context of
-e-voting have a negative impact on the usability. Many steps such as key
-generation, decryption, etc. have to be done in order to guarantee all the
-desired properties for e-voting. All these steps bring a certain complexity
-into the handling of the application. Therefore it is crucial to guide the user
-through the process, and this can only be done by providing them a carefully
-crafted user interface. A further goal of this project is to implement a user
-interface which provides a good usability.
 \\
 
 The time budget of this master thesis is one year, although the project will be
@@ -279,7 +273,7 @@ implemented part time. It is equivalent to 27 ECTS credits.
 \label{sec:contribution}
 Currently there are a couple of Android apps available in the Google Play
 store\footnote{\url{http://play.google.com/}} which allow to do simple votes, or
-else they are clients of e-voting systems of a specific organisation. A
+else they are clients of e-voting systems of a specific organization. A
 decentralized e-voting system which offers the cryptographic level of this
 project is currently not available. The implementation and the evaluation of
 this project will help to understand further strong and weak points of the CGS97
@@ -293,11 +287,11 @@ devices.
 Furthermore, the extensions for the UniCrypt library can be used for other
 projects as well. In the area of e-voting, threshold cryptosystems and validity
 proofs are considered as standard building blocks and can be used for the
-implementation of e-voting schemes other than CGS97.
+implementation of other e-voting schemes.
 
 \section{Outline}
 \Vref{cha:brw} gives an overview of the work on which this project has
-been based on. The cryptographic building blocks which are used are discussed,
+been based on. The cryptographic building blocks which we use are discussed,
 as well as the e-voting scheme on which this work is based on. We also discuss
 projects which have been implemented as a preparation of this master thesis.
 \Vref{cha:results} explains the resulting implementation in detail.
@@ -342,7 +336,7 @@ some properties and their definitions have emerged.
   voted.
   \item[Receipt-freeness:] The voter can not prove to anybody else how
   she voted.
-  \item[Coercion-resistance:] Noone can force a voter to vote in a
+  \item[Coercion-resistance:] Nobody can force a voter to vote in a
   particular way, or prevent a voter to vote at all.
   \item[Robustness:] An attacker is not able to disrupt an election
   process or change the outcome by damaging a small set of system components. 
@@ -356,42 +350,45 @@ scenario. Researchers are trying to develop schemes towards these requirements
 using cryptographic building blocks. The robustness property is probably the
 biggest factor that prevents the breakthrough of e-voting on large scales.
 E-voting systems are the perfect targets for an intended manipulation or a
-boycott of an election. That's why many governments use e-voting only on small
-scales so that the electorate is small enough that it is statistically unlikely
-to tip the scale to one side or the other.
+boycott of an election. That is the reason why many governments use e-voting
+only on small scales so that the electorate is small enough that it is
+statistically unlikely to tip the scale to one side or the other.
 
 \section{Cryptographic Building Blocks}
 \label{sec:buildingblocks}
 The voting scheme that will be used in our system is assembled from some well
 known cryptographic building blocks which are briefly explained in this section.
 All these cryptographic building blocks belong to the area of \emph{asymmetric}
-cryptography, which is based usually based on key pair, containing a
+cryptography, which is usually based on a key pair, containing a
 \emph{public key} and a \emph{secret key}.
 
 \subsection{Discrete Logarithm Problem}
+\label{sec:discretelogarithm}
 Asymmetric cryptography relies on a mathematical problem, which is nowadays
 considered to be hard to solve, meaning that so far there is no known algorithm
 to find a solution for a given problem efficiently. An example of such a problem
 is the prime factorization of large numbers on which the security of the famous
 RSA cryptosystem \cite{RSA78} is based on. The other hard problem of this kind
-is know as the \emph{Discrete Logarithm Problem}. The formal definition of
+is known as the \emph{Discrete Logarithm Problem}. The formal definition of
 the problem is as follows: 
 
 Given a prime $p$, a generator $g$ of a multiplicative modular group
 $\mathbb{Z}^*_p$ and an element $b \in \mathbb{Z}^*_p$, find the integer
-$x,0 \leq x \leq p - 2$, such that $a^x \equiv b \mod p$.
+$x,0 \leq x \leq p - 2$, such that $g^x \equiv b \mod p$.
 
 Currently there is no efficient way of solving this equation in an efficient
 manner. There are some more sophisticated approaches than the naive way of
 iterating over all elements of the group, for example the baby-step giant-step
-algorithm. The security of most of the building blocks we are using in this
-project is based on this problem. Further information concerning the discrete
-logarithm problem can be found in Chapter 3 of the Handbook of Applied
-Cryptography by Alfred Menezes et. al. \cite{book:hac}.
+algorithm\footnote{\url{http://en.wikipedia.org/wiki/Baby-step_giant-step}}, but
+it is still not possible to find a solution in polynomial time with respect to the order of the group. The security of most of the building
+blocks we are using in this project is based on this problem. Further
+information concerning the discrete logarithm problem can be found in Chapter 3
+of the Handbook of Applied Cryptography by A. Menezes et. al.
+\cite{book:hac}.
 
 \subsection{ElGamal Cryptosystem}
 \label{sec:elgamal}
-The ElGamal cryptosystem \cite{EG84}, proposed by Taher El Gamal in 1984, is the
+The ElGamal cryptosystem \cite{EG84}, proposed by T. El Gamal in 1984, is the
 asymmetric cryptosystem which is mostly used in the context of e-voting. An
 asymmetric cryptosystem uses two keys to operate, one which is used to encrypt a
 certain message (the public key) and another to decrypt the message (the secret
@@ -406,7 +403,7 @@ a \textit{randomized} cryptosystem.
 
 In order to define an ElGamal cryptosystem, three parameters are required. Let
 $p$ and $q$ be large prime numbers such that $q|p-1$.\footnote{In the case of
-$p=2q+1$ where $p$ and $q$ are primes, $p$ is called \emph{save prime} and $q$
+$p=2q+1$ where $p$ and $q$ are primes, $p$ is called \emph{safe prime} and $q$
 is called \emph{Sophie Germain prime}.}
 The prime number $q$ defines the order of a subgroup $G_q$ of the multiplicative
 modular group $\mathbb{Z}^*_p$. $\mathbb{Z}_q$ is an additive modular group of order $q$. The
@@ -437,9 +434,8 @@ the message $\hat{m} \in \mathbb{Z}_q$. In many cases, the ElGamal parameter $g$
 is used as $\hat{g}$, which makes it unnecessary to define a fourth predefined
 parameter. Note that the message $\hat{m}$ is an element of the additive group
 $\mathbb{Z}_q$ as opposed to the classical ElGamal where $m$ is an element of
-the multiplicative group $G_q$. Elements of the group $\mathbb{Z}_q$ are much
-easier to find as all integers between $0$ and $q-1$ belong to this group. The
-modified encryption function of exponential ElGamal looks as follows:
+the multiplicative group $G_q$. The modified encryption function of exponential
+ElGamal looks as follows:
 \begin{equation}
 \hat{Enc_y} : \mathbb{Z}_q \times \mathbb{Z}_q \rightarrow G_q \times G_q,
 (a, b)=\hat{Enc_y}(\hat{m}, r)=(g^r, y^r \cdot \hat{g}^{\hat{m}}) \notag
@@ -496,12 +492,14 @@ r_2)
 \notag
 \end{equation}
 
-In order to obtain the sum of $m_1$ and $m_2$, the computation of a discrete
-logarithm is required, which is considered as a hard problem. In the scenario of
-e-voting, we know what the possible solutions are. The number of possible
-solution is merely the number of ballots which have been cast, so we can just
-iterate through all the possible solutions and stop as soon as it matches with
-the decrypted product.
+After decrypting the product of all ciphertexts, we end up with a value of the
+form $\hat{g}^(m_1+m_2)$. The value that we are interested in is $m_1+m_2$. This
+value can be obtained by computing the discrete logarithm, but we have seen in
+\Vref{sec:discretelogarithm} that this is a hard problem. In the context of
+e-voting, we can solve this problem by iterating over all possible solutions and
+compare it with the decrypted value. The number of possible solutions can't be
+bigger as the number of cast ballots, therefore iterating over these solutions
+is not a big problem.
 
 
 \subsection{Secret sharing}
@@ -509,34 +507,99 @@ the decrypted product.
 In e-voting scenarios it is crucial that not a
 single entity can manipulate the result or reveal single votes. This
 responsibility, or in our case the secret key which is needed to obtain the
-final result, has to be spread across a set of trustees. In the CGS97 scheme,
-this property is achieved by using a secret sharing mechanism as proposed by Adi
+final result, has to be spread across a set of so called trustees. In the CGS97
+scheme, this property is achieved by using a secret sharing mechanism as proposed by Adi
 Shamir in 1979 \cite{Shamir79}. This scheme even allows to define a so called
 \textit{threshold}, which defines the minimal amount of participating trustees
 in order to decrypt the result. Such a system is also known as a
 $(t-n)$-threshold scheme, where $n$ defines the number of shares which are
 issued at the beginning and $t$ defines the number of participants needed to
-recover the secret. In a first step, a trusted dealer defines a polynomial
-function $f(x)$ with degree $t-1$ and random coefficients. Each trustee $A_{i |
-1 \leq i \leq n}$ gets its share $s_i=f(i)$. The secret itself, at this stage
-only known by the trusted dealer, is defined by $s=f(0)$. In order to reproduce the
-secret using the shares distributed among all trustees, we can use an
-interpolation technique such as Lagrange interpolation, which allows us to
-reproduce the secret $f(0)$. Since a polynomial function of degree $t-1$ is
-defined by at least $t$ points, the secret can only be reproduced if at least
-$t$ trustees are collaborating and contribute their shares to the decryption
-process.
+recover the secret. Equal to the ElGamal cryptosystem, we need two large primes
+$p$ and $p$ such that $q|p-1$. The prime number $q$ defines the order of a
+subgroup $G_q$ of the multiplicative modular group $\mathbb{Z}^*_p$.
+$\mathbb{Z}_q$ is an additive modular group of order $q$. Having defined these
+prequisites, a secret can be shared as follows:
+\begin{enumerate}
+  \item A trusted dealer chooses a polynomial $f(z) \in \mathbb{Z}_q(z)$ with
+  uniformly random chosen coefficients $f_0, \ldots, f_{t-1}$.
+  If the secret $x \in \mathbb{Z}_q$ has been defined earlier, the coefficient of degree $0$ has to
+  be equal to $x$.
+  \item The trusted dealer calculates a share $x_i = f(i)$ for $i = 1,\ldots,
+  n$.
+  \item The trusted dealer \emph{secretly} communicates the share $x_i$ to each
+  individual trustee.
+\end{enumerate}
+
+The secret itself, at this stage only known by the trusted dealer, is defined by
+$x=f(0)$. In order to reproduce the secret using the shares distributed among
+all trustees, we can use an interpolation technique such as Lagrange
+interpolation, which allows us to reproduce the secret $f(0)$. Since a
+polynomial function of degree $t-1$ is defined by at least $t$ points, the
+secret can only be reproduced if at least $t$ trustees are collaborating and
+contribute their shares.
 
 The approach of Shamir is quite simple, has one major drawback though: It
 requires a trusted dealer which has the knowledge of the shared key. It it
 would be nice to have a scheme where the group of trustees collaborate to create
 the shares in a way that nobody can derive the secret key unless a sufficient
-amount of trustees collaborate. In 1991, Torben Pryds Pedersen proposed a scheme
-where this trusted dealer is no longer needed \cite{PED91}. In this scheme, all the
-trustees perform the steps of the trusted dealer in the scheme of Shamir, namely
-they generate a polynomial function with random coefficients of degree $t-1$ and
-calculate a point for each trustee in the system. These points are then
-\textit{secretly} communicated individually to each trustee.
+amount of trustees collaborate. In 1991, T. P. Pedersen proposed a scheme
+\cite{PED91} where this trusted dealer is no longer required. In order to
+jointly generate a secret, the trustees perform the following steps:
+\begin{enumerate}
+  \item All trustees $\tau_i$ for $i = 1, \ldots, n$ choose a polynomial $f_i(z)
+  \in \mathbb{Z}_q(z)$ for $i = 1, \ldots, n$ with uniformly random chosen coefficients $f_{i0}, \ldots,
+  f_{i, t-1}$.
+  \item All trustees commit themselves to their chosen coefficients by
+  publishing the values $F_{ij} = g^{f_{ij}}$ for $j=0,\ldots, t-1$.
+  \item All trustees generate a secret $x_{ij} = f_i(j)$ for each
+  trustee $\tau_j, j=1,\ldots,n$ and send it through a secure channel to
+  $\tau_j$.
+  \item All trustees verify that the received shares are consistent with the
+  previously published coefficient commitments by verifying that the following
+  equation holds:
+  \begin{equation}
+	g^{x_{ji}} \stackrel{?}{=} \prod_{l=0}^{t-1} F_{jl}^{i^l} \notag
+  \end{equation}
+  If this verification fails, $\tau_i$ broadcasts a message that there was a
+  problem, publishes the malicious share $x_{ji}$, and stops the protocol.
+  \item All trustees with correct shares can now compute their share $x_i$ by
+  computing $x_i=\sum_{j=1}^n s_{ji}$.
+  \item The public key $y$ can be computed by calculating $y=\sum_{j=1}^n
+  F_{j0}$.
+\end{enumerate}
+The public key $y$ can now be used by anybody, for example to do an ElGamal
+encryption. In order to decrypt an ElGamal ciphertext $(a, b)$ created by the
+public key $y$, at least $t$ trustees have to collaborate and execute the following steps:
+\begin{enumerate}
+  \item Each collaborating trustee $\tau_i$ publishes a part decryption $w_i =
+  a^{s_j}$
+  \item Along with the part decryption $w_i$, each trustee has to publish a
+  proof that testifies the following relation:
+  \begin{equation}
+	\log_g g^{x_i} = \log_a w_i \notag
+  \end{equation}
+  This proves that the trustee $\tau_i$ indeed used its keyshare to do the part
+  decryption. Further details about zero-knowledge proofs can be found in
+  \Vref{sec:zeroknowledgeproofs}.
+\end{enumerate}
+As soon as at least $t$ partdecryptions are publicly available, anyone can use
+the Lagrange interpolation algorithm to recover the plaintext. Let $\Lambda$ be a set of
+at least $t$ available shares. Using this set, the Lagrange coefficients can be
+calculated as follows:
+\begin{equation}
+	\lambda_{j,\Lambda} = \prod_{l\in \Lambda \\ \{j\}} \frac{l}{l-j} \notag
+\end{equation}
+The plaintext $m$ of the ElGamal ciphertext $(a, b)$ can then be recovered as
+follows:
+\begin{equation}
+	m = \frac{b}{\prod_{j \in \Lambda} w_j^{\lambda_{j,\Lambda}}} \notag
+\end{equation}
+
+Note that a set of at least $t$ trustees could recover the secret $x$ just
+by running an interpolation algorithm. If $f(z)$ is the function recovered by
+interpolation, the secret $x$ can be found by calculating $x=f(0)$. Recovering
+the secret is not desirable in the CGS97 voting scheme though, because a
+reunited secret key could be used to violate the privacy of the voters.
 
 \subsection{Zero-knowledge proofs}
 \label{sec:zeroknowledgeproofs}
@@ -566,17 +629,17 @@ relationship between the observer and the verifier. In an e-voting scenario, we
 need a proof which can be verified by anybody and doesn't require an interactive
 conversation between the verifier and the prover. Such proofs are called
 \textit{non-interactive zero-knowledge proofs} or \textit{NIZKPs}. The
-foundations of these NIZKPs were introduced by Amos Fiat and Adi Shamir in 1986
+foundations of these NIZKPs were introduced by A. Fiat and A. Shamir in 1986
 \cite{FS87}, later known as the \textit{Fiat-Shamir heuristic}. Instead of the
-verifer challenging the prover, the prover challenges himself by using a
+verifier challenging the prover, the prover challenges himself by using a
 \emph{hashfunction} such as SHA-256. The result of such a non-interactive
 zero-knowledge proof is similar to a digital signature. Once published,
 everybody can verify the integrity of the data over which the signature has been
 calculated. In a similar way, non-interactive zero-knowledge proofs can be
 verified, with the important difference that the secret of course remains
-secret. So far, we didn't specify what a secret actually is. There are multiple
+secret. So far, we did not specify what a secret actually is. There are multiple
 types of secrets and therefore also multiple types of zero-knowledge proofs, but
-due to the work of Ueli Maurer \cite{Maurer09}, we can formulate a general
+due to the work of U. Maurer \cite{Maurer09}, we can formulate a general
 recipe how such a NIZKP is assembled:
 
 Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups and
@@ -604,7 +667,7 @@ condition holds:
  
 \subsubsection{Proving the Knowledge of Discrete Logarithm}
 \label{sec:proofknowledgedlog}
-This type of proof was first presented by Claus Peter Schnorr in 1991
+This type of proof was first presented by C. P. Schnorr in 1991
 \cite{Schnorr91}. We have seen that the ElGamal encryption function has the
 homomorphic property \myref{sec:homenc}. Therefore, it is possible to prove the
 knowledge of the plaintext of a given ciphertext by applying the scheme above.
@@ -647,7 +710,7 @@ $c=H(a||t)$ and check whether the following condition holds:
 
 \subsubsection{Proving the Equality of Discrete Logarithms}
 \label{sec:proofeqdlog}
-This type of proof due to David Chaum and Torben Pryds Pedersen \cite{CP93}
+This type of proof due to D. Chaum and T. P. Pedersen \cite{CP93}
  proves the relation $log_{g_1} c_1 = log_{g_2} c_2 $ for two values $c_1 =
 g_1^m$ and $c_2 = g_2^m$, where $g_1$ and $g_2$ are generators of the
 mathematical group $G_q$. In order to prove this relation, we can again
@@ -684,10 +747,11 @@ Proofs of validity are used to prove that a certain image of a homomorphic one
 way function is in fact the image of a preimage, and the preimage is an element
 of a set of possible preimages. The proof however does not reveal which preimage
 it actually is. This type of proof is not a straight forward application of the
-generalized scheme of Maurer \cite{Maurer09}, it is rather an OR-combination
-knowledge proofs. The idea is to \emph{simulate} accepting conversations for the
-preimages which do not correspond to the calculated image and combine those
-simulated proofs with the actual proof from the image we calculated. 
+generalized scheme of Maurer \cite{Maurer09}, it is rather an OR-combination of
+several zero-knowledge proofs of knowledge. The idea is to \emph{simulate}
+accepting conversations for the preimages which do not correspond to the
+calculated image and combine those simulated proofs with the actual proof from
+the image we calculated.
 
 Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups, $f:X \rightarrow
 Y$ be a one-way homomorphic function and $A=\{\alpha_1,\ldots,\alpha_n\} \subseteq X$
@@ -696,9 +760,8 @@ image $\beta=f(\alpha_i) \in Y$ belongs to a preimage $\alpha_i$ without
 revealing which preimage it actually is. 
 
 \paragraph{Value Precomputation.} In this phase, we need to compute a specially
-crafted image for all the possible preimages without the the
-preimage for which the proof is being created. This can be done by
-executing the following step:
+crafted image for all the possible preimages without the preimage for which the
+proof is being created. This can be done by executing the following step:
 
 \begin{enumerate}
   \item Compute $\beta_j = \beta \cdot \alpha_j^{-1}$ for $j=(1,...,n)$.
@@ -773,7 +836,7 @@ denial-of-service attack, it is a good idea to replicate the content of the bull
 
 \section{The Voting Scheme CGS97}
 \label{sec:CGS97}
-In 1997, Ronald Cramer, Rosario Gennaro and Berry Schoenmakers proposed a scheme
+In 1997, R. Cramer, R. Gennaro and B. Schoenmakers proposed a scheme
 \cite{CGS97} which allows to do e-voting in a secure and verifiable manner. The participants of
 the protocol can be divided into four different roles:
 \begin{itemize}
@@ -803,7 +866,7 @@ In \Vref{sec:evoting} we discussed some security requirements which
 are desirable for e-voting systems. The following paragraph assesses the CGS97
 protocol against these requirements.
 
-\paragraph{Democracy.} The CGS97 protocol doesn't specify how the access to
+\paragraph{Democracy.} The CGS97 protocol does not specify how the access to
 the virtual voting booth is controlled. The e-voting system which implements
 the CGS97 protocol needs a sufficiently secure authentication mechanism in order to
 fulfill the democracy requirement. The criteria that only one valid vote can be
@@ -848,7 +911,7 @@ how this should be achieved. A possible approach can be found in \cite{HL09}.
 
 \subsection{Usability Properties}
 \label{sec:usabilityproperties}
-It is a generally know fact that high security measures have a negative impact
+It is a generally known fact that high security measures have a negative impact
 on the usability of a certain application. In the area of e-voting, usability is a
 crucial factor since the potential average voter is not expected to have a high
 expertise in cryptography and information security. In the CGS97 scheme, casting
@@ -864,7 +927,7 @@ The CGS97 voting scheme has a well defined procedure on how a vote should be
 performed. This procedure is explained in this section. Formally we define the set
 of $n$ trustees as $T=\{\tau_1, \ldots, \tau_n\}$ and the set of $l$
 voters as $V=\{v_1, \ldots, v_l\}$. Furthermore, the role of an
-\emph{administrator} $A$ needs to be assigned to a participant. The process of these role assignments
+administrator $A$ needs to be assigned to a participant. The process of these role assignments
 strongly depends on the political structure of the organization which runs
 the vote and is considered to be an administrative task and is hence not
 further discussed at this point. The procedure how a vote is performed looks as
@@ -874,7 +937,7 @@ follows:
 All the parties need to agree on the ElGamal parameters $p, q,$ and $g$. These
 parameters can be seen as fixed parameters and do not need to be redefined for
 each vote. Further details regarding these parameters can be found in
-\Vref{sec:elgamal}. Futhermore, the administrator $A$ defines the question and
+\Vref{sec:elgamal}. Furthermore, the administrator $A$ defines the question and
 all the possible options of the upcoming vote.
 
 \paragraph{Key Generation Phase.}
@@ -893,7 +956,7 @@ To do so, the voters encrypt their ballots using the public key $y$ and post
 them to the bulletin board. Note that we need to use \emph{exponential
 ElGamal} \myref{sec:expelgamal} so that we can \emph{add} the result in an upcoming
 stage.
-Futhermore, each voter needs to post a proof of validity
+Furthermore, each voter needs to post a proof of validity
 \myref{sec:proofofvalidity} on the bulletin board in order to prove that encrypted ballot indeed contains a valid option of the election.
 
 \paragraph{Tallying Phase.}
@@ -963,11 +1026,11 @@ semesters. The hand in of the project is planned for February 7, 2014.
 
 During the same period, a fellow master student is working on a very similar
 topic, namely the implementation of the decentralized e-voting system proposed by
-Dalia Khader et al. \cite{HKRS12}. This project will also be based on the
+D. Khader et al. \cite{HKRS12}. This project will also be based on the
 InstaCircle communication infrastructure \cite{ritter13a} and the UniCrypt
 cryptographic library \cite{ritter12} which have been developed earlier during
 the master studies. It is the plan to establish a collaboration between these
-two project, mainly for the development of the graphical user interface. A
+two projects, mainly for the development of the graphical user interface. A
 collaboration between these project also makes it easier to compare the
 approaches and evaluate the advantages and disadvantages of the two approaches.
 
@@ -1120,7 +1183,7 @@ design of this phase is illustrated in \Vref{fig:vote}.
 \paragraph{Displaying the result.}
 The vote is tallied as soon as the last vote has been cast, or if the
 administrator has ended the voting phase. The result is displayed in the form of
-a piechart and a tabular view. The result of the vote is saved on each devices
+a pie-chart and a tabular view. The result of the vote is saved on each devices
 and can be revisited using the archive function in the main screen. The screen
 design of this phase is illustrated in \Vref{fig:result}.
 
@@ -1145,13 +1208,13 @@ practices which have been employed whenever possible.
 \subsection{AllJoyn}
 AllJoyn\footnote{\url{https://allseenalliance.org/}} is a library which allows
 peer-to-peer communication between several devices. The library has been
-released as opensource recently by the Qualcomm company. It is available for
+released as open-source recently by the Qualcomm company. It is available for
 multiple platforms, including Android. AllJoyn serves as a communication layer
 which allows to exchange messages between devices such as smartphones and
 tablets. One device acts as master and starts advertising a group to which other
 devices can join. Once joined into the group, all the devices in the group can
-exchange messages among each other. The communication can happen either in
-broadcast (one to many) or unicast (one to one).
+exchange messages among each other. The communication can happen either in a
+broadcast (one to many) or unicast (one to one) manner.
 
 The original intention was to use InstaCircle \cite{ritter13a} as a
 communication layer. It turned out that this type of completely decentralized
@@ -1179,10 +1242,16 @@ that is being used, the encryption key of the conversation, as well as a group
 identifier in case there are multiple conversations running in the same network.
 
 \subsection{AChartEngine}
-AChartEngine\footnote{\url{http://www.achartengine.org/}} is an opensource
+AChartEngine\footnote{\url{http://www.achartengine.org/}} is an open-source
 library which can be used to draw all sorts of charts on Android devices. In
 this project, we use this library in order to visualize the result on the
-result screen using a pie chart.
+result screen using a pie-chart.
+
+\subsection{Simple}
+Simple\footnote{\url{http://simple.sourceforge.net/}} is an open-source
+framework which allows to serialize and deserialize Java object to XML. It is
+used to save and export the transcript of a vote to a XML file. This
+functionality is further discussed in \Vref{sec:datastructures}. 
 
 \subsection{UniCrypt}
 UniCrypt\footnote{\url{https://github.com/bfh-evg/unicrypt/}} is a cryptographic
@@ -1190,8 +1259,8 @@ library which provides mathematical and cryptographic primitives which are used
 for implementing the e-voting protocol for this application. The version 2 of
 UniCrypt is currently under active development. The use of this library in this
 project also helped to improve UniCrypt itself. Since UniCrypt is developed at
-the same institute, problems could be adressed and fixed right away. Since this
-project is one of the first projects using UniCrypt, it also served as a test
+the same institute, problems could be addressed and fixed right away. Since
+this project is one of the first projects using UniCrypt, it also served as a test
 bed for UniCrypt. For this project, some non existing extensions for UniCrypt
 have been implemented. The result of this work is discussed in further detail in
 \Vref{sec:enhancmentsunicrypt}.
@@ -1216,6 +1285,7 @@ the corresponding layouts which have been implemented for this application.
 
 \begin{table}[htbp]
 	\centering
+	\renewcommand{\arraystretch}{1.4}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
 		\textbf{Activity}			& \textbf{Layout}							& 	\textbf{Description}			\\
@@ -1238,6 +1308,7 @@ the corresponding layouts which have been implemented for this application.
 		
 		\bottomrule
 	\end{tabularx}
+	\renewcommand{\arraystretch}{1}
 	\caption{Activities}
 	\label{tab:activities}
 \end{table}
@@ -1253,6 +1324,7 @@ layouts which have been implemented for this application.
 
 \begin{table}[htbp]
 	\centering
+	\renewcommand{\arraystretch}{1.4}
 	\begin{minipage}{\linewidth}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
@@ -1274,9 +1346,38 @@ layouts which have been implemented for this application.
 		\bottomrule
 	\end{tabularx}
 	\end{minipage}
+	\renewcommand{\arraystretch}{1}
 	\caption{Fragments}
 	\label{tab:fragments}
 \end{table}
+
+\section{Voting Protocol}
+\label{sec:votingprotocol}
+A major goal of this project is to create an e-voting system which provides
+as many security properties that we want in e-voting as possible. These
+properties are discussed in \Vref{sec:evoting}. The CGS97 voting scheme
+\cite{CGS97} offers most of these properties. The properties of the CGS97 scheme
+are discussed in \Vref{sec:CGS97}. This scheme has not specifically been
+designed for decentralized e-voting systems. The protocol itself remains exactly
+the same, but the assignment of some roles are slightly changed:
+
+\paragraph{Trustees:} The CGS97 scheme stipulates the role of trustees. Trustees
+are responsible to jointly generate a key pair for the voting session and jointly
+decrypt the result after the voting period has come to an end. In the
+decentralized scenario, we merge the role of the trustee with the role of the
+participant. This doesn't create a conflict because a trustee can also be a
+participant in the vote. The fact that we assign the role of a trustee to each
+participant also reduces the complexity from a usability perspective, because no
+explicit assignment is required during the setup process of the vote.
+
+\paragraph{Bulletin Board:} Usually a bulletin board is considered as a
+centralized high available infrastructure. This paradigm can't be applied to the
+decentralized voting scenario because no central infrastructure should be
+required. Instead, each participants creates it's own transcript of the voting
+protocol. Almost all messages are exchanged by broadcasting them to all
+participants of the group and can be intercepted and recorded by each
+participant. In case of a manipulation, the participants would discover the
+manipulation by comparing the recorded values using their physical proximity.
 
 \section{Bootstrapping of Group Communication}
 \label{sec:bootstraping}
@@ -1308,7 +1409,7 @@ dynamic salt which is generated by the administrator decreases the risk of
 rainbowtable attacks.
 
 In order to guarantee the authenticity and integrity of the messages in the
-conversation, each participant generates an RSA keypair. The public key is 
+conversation, each participant generates an RSA key pair. The public key is 
 broadcast to all the participants. This key setup can then be used for
 signing/verifying all the messages in the conversation, as well as for
 establishing a secure point-to-point channel between two participants in the
@@ -1316,12 +1417,127 @@ conversation.
 
 \section{Messaging}
 \label{sec:messaging}
+For the communication between devices and components, a messaging infrastructure
+is required. We can divide the messages which are exchanged during a voting
+period into two categories:
+\begin{itemize}
+  \item \textbf{Network Messages:} Messages which are exchanged
+  between the participants mobile devices.
+  \item \textbf{Local Broadcast Messages:} This type of messages are Messages
+  which are passed between Android components, for example when a user interface
+  component needs to be updated if a specific event occurs. 
+\end{itemize}
+In order to distinguish the messages in order to decide how they should be
+processed, messages types were defined. The following two sections describe the
+message types which have been defined for each category and gives further
+technical insight how the messaging infrastructure has been designed.
+
+\subsection{Network Messages}
+Network Messages are required to exchange messages between the mobile devices of
+the participants. This is necessary for establishing the voting session, as well
+as for exchanging protocol specific values, for example an encrypted ballot.
+These messages are passed through a stack of communication layers.
+\Vref{fig:messagingarchitecture} depicts how this stack is built. For
+establishing a group communication among network devices, the AllJoyn library is
+used. For the specific use in MobiVote, a wrapper library has been implemented.
+The availability of this interface allows to interchange the messaging library
+which is used for MobiVote. The AllJoyn Interface Library allows to send
+broadcast messages, meaning the messages reach all the participant in the group.
+Most of the communication is done in this manner. It is also possible to send a
+message to a specific member of the group. This method is called unicast. In
+order to distinguish the different purpose of the messages interchanged between
+the participant's devices, a number of message types have been defined. These
+message types are outlined in \Vref{tab:networkmessagetypes}.
+
+ \begin{figure}[htbp]
+	\centering
+	\tikzumlset{fill component=lightgray!20}
+	\tikzumlset{fill note=white} 
+	\begin{tikzpicture} 
+		\draw[rounded corners=0.2cm,dashed] (-3,6.8) rectangle (3,14);
+		\draw (0,13.7) node {implemented during this project};
+		\umlbasiccomponent[x=0, y=12, width=4cm]{MobiVote} 
+		\umlbasiccomponent[x=0, y=8, width=4cm]{AllJoyn Interface Library} 
+		\umlbasiccomponent[x=0, y=4, width=4cm]{AllJoyn}
+		\umlbasiccomponent[x=0, y=0, width=4cm]{Android Network Stack} 
+		\umlassemblyconnector[interface={\space}, anchor1=south,
+		anchor2=north, name=1]{MobiVote}{AllJoyn Interface Library}
+		\umlassemblyconnector[interface={\space}, anchor1=south,
+		anchor2=north, name=2]{AllJoyn Interface Library}{AllJoyn}
+		\umlassemblyconnector[interface={\space}, anchor1=south,
+		anchor2=north, name=3]{AllJoyn}{Android Network Stack}
+		
+		\umlnote[x=6, y=10.2, width=5cm]{1-interface}{The AllJoyn interface library
+		provides an interface to the messaging infrastructure which can be used by
+		MobiVote.}
+		\umlnote[x=6, y=6.2, width=5cm]{2-interface}{AllJoyn provides an API which
+		allows to use the library's functionality.}
+		\umlnote[x=6, y=2.2, width=5cm]{3-interface}{AllJoyn uses the network API
+		provided by the Android platform.}
+		
+	\end{tikzpicture}
+	\caption{Messaging Architecture}
+	\label{fig:messagingarchitecture}
+\end{figure}
+
+\subsection{Local Broadcast Messages}
+The Android framework provides an internal messaging infrastructure which allows
+android component to communicate among each other. Any component can broadcast
+messages using this infrastructure. These messages can be received by any
+component which registered a so called Broadcast Receiver. All the registered
+components will then be notified as soon as a message has been broadcast. This
+mechanism can be used for example to update the User Interface according to a
+specific event.
+This paradigm was used heavily for the implementation of this project.
 
 
-\section{Datastructures} 
+\begin{table}[htbp]
+	\centering
+	\renewcommand{\arraystretch}{1.4}
+	\begin{minipage}{\linewidth}
+	\begin{tabularx}{\textwidth}{lX}
+		\toprule
+		\textbf{Message Type}					& 	\textbf{Description}			\\
+		\midrule
+		VOTE\_MESSAGE\_ELECTORATE					& 	Used during the setup phase to
+														indicate which participants are allowed to vote.\\
+		VOTE\_MESSAGE\_POLL\_TO\_REVIEW				& 	Used to signal the participants that a
+														vote is available for review.\\
+		VOTE\_MESSAGE\_ACCEPT\_REVIEW				& 	Used by the participants to signal that
+														they agree with the proposed vote.\\
+		VOTE\_MESSAGE\_START\_POLL					& 	Used to signal the start of a voting
+														period. \\
+		VOTE\_MESSAGE\_COEFFICIENT\_COMMITMENT		& 	Used during the key generation
+														phase for commiting to the chosen coefficients.\\
+		VOTE\_MESSAGE\_KEY\_SHARE					& 	Used to transmit the key shares between
+														participants.\\
+		VOTE\_MESSAGE\_KEY\_SHARE\_COMMITMENT		& 	Used to commit to the key share
+														used for performing the part decryption.\\
+		VOTE\_MESSAGE\_VOTE							& 	Used to transmit a vote.	\\
+
+		VOTE\_MESSAGE\_STOP\_POLL					& 	Used to signal the end of a voting period.\\
+		VOTE\_MESSAGE\_CANCEL\_POLL					& 	Used to signal the cancellation of a
+														voting period.\\
+		VOTE\_MESSAGE\_PART\_DECRYPTION				& 	Used to transmit a part decryption
+														after the voting period for jointly decrypting the result of the
+														vote.\\
+		
+
+		\bottomrule
+	\end{tabularx}
+	\end{minipage}
+	\renewcommand{\arraystretch}{1}
+	\caption{Network Message Types}
+	\label{tab:networkmessagetypes}
+\end{table}
+
+\section{Data Structures} 
 \label{sec:datastructures}
-For the management of the available votes in the system (prepared as well as
-completed votes), a small database structure has been implemented. The Android
+In this section the used data structures to store data within the MobiVote
+application are introduced.
+
+\paragraph{Database.} For the management of the available votes in the system
+(prepared as well as completed votes), a small database structure has been implemented. The Android
 platform embeds the sqlite\footnote{\url{http://www.sqlite.org/}} database in
 its API, hence this was the obvious choice for the database technology. \Vref{fig:erd} depicts the very simple data
 structure which has been chosen for this project.
@@ -1397,8 +1613,20 @@ therefore the information about the participants are not stored in the database.
 	\label{fig:entities}
 \end{figure}
 
-\section{Voting Protocol}
-\label{sec:votingprotocol}
+\paragraph{XML Serialization.} In order to make a vote verifiable, all the
+relevant values such as cryptographic parameters, encrypted ballots, zero-knowledge proofs, etc. of the
+CGS97 voting protocol are serialized into a simple XML file. To do so, we are
+using the Simple framework. Using this framework, we can create a set of classes
+which are used to store all the values which should be written into a file.
+Instructions how the serialization should happen are defined using annotations
+in the class. This type of simple class is also known as POJO (Plain Old Java
+Object)\footnote{\url{http://en.wikipedia.org/wiki/Plain_Old_Java_Object}}.
+These POJO classes could later be used for writing a verifier software which
+allows to check a vote by a third party software. The POJO classes can be found
+in the Java package \texttt{ch.bfh.evoting.voterapp.protocol.cgs97.xml}.
+
+\section{Testing}
+\label{sec:testing}
 
 
 \section{UniCrypt Extensions}
@@ -1412,7 +1640,7 @@ projects. In the following we describe how this implementation has been done.
 \subsection{Shamir Secret Sharing Scheme}
 In 1979, Adi Shamir proposed a scheme \cite{Shamir79} on how a secret can be
 split into several independent pieces which can be distributed among several
-authorities. It is not possible to recover the secret unless a sufficient amout
+authorities. It is not possible to recover the secret unless a sufficient amount
 of these authorities collaborate in order to recover the secret. Further details
 regarding this scheme can be found in \Vref{sec:secretsharing}.
 
@@ -1423,7 +1651,7 @@ The class in which the implementation has been done is the following:
 \texttt{ch.bfh.unicrypt.crypto.schemes.sharing.classes.ShamirSecretSharingScheme}
 \\
 \\
-The instanciation of this scheme requires three parameters:
+The instantiation of this scheme requires three parameters:
 \begin{itemize}
   \item An algebraic field of the type \\
   \texttt{ch.bfh.unicrypt.math.algebra.dualistic.classes.ZModPrime}. The secret
@@ -1435,7 +1663,7 @@ The instanciation of this scheme requires three parameters:
 
 A secret can be shared using the method \texttt{share()}, which takes
 a message as an argument. The message must be an element of the field which has
-been specified during the initialisation of the scheme. The method returns an
+been specified during the initialization of the scheme. The method returns an
 array of value pairs. Each pair represents a share.
 
 The secret can be recovered using the method \texttt{recover()}, which takes an
@@ -1468,6 +1696,12 @@ version of the ElGamal proof of validity.
 \chapter{Discussion}
 \label{cha:discussion}
 \todo{This chapter will be written in a later phase of the project}
+
+\section{Implementation}
+\label{sec:implementation}
+
+\section{Security Consideration}
+\label{sec:securityconsiderations}
 
 \chapter{Conclusion}
 \label{cha:conclusion}
@@ -1579,7 +1813,7 @@ a board meeting.
 
 \section{Prerequisites}
 In order to run a vote using MobiVote, all the participants need to be in
-posession of a mobile device such as a smartphone or a tablet computer running
+possession of a mobile device such as a smartphone or a tablet computer running
 at least Android 4.0 (Ice Cream Sandwich). All the devices also need to be WLAN
 capable and the WLAN adapter has to be activated. Currently is not possible to
 use mobile devices of other flavours such as Apple iPhones or devices running
@@ -1588,7 +1822,7 @@ Windows mobile.
 \section{Installation}
 The MobiVote application is available as an APK file which can be installed on
 Android devices. In order to install the APK file, the file needs to be
-transfered the devices. The easiest way is to connect the Device to a computer
+transferred the devices. The easiest way is to connect the Device to a computer
 using the USB cable and copy the APK file to the device. Using a filemanager on
 the mobile device, locate the APK file in your filesystem and install it by
 clicking on it. For this to work, the option
@@ -1720,9 +1954,9 @@ to the setup, the administrator can start the actual voting period by clicking
 on the button \keys{Start voting period}.
 
 \section{Voting}
-In the voting screen, each participant can select the prefered option. After
+In the voting screen, each participant can select the preferred option. After
 confirming the choice, the vote is encrypted and cast. The following screen
-summarises which participants cast their votes and which did not. The
+summarizes which participants cast their votes and which did not. The
 administrator has the option to interrupt by clicking on \keys{Cancel vote}, in
 which case no results are obtained. The administrator can also choose the option
 \keys{Finish vote}, in which case the vote is tallied and the results are
@@ -1742,7 +1976,9 @@ Unwanted votes can be deleted using the trash icon on the right side. An
 individual vote including the results can be examined in further detail by
 clicking on the according list item. If you want to run the exact election
 again, the \keys{Clone vote} button can be used to recreate an empty vote which
-can then be started in the usual manner.
+can then be started in the usual manner. The \keys{Export} button allows to
+export the transcript of this vote to an XML file. This file could be used to
+verify that the vote has been done correctly. 
 
 \listoftodos
 
