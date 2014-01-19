@@ -55,7 +55,8 @@ footsepline, oneside, draft=off]{scrreprt}
 \SetWatermarkScale{5}
 \SetWatermarkLightness{0.9}
 
-
+\usepackage{subcaption} 
+\usepackage[section]{placeins}
 
 % improve word spacing
 \usepackage{microtype}
@@ -373,17 +374,18 @@ is known as the \emph{Discrete Logarithm Problem}. The formal definition of
 the problem is as follows: 
 
 Given a prime $p$, a generator $g$ of a multiplicative modular group
-$\mathbb{Z}^*_p$ and an element $b \in \mathbb{Z}^*_p$, find the integer
-$x,0 \leq x \leq p - 2$, such that $g^x \equiv b \mod p$.
+$\mathbb{Z}^*_p$ and an element $b \in \mathbb{Z}^*_p$, find the integer $x,0
+\leq x \leq p - 2$, such that $g^x \equiv b \mod p$.
 
 Currently there is no efficient way of solving this equation in an efficient
 manner. There are some more sophisticated approaches than the naive way of
 iterating over all elements of the group, for example the baby-step giant-step
 algorithm\footnote{\url{http://en.wikipedia.org/wiki/Baby-step_giant-step}}, but
-it is still not possible to find a solution in polynomial time with respect to the order of the group. The security of most of the building
-blocks we are using in this project is based on this problem. Further
-information concerning the discrete logarithm problem can be found in Chapter 3
-of the Handbook of Applied Cryptography by A. Menezes et. al.
+it is still not possible to find a solution in polynomial time with respect to
+the order of the group. The security of most of the building blocks we are using
+in this project is based on this problem. Further information concerning the
+discrete logarithm problem can be found in Chapter 3 of the Handbook of Applied
+Cryptography by A. Menezes et. al.
 \cite{book:hac}.
 
 \subsection{ElGamal Cryptosystem}
@@ -1077,123 +1079,6 @@ will discuss the development of the graphical user interface, the architecture
 and implementation of the Android application and finally the contributions to
 related projects.
 
-\section{Graphical User Interface}
-\label{sec:gui}
-A crucial aspect for the success of e-voting is the usability for the end user.
-This becomes even more important when e-voting should be used in an ad-hoc
-manner, where the formality is less visible compared to official elections.
-Also, the time consumption for a voting cycle has to be as short as possible,
-which is also a significant difference to classically held elections.
-
-Before the actual implementation of the Android application, we tried to develop
-a screen design which meets these requirements. This screen design has been
-designed as a storyboard without writing actual code. We have chosen an
-iterative approach where the design has been peer reviewed several times before
-the final draft was available. One major decision point was to decide whether we
-implement a single Android app or whether we should split it into an app for the
-voter and another for the vote administrator. The approach with multiple apps
-turned out to be confusing and was hence dismissed.
-
-The design which has been finally chosen is based on a single Android
-application. A voting cycle can be broken into several phases which are outlined
-in the following, along with the storyboard for this particular phase.
-
-\paragraph{Setup a Vote.}
-The designated administrator of the vote is responsible for setting up a vote,
-namely defining the question and the possible options which can be chosen later
-during the voting phase. A vote can also be prepared and saved in advance in
-order to save time at the reunion. From here, the administrator can also
-start the voting process. The screen design of this phase is illustrated in
-\Vref{fig:vote_setup}.
-
-
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[height=.4\textheight]{img/vote_setup}
-	\caption{Setup a vote}
-	\label{fig:vote_setup}
-\end{figure}
-
-\paragraph{Network Setup.}
-The next step after defining a vote is to define in which network environment
-the voting session will take place. The first person to do so is the vote
-administrator. He can choose a Wi-Fi network in which the network session will
-be started. The information about the chosen network as well as the generated
-session password has to be shared with the participants. To do so, the
-administrator can either just read the information out loud, or share the
-information using either a QR-code or write the information to a NFC token which
-can be passed to all participants. Using this information, the participants can
-join the network session with their devices. Before joining the session, each
-participant (including the administrator) has to define an identification string
-for themselves. The screen design of this phase is illustrated in
-\Vref{fig:network_setup}.
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[height=.4\textheight]{img/network_setup}
-	\caption{Network setup}
-	\label{fig:network_setup}
-\end{figure}
-
-
-\paragraph{Defining the Electorate and Review of the Vote.}
-After joining the network session, a list of all the session participants is
-displayed. At this stage, the administrator can define the electorate, meaning
-he can select the participants which are allowed to vote. This can be done by
-clicking on the the checkboxes next to the participant's identification. The
-participants can see who has been selected on their devices.
-
-Once the administrator has defined the electorate, each participant has to
-confirm that all the parameters of the vote (question, allowed options
-and electorate) are correct. The vote can only be started by the administrator
-if the whole electorate has agreed. If necessary, the administrator can go back and do changes on the vote parameters.
-
-The screen design of this phase from the administrator's perspective is
-illustrated in \Vref{fig:admin_review} and from the voter's perspective in
-\Vref{fig:voter_review}.
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[height=.4\textheight]{img/admin_review}
-	\caption{Administrator defining the electorate}
-	\label{fig:admin_review}
-\end{figure}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[height=.4\textheight]{img/voter_review}
-	\caption{Review of the vote from voter's perspective}
-	\label{fig:voter_review}
-\end{figure}
-
-\paragraph{Voting phase.}
-Once the vote has passed the review, the vote itself can take place. Each
-participant can choose an option and cast it. The screen transitions to a view
-which shows the vote casting state of all the participants. The screen
-design of this phase is illustrated in \Vref{fig:vote}.
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[height=.4\textheight]{img/vote}
-	\caption{Vote casting}
-	\label{fig:vote}
-\end{figure}
-
-\paragraph{Displaying the result.}
-The vote is tallied as soon as the last vote has been cast, or if the
-administrator has ended the voting phase. The result is displayed in the form of
-a pie-chart and a tabular view. The result of the vote is saved on each devices
-and can be revisited using the archive function in the main screen. The screen
-design of this phase is illustrated in \Vref{fig:result}.
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[height=.4\textheight]{img/result}
-	\caption{Result of the vote}
-	\label{fig:result}
-\end{figure}
-
 \section{Used Technologies}
 This Section outlines the frameworks which have been used for the implementation
 of this project and how they are put together into an application.
@@ -1202,8 +1087,6 @@ The Android\footnote{\url{http://developer.android.com/}} platform serves as the
 foundation of the whole implementation. The Application has been built using existing building blocks such as Activities,
 Services, Fragments, etc. Furthermore, there are existing guidelines and best
 practices which have been employed whenever possible. 
-
-
 
 \subsection{AllJoyn}
 AllJoyn\footnote{\url{https://allseenalliance.org/}} is a library which allows
@@ -1269,87 +1152,225 @@ Since UniCrypt is an essential cornerstone of this project, it is discussed in
 further detail in \Vref{sec:unicrypt}.
 
 \section{Graphical User Interface}
-\label{sec:graphicaluserinterface}
+\label{sec:gui}
+A crucial aspect for the success of e-voting is the usability for the end user.
+This becomes even more important when e-voting should be used in an ad-hoc
+manner, where the formality is less visible compared to official elections.
+Also, the time consumption for a voting cycle has to be as short as possible,
+which is also a significant difference to classically held elections.
 
-The Android platform provides a powerful framework which allows to design rich
-user interfaces specifically designed for mobile devices. The User interface was
-built using these techniques.
+\subsection{Storyboard}
+Before the actual implementation of the Android application, we tried to develop
+a screen design which meets these requirements. This screen design has been
+designed as a storyboard without writing actual code. We have chosen an
+iterative approach where the design has been peer reviewed several times before
+the final draft was available. One major decision point was to decide whether we
+implement a single Android app or whether we should split it into an app for the
+voter and another for the vote administrator. The approach with multiple apps
+turned out to be confusing and was hence dismissed.
 
-\paragraph{Activities.}
-Android Activities basically represent screens which allow the user to interact
-with the application. An activity is represented as a Java class inheriting from
-the Activity class. For each Activity there is a XML file which represents the
-structure of the screen layout and which elements (buttons, icons, labels,
-textfields, etc.) it contains. \Vref{tab:activities} outlines the activities and
-the corresponding layouts which have been implemented for this application.
+The design which has been finally chosen is based on a single Android
+application. A voting cycle can be broken into several phases which are outlined
+in the following, along with the storyboard for this particular phase.
 
-\begin{table}[htbp]
+\paragraph{Setup a Vote.}
+The designated administrator of the vote is responsible for setting up a vote,
+namely defining the question and the possible options which can be chosen later
+during the voting phase. A vote can also be prepared and saved in advance in
+order to save time at the reunion. From here, the administrator can also
+start the voting process. The screen design of this phase is illustrated in
+\Vref{fig:vote_setup}.
+
+
+
+\begin{figure}[htb]
 	\centering
-	\renewcommand{\arraystretch}{1.4}
-	\begin{tabularx}{\textwidth}{llX}
-		\toprule
-		\textbf{Activity}			& \textbf{Layout}							& 	\textbf{Description}			\\
-		\midrule
-		CheckElectorateActivity 	& \texttt{activity\_check\_electorate.xml} 				&		\\
-		CreateNetworkActivity		& \texttt{activity\_create\_network.xml}				&		\\
-		DisplayResultActivity		& \texttt{activity\_display\_result.xml}				&		\\
-		ElectorateActivity			& \texttt{activity\_electorate.xml}						&		\\
-		ListTerminatedPollsActivity	& \texttt{activity\_list\_terminated\_polls.xml}		&		\\
-		MainActivity				& \texttt{activity\_main.xml}							& 	 	\\
-		NetworkConfigActivity		& \texttt{activity\_network\_config.xml}				&		\\
-		NetworkInformationActivity	& \texttt{activity\_network\_information.xml}			&		\\
-		PollActivity				& \texttt{activity\_poll.xml}							& 		\\
-		PollDetailActivity			& \texttt{activity\_poll\_detail.xml}					&		\\
-		ReviewPollAdminActivity		& \texttt{activity\_review\_poll.xml}					&		\\
-		ReviewPollVoterActivity		& \texttt{activity\_review\_poll\_voter.xml}			&		\\
-		VoteActivity				& \texttt{activity\_vote.xml}							&		\\
-		WaitForVotesAdminActivity	& \texttt{activity\_admin\_wait\_for\_votes.xml}		&		\\
-		WaitForVotesVoterActivity	& \texttt{activity\_wait\_for\_votes.xml}				&		\\
-		
-		\bottomrule
-	\end{tabularx}
-	\renewcommand{\arraystretch}{1}
-	\caption{Activities}
-	\label{tab:activities}
-\end{table}
+	\includegraphics[height=.4\textheight]{img/storyboard/vote_setup}
+	\caption{Setup a vote}
+	\label{fig:vote_setup}
+\end{figure}
 
+\paragraph{Network Setup.}
+The next step after defining a vote is to define in which network environment
+the voting session will take place. The first person to do so is the vote
+administrator. He can choose a Wi-Fi network in which the network session will
+be started. The information about the chosen network as well as the generated
+session password has to be shared with the participants. To do so, the
+administrator can either just read the information out loud, or share the
+information using either a QR-code or write the information to a NFC token which
+can be passed to all participants. Using this information, the participants can
+join the network session with their devices. Before joining the session, each
+participant (including the administrator) has to define an identification string
+for themselves. The screen design of this phase is illustrated in
+\Vref{fig:network_setup}.
 
-\paragraph{Fragments.}
-Fragments allow to reuse parts of a screen design in multiple activities. They
-are also used to design complex dialog interfaces. Fragments are always embedded
-into an activity or a dialog. Similar to activities,
-fragments also have a corresponding layout which is stored
-in a XML file. \Vref{tab:fragments} outlines the fragments and the corresponding
-layouts which have been implemented for this application.
-
-\begin{table}[htbp]
+\begin{figure}[htb]
 	\centering
-	\renewcommand{\arraystretch}{1.4}
-	\begin{minipage}{\linewidth}
-	\begin{tabularx}{\textwidth}{llX}
-		\toprule
-		\textbf{Fragment}						& \textbf{Layout}				& 	\textbf{Description}			\\
-		\midrule
-		ConnectNetworkDialogFragment			& \texttt{dialog\_join\_network.xml}			& 	\\
-		HelpDialogFragment						& \texttt{dialog\_help.xml}						& 	\\
-		IdentificationWlanKeyDialogFragment		& \texttt{dialog\_identification\_wlankey.xml}	&	\\
-		NetworkDialogFragment					& \texttt{dialog\_network\_information.xml}		&	\\
-		NetworkInformationFragment				& \texttt{fragment\_network\_information.xml}	&	\\
-		NetworkListFragment						& \texttt{list\_item\_network.xml}\footnote{In
-		\emph{ListFragments} the layout for each row is applied} 								&	\\
-		NetworkOptionsFragment					& \texttt{fragment\_network\_options.xml}		& 	\\
-		NFCFragment								& \texttt{fragment\_nfc.xml}					&	\\
-		PollReviewFragment						& \texttt{fragment\_poll\_review.xml}			&	\\
-		ResultChartDialogFragment				& \texttt{dialog\_chart.xml}					&	\\
-		ResultChartFragment						& \texttt{fragment\_result\_chart.xml}			&	\\
-		WaitForVotesFragment					& \texttt{fragment\_wait\_for\_votes.xml}		&	\\
-		\bottomrule
-	\end{tabularx}
-	\end{minipage}
-	\renewcommand{\arraystretch}{1}
-	\caption{Fragments}
-	\label{tab:fragments}
-\end{table}
+	\includegraphics[height=.4\textheight]{img/storyboard/network_setup}
+	\caption{Network setup}
+	\label{fig:network_setup}
+\end{figure}
+
+
+\paragraph{Defining the Electorate and Review of the Vote.}
+After joining the network session, a list of all the session participants is
+displayed. At this stage, the administrator can define the electorate, meaning
+he can select the participants which are allowed to vote. This can be done by
+clicking on the the checkboxes next to the participant's identification. The
+participants can see who has been selected on their devices.
+
+Once the administrator has defined the electorate, each participant has to
+confirm that all the parameters of the vote (question, allowed options
+and electorate) are correct. The vote can only be started by the administrator
+if the whole electorate has agreed. If necessary, the administrator can go back and do changes on the vote parameters.
+
+The screen design of this phase from the administrator's perspective is
+illustrated in \Vref{fig:admin_review} and from the voter's perspective in
+\Vref{fig:voter_review}.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[height=.4\textheight]{img/storyboard/admin_review}
+	\caption{Administrator defining the electorate}
+	\label{fig:admin_review}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[height=.4\textheight]{img/storyboard/voter_review}
+	\caption{Review of the vote from voter's perspective}
+	\label{fig:voter_review}
+\end{figure}
+
+\paragraph{Voting phase.}
+Once the vote has passed the review, the vote itself can take place. Each
+participant can choose an option and cast it. The screen transitions to a view
+which shows the vote casting state of all the participants. The screen
+design of this phase is illustrated in \Vref{fig:vote}.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[height=.4\textheight]{img/storyboard/vote}
+	\caption{Vote casting}
+	\label{fig:vote}
+\end{figure}
+
+\paragraph{Displaying the result.}
+The vote is tallied as soon as the last vote has been cast, or if the
+administrator has ended the voting phase. The result is displayed in the form of
+a pie-chart and a tabular view. The result of the vote is saved on each devices
+and can be revisited using the archive function in the main screen. The screen
+design of this phase is illustrated in \Vref{fig:result}.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[height=.4\textheight]{img/storyboard/result}
+	\caption{Result of the vote}
+	\label{fig:result}
+\end{figure}
+
+
+\subsection{Implementation}
+The user interface has been implemented according to the storyboard presented in
+the previous section. The Android platform provides a powerful framework to
+implement rich user interfaces. The framework also allows to handle different
+layouts for each individual form factor. This is necessary because devices can
+have different screen sizes and are normally used in different orientations. A
+layout designed for a smartphone in portrait mode usually does not fit well on a
+tablet in landscape mode. To deal with this issue, multiple layouts have been
+developed to cope with this issue. The Android framework then automatically
+applies the correct framework.
+
+
+
+% \section{Graphical User Interface}
+% \label{sec:graphicaluserinterface}
+% 
+% The Android platform provides a powerful framework which allows to design rich
+% user interfaces specifically designed for mobile devices. The User interface was
+% built using these techniques:
+% 
+% \paragraph{Activities.}
+% Android Activities basically represent screens which allow the user to interact
+% with the application. An activity is represented as a Java class inheriting from
+% the Activity class. For each Activity there is a XML file which represents the
+% structure of the screen layout and which elements (buttons, icons, labels,
+% textfields, etc.) it contains. \Vref{tab:activities} outlines the activities and
+% the corresponding layouts which have been implemented for this application.
+% 
+% \begin{table}[htbp]
+% 	\centering
+% 	\renewcommand{\arraystretch}{1.4}
+% 	\begin{tabularx}{\textwidth}{llX}
+% 		\toprule
+% 		\textbf{Activity}			& \textbf{Layout}										\\
+% 		\midrule
+% 		CheckElectorateActivity 	& \texttt{activity\_check\_electorate.xml} 				\\
+% 		CreateNetworkActivity		& \texttt{activity\_create\_network.xml}				\\
+% 		DisplayResultActivity		& \texttt{activity\_display\_result.xml}				\\
+% 		ElectorateActivity			& \texttt{activity\_electorate.xml}						\\
+% 		ListTerminatedPollsActivity	& \texttt{activity\_list\_terminated\_polls.xml}		\\
+% 		MainActivity				& \texttt{activity\_main.xml}							\\
+% 		NetworkConfigActivity		& \texttt{activity\_network\_config.xml}				\\
+% 		NetworkInformationActivity	& \texttt{activity\_network\_information.xml}			\\
+% 		PollActivity				& \texttt{activity\_poll.xml}							\\
+% 		PollDetailActivity			& \texttt{activity\_poll\_detail.xml}					\\
+% 		ReviewPollAdminActivity		& \texttt{activity\_review\_poll.xml}					\\
+% 		ReviewPollVoterActivity		& \texttt{activity\_review\_poll\_voter.xml}			\\
+% 		VoteActivity				& \texttt{activity\_vote.xml}							\\
+% 		WaitForVotesAdminActivity	& \texttt{activity\_admin\_wait\_for\_votes.xml}		\\
+% 		WaitForVotesVoterActivity	& \texttt{activity\_wait\_for\_votes.xml}				\\
+% 		
+% 		\bottomrule
+% 	\end{tabularx}
+% 	\renewcommand{\arraystretch}{1}
+% 	\caption{Activities}
+% 	\label{tab:activities}
+% \end{table}
+% 
+% 
+% \paragraph{Fragments.}
+% Fragments allow to reuse parts of a screen design in multiple activities. They
+% are also used to design complex dialog interfaces. Fragments are always embedded
+% into an activity or a dialog. Similar to activities,
+% fragments also have a corresponding layout which is stored
+% in a XML file. \Vref{tab:fragments} outlines the fragments and the corresponding
+% layouts which have been implemented for this application.
+% 
+% \begin{table}[htbp]
+% 	\centering
+% 	\renewcommand{\arraystretch}{1.4}
+% 	\begin{minipage}{\linewidth}
+% 	\begin{tabularx}{\textwidth}{llX}
+% 		\toprule
+% 		\textbf{Fragment}						& \textbf{Layout}								\\
+% 		\midrule
+% 		ConnectNetworkDialogFragment			& \texttt{dialog\_join\_network.xml}			\\
+% 		HelpDialogFragment						& \texttt{dialog\_help.xml}						\\
+% 		IdentificationWlanKeyDialogFragment		& \texttt{dialog\_identification\_wlankey.xml}	\\
+% 		NetworkDialogFragment					& \texttt{dialog\_network\_information.xml}		\\
+% 		NetworkInformationFragment				& \texttt{fragment\_network\_information.xml}	\\
+% 		NetworkListFragment						& \texttt{list\_item\_network.xml}\footnote{In
+% 		\emph{ListFragments} the layout for each row is applied} 								\\
+% 		NetworkOptionsFragment					& \texttt{fragment\_network\_options.xml}		\\
+% 		NFCFragment								& \texttt{fragment\_nfc.xml}					\\
+% 		PollReviewFragment						& \texttt{fragment\_poll\_review.xml}			\\
+% 		ResultChartDialogFragment				& \texttt{dialog\_chart.xml}					\\
+% 		ResultChartFragment						& \texttt{fragment\_result\_chart.xml}			\\
+% 		WaitForVotesFragment					& \texttt{fragment\_wait\_for\_votes.xml}		\\
+% 		\bottomrule
+% 	\end{tabularx}
+% 	\end{minipage}
+% 	\renewcommand{\arraystretch}{1}
+% 	\caption{Fragments}
+% 	\label{tab:fragments}
+% \end{table}
+% 
+% \paragraph{Listviews and Adapters.}
+% In the Android framework, adapters are used to bind data to a layout
+% representing one line in the list. These populated layouts are then displayed in
+% a scrollable list. 
+% \\
 
 \section{Voting Protocol}
 \label{sec:votingprotocol}
@@ -1404,9 +1425,9 @@ identify the conversation. The following possibilities are available:
 \end{itemize}
 
 The applications uses the password to derive an AES key which will be used to
-symmetrically encrypt all the traffic in the conversation. Furthermore, a
-dynamic salt which is generated by the administrator decreases the risk of
-rainbowtable attacks.
+symmetrically encrypt all the broadcast traffic in the conversation.
+Furthermore, a dynamic salt which is generated by the administrator decreases
+the risk of rainbowtable attacks.
 
 In order to guarantee the authenticity and integrity of the messages in the
 conversation, each participant generates an RSA key pair. The public key is 
@@ -1414,6 +1435,12 @@ broadcast to all the participants. This key setup can then be used for
 signing/verifying all the messages in the conversation, as well as for
 establishing a secure point-to-point channel between two participants in the
 conversation.
+
+For the unicast functionality of the messaging layer, a hybrid encryption
+mechanism is used. To achieve this, we encrypt an AES key which is used
+previously to encrypt the unicast payload using the RSA public key of the
+recipient. The recipient can then use it's private key to decrypt the AES key,
+and then in a second step use this AES key to decrypt the payload.
 
 \section{Messaging}
 \label{sec:messaging}
@@ -1638,7 +1665,7 @@ implementation of this application and make it also reusable in further upcoming
 projects. In the following we describe how this implementation has been done.
 
 \subsection{Shamir Secret Sharing Scheme}
-In 1979, Adi Shamir proposed a scheme \cite{Shamir79} on how a secret can be
+In 1979, A. Shamir proposed a scheme \cite{Shamir79} on how a secret can be
 split into several independent pieces which can be distributed among several
 authorities. It is not possible to recover the secret unless a sufficient amount
 of these authorities collaborate in order to recover the secret. Further details
@@ -1700,7 +1727,7 @@ version of the ElGamal proof of validity.
 \section{Implementation}
 \label{sec:implementation}
 
-\section{Security Consideration}
+\section{Security Considerations}
 \label{sec:securityconsiderations}
 
 \chapter{Conclusion}
@@ -1809,7 +1836,7 @@ This chapter describes how the MobiVote Application can be used in practice.
 \section{Purpose of this Application}
 The purpose of this application is providing a system for verifiable and secure
 voting for a group of people gathered in the same physical location, for example
-a board meeting. 
+a board meeting.
 
 \section{Prerequisites}
 In order to run a vote using MobiVote, all the participants need to be in
@@ -1825,13 +1852,20 @@ Android devices. In order to install the APK file, the file needs to be
 transferred the devices. The easiest way is to connect the Device to a computer
 using the USB cable and copy the APK file to the device. Using a filemanager on
 the mobile device, locate the APK file in your filesystem and install it by
-clicking on it. For this to work, the option
-\menu[,]{Settings, Security, Unknown Sources}
-must be enabled. 
+clicking on it. For this to work, the option \menu[,]{Settings, Security,
+Unknown Sources} must be enabled.
 
 \section{Start of the Application}
 After a successful installation, the app should be available in the applications
 screen of your Android device. The app can be started by clicking on the icon.
+This leads you to the main screen of the application
+\myref{fig:handbook_mainscreen}.
+
+\begin{figure}[!htb] \centering
+\includegraphics[height=.4\textheight]{img/screenshots/main}
+	\caption{MobiVote Main Screen}
+	\label{fig:handbook_mainscreen}
+\end{figure}
 
 \section{Setup a Vote}
 The group needs to nominate one member as the administrator of the vote. The
@@ -1841,19 +1875,36 @@ to be in the electorate and initiating the voting phase.
 
 In order to setup a new vote, the nominated administrator selects the option
 \keys{Votes} on the main screen. The appearing screen shows a list of prepared
-votes, as well as an option to create a new vote. In the ``Vote Setup''
-screen, the properties of the vote can be entered, namely the question of the vote and a
-list of possible answers. The option \menu[,]{Allow blank ballots} can be
-checked if voters should be allowed to cast a blank ballot.
+votes, as well as an option to create a new vote \myref{fig:handbook_votes}. In
+the ``Vote Setup'' screen \myref{fig:handbook_votesetup}, the properties of the
+vote can be entered, namely the question of the vote and a list of possible
+answers. The option \menu[,]{Allow blank ballots} can be checked if voters
+should be allowed to cast a blank ballot.
 
 From here you can either go back if you just want to prepare the vote in advance
 for an upcoming session, or you can directly start the vote by clicking on the
 button \keys{Start vote}.
 
+\begin{figure}[!htb]
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/votes}
+		\caption{Available Votes}
+		\label{fig:handbook_votes}
+	\end{minipage}
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/vote_details}
+		\caption{Vote Setup}
+		\label{fig:handbook_votesetup}
+	\end{minipage}
+\end{figure}
+
 \section{Start a Voting Session}
 In order to establish a voting session, some additional information regarding
 the network is required. First, you need to enter an identification into the
-according textbox at the top of the screen. This value defines how you will be
+according textbox at the top of the screen
+\myref{fig:handbook_networkconfiguration}. This value defines how you will be
 represented in the voting session. Most likely you will want to enter your name
 into this box. This value will be saved on the device and will be proposed in
 upcoming sessions, but you can change this representation anytime you want to.
@@ -1861,14 +1912,31 @@ Moreover, you are required to tell the application in which wireless network the
 voting session should take place. In most cases this will be the network that
 you are currently connected to. If you want to use this network, you can just
 click on the button \keys{Use network ``XYZ''}. In case you want to use a
-different network, you can use the button \keys{Advanced network configuration}. This screen
-lets you choose all currently available network.
-When choosing a network you should consider that all the participants need to be
-allowed to connect to this network.
+different network, you can use the button \keys{Advanced network configuration}.
+This screen lets you choose all currently available network
+\myref{fig:handbook_advancednetworkconfiguration} When choosing a network you
+should consider that all the participants need to be allowed to connect to this
+network.
+
+\begin{figure}[!htb]
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/network_configuration}
+		\caption{Network Configuration}
+		\label{fig:handbook_networkconfiguration}
+	\end{minipage}
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/advanced_network_configuration}
+		\caption{Advanced Configuration}
+		\label{fig:handbook_advancednetworkconfiguration}
+	\end{minipage}
+\end{figure}
 
 \section{Share the Session Parameters}
 After selecting the network, a screen containing the voting session parameters
-is displayed. Three parameters are required to connect to a voting session:
+is displayed \myref{fig:handbook_networkinformation}. Three parameters are
+required to connect to a voting session:
 \begin{itemize}
   \item The network name (SSID)
   \item The group number
@@ -1885,21 +1953,38 @@ ways.
   \item \textbf{QR-code:} The three parameters are encoded in a QR-code which is
   displayed on the same screen. This QR-code can then be scanned using the
   camera of the participant's devices.
-  \item \textbf{NFC tag:} The three parameters are written to a NFC tag. This
-  tag can then be passed along the participants who can scan the tag by tapping
-  it to the back of their device. Please note that NFC functionality is only
-  available in devices of the latest generation.
+  \item \textbf{NFC tag:} The three parameters are written to a NFC tag. A NFC
+  tag is a small magnetic storage token. An example of a NFC tag is depicted in
+  \Vref{fig:handbook_nfctag}. This tag can then be passed along the participants
+  who can scan the tag by tapping it to the back of their device. Please note
+  that NFC functionality is only available in devices of the latest generation.
 \end{itemize}
 Of course it is also possible to use a combination of these three options. Using
 one of the sharing methods above, the participants can now join the voting
 session.
+
+\begin{figure}[!htb]
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/network_information}
+		\caption{Network Information}
+		\label{fig:handbook_networkinformation}
+		\end{minipage}
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.2\textheight]{img/nfc_tag}
+		\caption{NFC tag}
+		\label{fig:handbook_nfctag}
+	\end{minipage}
+\end{figure}
 
 \section{Join a Voting Session as a Participant}
 Once the administrator has announced the session parameters, the participants
 can join the session using one of the sharing methods outlined in the previous
 section. After starting up the MobiVote app, the participants now chooses the
 option \keys{Join electorate}. First, you need to enter an identification into
-the according textbox at the top of the screen. This value defines how you will be
+the according textbox at the top of the screen
+\myref{fig:handbook_joinelectorate}. This value defines how you will be
 represented in the voting session. Most likely you will want to enter your name
 into this box. This value will be saved on the device and will be proposed in
 upcoming sessions, but you can change this representation anytime you want to.
@@ -1913,65 +1998,150 @@ Next, one of the following methods to join can be chosen:
   probably the easiest and fastest way to join a voting session.
   \item \textbf{Use currently connected network:} When choosing this option, the
   WLAN to which the device is currently connected will be used. The user will be
-  prompted to enter the password and the group number. These values are both
-  displayed on the device of the administrator who established the voting
-  session.
+  prompted to enter the password and the group number
+  \myref{fig:handbook_joinelectoratepassword}.
+  These values are both displayed on the device of the administrator who
+  established the voting session.
   \item \textbf{Advanced network configuration:} This option provides you with a
-  list of currently available WLAN configuration. In order to join the voting
+  list of currently available WLAN configuration
+  \myref{fig:handbook_advancedconfigurationuser}. In order to join the voting
   session, you need to choose the WLAN which is displayed on the screen of the
   administrator's device. You will then be prompted to enter the password and
   the group number according to the parameters provided by the administrator.
   \item \textbf{Scan NFC tag:} This option can be used if you want to use a NFC
-  tag which has been passed to you from the vote administrator. After tapping
-  the NFC tag to the back of the device, the devices automatically connects to
-  the voting session. In case the session takes place on a secure WLAN which is
-  not known on the device, the user will be prompted to enter the WLAN key.
+  tag which has been passed to you from the vote administrator
+  \myref{fig:handbook_scannfctag}.
+  After tapping the NFC tag to the back of the device, the devices automatically
+  connects to the voting session. In case the session takes place on a secure
+  WLAN which is not known on the device, the user will be prompted to enter the
+  WLAN key.
   Please note that this option is only available on devices on which NFC
   functionality is available.
 \end{itemize}
 
+\begin{figure}[!htb]
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/join_electorate}
+		\caption{Join Electorate}
+		\label{fig:handbook_joinelectorate}
+	\end{minipage}
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/join_electorate_password}
+		\caption{Enter Password}
+		\label{fig:handbook_joinelectoratepassword}
+	\end{minipage}
+\end{figure}
+\begin{figure}[!htb]
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/advanced_network_configuration}
+		\caption{Advanced Configuration}
+		\label{fig:handbook_advancedconfigurationuser}
+	\end{minipage}
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/scan_nfc_tag}
+		\caption{Scan NFC Tag}
+		\label{fig:handbook_scannfctag}
+	\end{minipage}
+\end{figure}
+
 \section{Define the Electorate}
 As soon as all participants were able to join their devices to the voting
 session, the administrator can forward to the next screen by clicking on
-\keys{Next}. In the following screen, the administrator can approve all the
-joined participants by clicking on the checkbox next to the allowed participants. Each
-action automatically reflects immediately on all the joined devices. Please note
-that the administrator can include or exclude himself in the electorate.
+\keys{Next}. In the following screen \myref{fig:handbook_electorateselection},
+the administrator can approve all the joined participants by clicking on the
+checkbox next to the allowed participants. Each action automatically reflects
+immediately on all the joined devices \myref{fig:handbook_electoratedisplay}.
+Please note that the administrator can include or exclude himself in the
+electorate.
 Furthermore, the administrator has to define a so called \emph{threshold} value.
 This value defines how many honest behaving participants need to be available
 when the vote is tallied and decrypted. This value has to lie between two and
 the number of participants in the electorate. The value can be adjusted using
 the slider at the bottom of the screen.
 
+\begin{figure}[!htb]
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/electorate_selection}
+		\caption{Admin Defines Electorate}
+		\label{fig:handbook_electorateselection}
+	\end{minipage}
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/electorate_display}
+		\caption{Display Electorate}
+		\label{fig:handbook_electoratedisplay}
+	\end{minipage}
+\end{figure}
+
 \section{Review the Vote}
 After having defined the electorate, the administrator can move along the
-process by clicking on the \keys{Next} button. This leads to the review screen,
-where all the participants sees a summary of the vote and its electorate. All
-participants have to agree to this setup by clicking on the checkbox next to
+process by clicking on the \keys{Next} button. This leads to the review screen
+\myref{fig:handbook_votereview}, where all the participants see a summary of the
+vote and its electorate.
+All participants have to agree to this setup by clicking on the checkbox next to
 their identification. In case some participants disagree, the administrator can
 always go back and adjust the electorate. Once all the participants have agreed
 to the setup, the administrator can start the actual voting period by clicking
 on the button \keys{Start voting period}.
 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[height=.4\textheight]{img/screenshots/vote_review}
+	\caption{Vote Review}
+	\label{fig:handbook_votereview}
+\end{figure}
+
+
 \section{Voting}
-In the voting screen, each participant can select the preferred option. After
-confirming the choice, the vote is encrypted and cast. The following screen
-summarizes which participants cast their votes and which did not. The
-administrator has the option to interrupt by clicking on \keys{Cancel vote}, in
+In the voting screen \myref{fig:handbook_votescreen}, each participant can
+select the preferred option.
+After confirming the choice, the vote is encrypted and cast. The following
+screen \myref{fig:handbook_waitforballots} summarizes which participants cast their votes and which
+did not.
+The administrator has the option to interrupt by clicking on \keys{Cancel vote}, in
 which case no results are obtained. The administrator can also choose the option
 \keys{Finish vote}, in which case the vote is tallied and the results are
 displayed. The tally of the vote starts automatically as soon as all
 participant have cast their votes.
 
+\begin{figure}[!htb]
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/vote}
+		\caption{Vote Screen}
+		\label{fig:handbook_votescreen}
+	\end{minipage}
+	\begin{minipage}{.5\textwidth}
+  		\centering
+		\includegraphics[height=.4\textheight]{img/screenshots/waitforballots}
+		\caption{Waiting for Ballots}
+		\label{fig:handbook_waitforballots}
+	\end{minipage}
+\end{figure}
+
 \section{Display the Result}
-After a successful tally, you will be redirected to the result screen where the
-result of the vote is displayed along with some statistics. The vote is archived
-and can be accessed anytime using the \keys{Vote archive} option on the main
-screen. The administrator has the possibility to repeat the vote. This comes in
-handy if several voting round are required to reach a decision.
+After a successful tally, you will be redirected to the result screen
+\myref{fig:handbook_result} where the result of the vote is displayed along with
+some statistics. The vote is archived and can be accessed anytime using the
+\keys{Vote archive} option on the main screen. The administrator has the
+possibility to repeat the vote. This comes in handy if several voting round are
+required to reach a decision.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[height=.4\textheight]{img/screenshots/result}
+	\caption{Result of the Vote}
+	\label{fig:handbook_result}
+\end{figure}
 
 \section{Vote Archive}
-The vote archive accessible through the main screen lists all the past votes.
+The vote archive \myref{fig:handbook_votearchive}, which is accessible
+through the main screen, lists all the past votes.
 Unwanted votes can be deleted using the trash icon on the right side. An
 individual vote including the results can be examined in further detail by
 clicking on the according list item. If you want to run the exact election
@@ -1979,6 +2149,13 @@ again, the \keys{Clone vote} button can be used to recreate an empty vote which
 can then be started in the usual manner. The \keys{Export} button allows to
 export the transcript of this vote to an XML file. This file could be used to
 verify that the vote has been done correctly. 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[height=.4\textheight]{img/screenshots/vote_archive}
+	\caption{Vote Archive}
+	\label{fig:handbook_votearchive}
+\end{figure}
 
 \listoftodos
 
