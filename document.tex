@@ -589,7 +589,7 @@ the Lagrange interpolation algorithm to recover the plaintext. Let $\Lambda$ be 
 at least $t$ available shares. Using this set, the Lagrange coefficients can be
 calculated as follows:
 \begin{equation}
-	\lambda_{j,\Lambda} = \prod_{l\in \Lambda \\ \{j\}} \frac{l}{l-j} \notag
+	\lambda_{j,\Lambda} = \prod_{l\in \Lambda \backslash \{j\}} \frac{l}{l-j} \notag
 \end{equation}
 The plaintext $m$ of the ElGamal ciphertext $(a, b)$ can then be recovered as
 follows:
