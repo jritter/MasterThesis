@@ -495,8 +495,8 @@ r_2)
 \end{equation}
 
 After decrypting the product of all ciphertexts, we end up with a value of the
-form $\hat{g}^(m_1+m_2)$. The value that we are interested in is $m_1+m_2$. This
-value can be obtained by computing the discrete logarithm, but we have seen in
+form $\hat{g}^{(m_1+m_2)}$. The value that we are interested in is $m_1+m_2$.
+This value can be obtained by computing the discrete logarithm, but we have seen in
 \Vref{sec:discretelogarithm} that this is a hard problem. In the context of
 e-voting, we can solve this problem by iterating over all possible solutions and
 compare it with the decrypted value. The number of possible solutions can't be
@@ -1068,25 +1068,29 @@ throughout the project period.
 \chapter{Results}
 \label{cha:results}
 During the project phase, a working implementation of the CGS97 voting protocol
-running on Android mobile devices has been implemented. As name for the
+running on Android mobile devices has been implemented. As the name for the
 application we chose ``MobiVote'', which is related to the name ``UniVote'',
 which is an e-voting system targeted for the use at a desktop computer.
 UniVote\footnote{\url{https://www.univote.ch/}} is developed at the same
 institute, therefore we tried to create this relation.
 
-In this chapter we present further insights of the design of MobiVote. We
-will discuss the development of the graphical user interface, the architecture
-and implementation of the Android application and finally the contributions to
-related projects.
+In this chapter we present further insights of the design of MobiVote. We will
+discuss the technologies on which the implementation is based, the development
+of the graphical user interface, the architecture and implementation of the
+Android application and finally the contributions to related projects.
 
 \section{Used Technologies}
 This Section outlines the frameworks which have been used for the implementation
 of this project and how they are put together into an application.
 \subsection{Android}
 The Android\footnote{\url{http://developer.android.com/}} platform serves as the
-foundation of the whole implementation. The Application has been built using existing building blocks such as Activities,
-Services, Fragments, etc. Furthermore, there are existing guidelines and best
-practices which have been employed whenever possible. 
+foundation of the whole implementation. The Application has been built using
+existing building blocks such as Activities, Services, Fragments, etc.
+Furthermore, there are existing guidelines and best practices which have been
+employed whenever possible. For developing Android applications, the popular
+Java\footnote{\url{http://www.java.com/}} programming language can be used. The
+Android development kit then compiles this Java code and creates Android
+specific Dalvik VM byte code which is then executed on Android devices.
 
 \subsection{AllJoyn}
 AllJoyn\footnote{\url{https://allseenalliance.org/}} is a library which allows
@@ -1116,8 +1120,9 @@ Crossing'') is a Java library provided by Google which allows to deal with many
 flavours of barcodes, including QR-codes which we are using in this
 implementation. It provides the logic to encode information into a QR-code and
 display it on the user interface of the application. It also provides the
-functionality to use the camera of a smartphone/tablet as a scanner in order to
-decode the QR-code which is being displayed on the screen of another device.
+functionality which allows to use the camera of a smartphone/tablet as a scanner
+in order to decode the QR-code which is being displayed on the screen of another
+device.
 
 In this project, we are using this functionality for transmiting the parameters
 of the group to other devices. These parameters include the SSID of the WLAN
@@ -1132,7 +1137,7 @@ result screen using a pie-chart.
 
 \subsection{Simple}
 Simple\footnote{\url{http://simple.sourceforge.net/}} is an open-source
-framework which allows to serialize and deserialize Java object to XML. It is
+framework which allows to serialize and deserialize Java objects to XML. It is
 used to save and export the transcript of a vote to a XML file. This
 functionality is further discussed in \Vref{sec:datastructures}. 
 
@@ -1144,7 +1149,7 @@ UniCrypt is currently under active development. The use of this library in this
 project also helped to improve UniCrypt itself. Since UniCrypt is developed at
 the same institute, problems could be addressed and fixed right away. Since
 this project is one of the first projects using UniCrypt, it also served as a test
-bed for UniCrypt. For this project, some non existing extensions for UniCrypt
+bed for UniCrypt. For this project, some non-existing components of UniCrypt
 have been implemented. The result of this work is discussed in further detail in
 \Vref{sec:enhancmentsunicrypt}.
 
@@ -1279,7 +1284,7 @@ have different screen sizes and are normally used in different orientations. A
 layout designed for a smartphone in portrait mode usually does not fit well on a
 tablet in landscape mode. To deal with this issue, multiple layouts have been
 developed to cope with this issue. The Android framework then automatically
-applies the correct framework.
+applies the correct layout.
 
 
 
@@ -1374,8 +1379,8 @@ applies the correct framework.
 
 \section{Voting Protocol}
 \label{sec:votingprotocol}
-A major goal of this project is to create an e-voting system which provides
-as many security properties that we want in e-voting as possible. These
+A major goal of this project is to create a decentralized e-voting system which
+provides as many security properties as possible. These
 properties are discussed in \Vref{sec:evoting}. The CGS97 voting scheme
 \cite{CGS97} offers most of these properties. The properties of the CGS97 scheme
 are discussed in \Vref{sec:CGS97}. This scheme has not specifically been
@@ -1383,22 +1388,25 @@ designed for decentralized e-voting systems. The protocol itself remains exactly
 the same, but the assignment of some roles are slightly changed:
 
 \paragraph{Trustees:} The CGS97 scheme stipulates the role of trustees. Trustees
-are responsible to jointly generate a key pair for the voting session and jointly
-decrypt the result after the voting period has come to an end. In the
+are responsible to jointly generate an asymmetric key pair for the voting
+session and jointly decrypt the result after the voting period has come to an end. In the
 decentralized scenario, we merge the role of the trustee with the role of the
 participant. This doesn't create a conflict because a trustee can also be a
 participant in the vote. The fact that we assign the role of a trustee to each
 participant also reduces the complexity from a usability perspective, because no
 explicit assignment is required during the setup process of the vote.
 
-\paragraph{Bulletin Board:} Usually a bulletin board is considered as a
-centralized high available infrastructure. This paradigm can't be applied to the
-decentralized voting scenario because no central infrastructure should be
-required. Instead, each participants creates it's own transcript of the voting
-protocol. Almost all messages are exchanged by broadcasting them to all
-participants of the group and can be intercepted and recorded by each
-participant. In case of a manipulation, the participants would discover the
-manipulation by comparing the recorded values using their physical proximity.
+\paragraph{Bulletin Board:} In classic e-voting scenarios, a bulletin board is
+considered as a centralized high available infrastructure. This paradigm can't
+be applied to the decentralized voting scenario because no central
+infrastructure should be required. Instead, each participants creates it's own
+transcript of the voting protocol. Almost all messages are exchanged by
+broadcasting them to all participants of the group and can be intercepted and
+recorded by each participant. In case of a manipulation, the participants would
+discover the manipulation by comparing the recorded values using their physical
+proximity.
+
+\todo{Vote encoding}
 
 \section{Bootstrapping of Group Communication}
 \label{sec:bootstraping}
@@ -1449,7 +1457,7 @@ is required. We can divide the messages which are exchanged during a voting
 period into two categories:
 \begin{itemize}
   \item \textbf{Network Messages:} Messages which are exchanged
-  between the participants mobile devices.
+  between the participant's mobile devices.
   \item \textbf{Local Broadcast Messages:} This type of messages are Messages
   which are passed between Android components, for example when a user interface
   component needs to be updated if a specific event occurs. 
@@ -1654,7 +1662,7 @@ in the Java package \texttt{ch.bfh.evoting.voterapp.protocol.cgs97.xml}.
 
 \section{Testing}
 \label{sec:testing}
-
+\todo{Testing scenarios}
 
 \section{UniCrypt Extensions}
 \label{sec:enhancmentsunicrypt}
@@ -1834,9 +1842,12 @@ version of the ElGamal proof of validity.
 This chapter describes how the MobiVote Application can be used in practice.
 
 \section{Purpose of this Application}
-The purpose of this application is providing a system for verifiable and secure
-voting for a group of people gathered in the same physical location, for example
-a board meeting.
+MobiVote can be used as an e-voting system for a small group of people. A
+possible use case would a vote in a board of directors of a company, or any
+other committee where a group of people want to seek a decision in a secure
+manner. With MobiVote, such a vote can be set up very spontaneously as no
+special infrastructure is required. The system guarantees the privacy of each
+voter. It is not possible to find out how a participant has voted.
 
 \section{Prerequisites}
 In order to run a vote using MobiVote, all the participants need to be in
@@ -1849,8 +1860,8 @@ Windows mobile.
 \section{Installation}
 The MobiVote application is available as an APK file which can be installed on
 Android devices. In order to install the APK file, the file needs to be
-transferred the devices. The easiest way is to connect the Device to a computer
-using the USB cable and copy the APK file to the device. Using a filemanager on
+transferred to the device. The easiest way to do so is to connect the device to
+a computer using the USB cable and copy the APK file to the device. Using a filemanager on
 the mobile device, locate the APK file in your filesystem and install it by
 clicking on it. For this to work, the option \menu[,]{Settings, Security,
 Unknown Sources} must be enabled.
@@ -1877,7 +1888,7 @@ In order to setup a new vote, the nominated administrator selects the option
 \keys{Votes} on the main screen. The appearing screen shows a list of prepared
 votes, as well as an option to create a new vote \myref{fig:handbook_votes}. In
 the ``Vote Setup'' screen \myref{fig:handbook_votesetup}, the properties of the
-vote can be entered, namely the question of the vote and a list of possible
+vote can be defined, namely the question of the vote and a list of possible
 answers. The option \menu[,]{Allow blank ballots} can be checked if voters
 should be allowed to cast a blank ballot.
 
@@ -1914,7 +1925,7 @@ you are currently connected to. If you want to use this network, you can just
 click on the button \keys{Use network ``XYZ''}. In case you want to use a
 different network, you can use the button \keys{Advanced network configuration}.
 This screen lets you choose all currently available network
-\myref{fig:handbook_advancednetworkconfiguration} When choosing a network you
+\myref{fig:handbook_advancednetworkconfiguration}. When choosing a network, you
 should consider that all the participants need to be allowed to connect to this
 network.
 
@@ -2011,7 +2022,7 @@ Next, one of the following methods to join can be chosen:
   \item \textbf{Scan NFC tag:} This option can be used if you want to use a NFC
   tag which has been passed to you from the vote administrator
   \myref{fig:handbook_scannfctag}.
-  After tapping the NFC tag to the back of the device, the devices automatically
+  After tapping the NFC tag to the back of the device, the device automatically
   connects to the voting session. In case the session takes place on a secure
   WLAN which is not known on the device, the user will be prompted to enter the
   WLAN key.
@@ -2053,13 +2064,13 @@ As soon as all participants were able to join their devices to the voting
 session, the administrator can forward to the next screen by clicking on
 \keys{Next}. In the following screen \myref{fig:handbook_electorateselection},
 the administrator can approve all the joined participants by clicking on the
-checkbox next to the allowed participants. Each action automatically reflects
+checkbox next to the allowed participants. Each action reflects
 immediately on all the joined devices \myref{fig:handbook_electoratedisplay}.
 Please note that the administrator can include or exclude himself in the
 electorate.
 Furthermore, the administrator has to define a so called \emph{threshold} value.
 This value defines how many honest behaving participants need to be available
-when the vote is tallied and decrypted. This value has to lie between two and
+when the vote is tallied. This value has to lie between two and
 the number of participants in the electorate. The value can be adjusted using
 the slider at the bottom of the screen.
 
