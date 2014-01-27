@@ -42,7 +42,7 @@ footsepline, oneside, draft=off]{scrreprt}
 \usepackage{tikz}
 \usepackage{tikz-uml}
 
-\usetikzlibrary{matrix, arrows}
+\usetikzlibrary{matrix,arrows,positioning,decorations.pathreplacing,calc,decorations.pathmorphing}
 
 % Intelligent references
 \usepackage{varioref} 
@@ -85,6 +85,8 @@ footsepline, oneside, draft=off]{scrreprt}
 % Pretty tables
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{siunitx}
 
 
 % menukeys for handbook in appendix
@@ -231,8 +233,8 @@ Having said this, we divide the following goals for this project:
 The main goal of this project is the implementation of the logic of CGS97
 \cite{CGS97}, by assembling the cryptographic building blocks to a working
 application. The final product needs to be able to handle a
-voting scenario \emph{one-out-of-n}, meaning that a user can choose exactly one
-out of $n$ options. 
+voting scenario \emph{one-out-of-k}, meaning that a user can choose exactly one
+out of $k$ options. 
 
 \paragraph{Graphical User Interface.}
 In many cases, cryptographic functions which are heavily used in the context of
@@ -510,8 +512,8 @@ In e-voting scenarios it is crucial that not a
 single entity can manipulate the result or reveal single votes. This
 responsibility, or in our case the secret key which is needed to obtain the
 final result, has to be spread across a set of so called trustees. In the CGS97
-scheme, this property is achieved by using a secret sharing mechanism as proposed by Adi
-Shamir in 1979 \cite{Shamir79}. This scheme even allows to define a so called
+scheme, this property is achieved by using a secret sharing mechanism as
+proposed by A. Shamir in 1979 \cite{Shamir79}. This scheme even allows to define a so called
 \textit{threshold}, which defines the minimal amount of participating trustees
 in order to decrypt the result. Such a system is also known as a
 $(t-n)$-threshold scheme, where $n$ defines the number of shares which are
@@ -520,7 +522,7 @@ recover the secret. Equal to the ElGamal cryptosystem, we need two large primes
 $p$ and $p$ such that $q|p-1$. The prime number $q$ defines the order of a
 subgroup $G_q$ of the multiplicative modular group $\mathbb{Z}^*_p$.
 $\mathbb{Z}_q$ is an additive modular group of order $q$. Having defined these
-prequisites, a secret can be shared as follows:
+prerequisites, a secret can be shared as follows:
 \begin{enumerate}
   \item A trusted dealer chooses a polynomial $f(z) \in \mathbb{Z}_q(z)$ with
   uniformly random chosen coefficients $f_0, \ldots, f_{t-1}$.
@@ -570,7 +572,7 @@ jointly generate a secret, the trustees perform the following steps:
   F_{j0}$.
 \end{enumerate}
 The public key $y$ can now be used by anybody, for example to do an ElGamal
-encryption. In order to decrypt an ElGamal ciphertext $(a, b)$ created by the
+encryption. In order to decrypt an ElGamal ciphertext $(a, b)$ created using the
 public key $y$, at least $t$ trustees have to collaborate and execute the following steps:
 \begin{enumerate}
   \item Each collaborating trustee $\tau_i$ publishes a part decryption $w_i =
@@ -584,7 +586,7 @@ public key $y$, at least $t$ trustees have to collaborate and execute the follow
   decryption. Further details about zero-knowledge proofs can be found in
   \Vref{sec:zeroknowledgeproofs}.
 \end{enumerate}
-As soon as at least $t$ partdecryptions are publicly available, anyone can use
+As soon as at least $t$ part decryptions are publicly available, anyone can use
 the Lagrange interpolation algorithm to recover the plaintext. Let $\Lambda$ be a set of
 at least $t$ available shares. Using this set, the Lagrange coefficients can be
 calculated as follows:
@@ -974,6 +976,231 @@ protocol in order to reveal the result of the election. Note that we only need a
 protocol properly. The transcript of the protocol and the result are posted on
 the bulletin board. Furthermore, each participating trustee has to provide a
 proof that he performed his decryption step in a correct fashion.
+
+\section{Ballot Encoding}
+In many cases, a voting scenario contains more than simply two options. In order
+to deal with a scenario of the type \emph{one-out-of-k}, we need to think about
+the structure of a ballot which has to be able to contain more than just two
+options. To achieve this, we evaluated two strategies, both with their own
+advantages and disadvantages. These two strategies are discussed in the
+following.
+
+\subsection{Multi Encryption Ballot}
+In in this strategy we treat each option as an individual \emph{yes-no}
+question. To do so, we create an encryption containing a $1$ for a
+\emph{yes}-vote or $0$ for a \emph{no}-vote for each individual option using
+exponential ElGamal. In order to prove that the encryption indeed contains
+either $0$ or $1$, a proof of validity is required for each individual
+encryption.
+Furthermore, we need to make sure that each ballot contains exactly one
+\emph{yes}-vote. This can be achieved by creating a validity proof, proving that
+the sum of all encryptions is equal to one. In the
+tallying phase, a ballot is only accepted if all validity proofs are valid. For
+each option a homomorphical sum is calculated, containing the corresponding
+encryptions of all valid ballots. We then end up with $k$ ElGamal encryptions,
+containing the result of each individual option. The trustees then perform a
+joint decryption of these values. Because exponential ElGamal is used, the
+decrypted results appear in the form $\hat{g}^{r_1}, \hat{g}^{r_2}, \ldots,
+\hat{g}^{r_o}$. To obtain the actual results $r_1, r_2, \ldots, r_o$, we would
+have to calculate the discrete logarithm, but as
+we have seen in \Vref{sec:discretelogarithm}, this is a hard problem. A better
+way to obtain the results is to exploit the fact that we know the set
+relativiely small set of the possible results. Each result has to contain a
+value between $0$ and $n$, $n$ being the size of the electorate. Each result can
+now be probed by generating values $\hat{g}^0, \hat{g}^1, \hat{g}^2, \ldots$ and
+compare them to the values $\hat{g}^{r_1}, \hat{g}^{r_2}, \ldots,
+\hat{g}^{r_o}$ until the corresponding values have been found.
+
+\begin{table}[htbp]
+	\centering
+	\renewcommand{\arraystretch}{1.4}
+	\begin{minipage}{\linewidth}
+	\begin{tabularx}{\textwidth}{cclll}
+		\toprule
+		\multicolumn{2}{c}{\textbf{Voter/}}  &  \multicolumn{3}{c}{\textbf{Options}}
+		\\
+		\multicolumn{2}{c}{\textbf{Choice}}	& 	\multicolumn{1}{c}{\textbf{A}}	&
+		\multicolumn{1}{c}{\textbf{B}} &
+		\multicolumn{1}{c}{\textbf{C}}
+		\\
+		\midrule
+		\multirow{3}{*}{1} & \multirow{3}{*}{B} &	$e_{11}=Enc_y(\hat{g}^0)$	&
+		$e_{12}=Enc_y(\hat{g}^1)$ & $e_{13}=Enc_y(\hat{g}^0)$ \\
+		& & $\pi_{11}=Prove(e_{11})$ & $\pi_{11}=Prove(e_{11})$ &
+		$\pi_{11}=Prove(e_{11})$ \\	
+		& & \multicolumn{3}{c}{$\rho_1=Prove(e_{11}\cdot e_{12} \cdot e_{13})$} \\
+		[1.5ex]
+		\multirow{3}{*}{2} & \multirow{3}{*}{A} &	$e_{21}=Enc_y(\hat{g}^1)$	&
+		$e_{22}=Enc_y(\hat{g}^0)$ & $e_{23}=Enc_y(\hat{g}^0)$ \\
+		& & $\pi_{21}=Prove(e_{21})$ & $\pi_{21}=Prove(e_{21})$ &
+		$\pi_{21}=Prove(e_{21})$ \\	
+		& & \multicolumn{3}{c}{$\rho_2=Prove(e_{21}\cdot e_{22} \cdot e_{23})$} \\
+		[1.5ex]
+		\multirow{3}{*}{3} & \multirow{3}{*}{C} &	$e_{31}=Enc_y(\hat{g}^0)$	&
+		$e_{32}=Enc_y(\hat{g}^0)$ & $e_{33}=Enc_y(\hat{g}^1)$ \\
+		& & $\pi_{31}=Prove(e_{31})$ & $\pi_{31}=Prove(e_{31})$ &
+		$\pi_{31}=Prove(e_{31})$ \\	
+		& & \multicolumn{3}{c}{$\rho_3=Prove(e_{31}\cdot e_{32} \cdot e_{33})$} \\
+		[1.5ex]
+		\multirow{3}{*}{4} & \multirow{3}{*}{A} &	$e_{41}=Enc_y(\hat{g}^1)$	&
+		$e_{42}=Enc_y(\hat{g}^0)$ & $e_{43}=Enc_y(\hat{g}^0)$ \\
+		& & $\pi_{41}=Prove(e_{41})$ & $\pi_{41}=Prove(e_{41})$ &
+		$\pi_{41}=Prove(e_{41})$ \\	
+		& & \multicolumn{3}{c}{$\rho_4=Prove(e_{41}\cdot e_{42} \cdot e_{43})$}	\\ 
+		[1.5ex]
+		\midrule
+		& & $r_1 = \displaystyle\prod_{i=1}^4 e_{i1}$ & $r_2 =
+		\displaystyle\prod_{i=1}^4 e_{i2}$ & $r_3 = \displaystyle\prod_{i=1}^4 e_{i3}$
+		\\[1.5ex]
+		& & $Dec_x(r_1) = \hat{g}^{0+1+0+1}$ & $Dec_x(r_2) = \hat{g}^{1+0+0+0}$ &
+		$Dec_x(r_3) = \hat{g}^{0+0+1+0}$ \\ [1.5ex]
+		\multicolumn{2}{l}{\textbf{Result:}} & $2 = \log_{\hat{g}} \hat{g}^{0+1+0+1}$ & $1 =
+		\log_{\hat{g}} \hat{g}^{1+0+0+0}$ & $1 = \log_{\hat{g}} \hat{g}^{0+0+1+0}$
+		\\ [1.5ex]
+		\bottomrule
+	\end{tabularx}
+	\end{minipage}
+	\renewcommand{\arraystretch}{1}
+	\caption{Example of Multi Ballot Encryption}
+	\label{tab:multiencryption}
+\end{table}
+
+\subsection{Single Encryption Ballot}
+In this strategy, the choice of each option is encoded in a single value, which
+is then encrypted. To do so, are using a bit zero vector which is divided
+into equally sized sections for each individual option. Let $k$ be the number of
+options in a vote, and $n$ be the size of the electorate. For this scenario, we need a bit
+vector with $k$ sections, each containing at least $\lceil\log_2 n+1\rceil$
+bits.
+A vote can then be encoded by flipping the least significant bit of the
+chosen option's corresponding section to 1. This creates a binary representation
+of the number $v \in \mathbb{Z}_q$, provided that the bit
+vector does not exceed the bitlenght of the order of the group.
+\Vref{fig:singleencryptionencoding} illustrate how such a vector would look like
+if someone chose option \emph{B}. A voting scenario with this setup would be
+limited to $2^4-1=15$ participants because each sector can only accommodate
+numbers from $0$ to $15$. In order to achieve additive homomorphism with respect
+to the message, this number needs to be encoded by calculating $\hat{v}=\hat{g}^{v}$ \myref{sec:expelgamal}.
+This number can now be encrypted using ElGamal. In order to prove that exactly one
+option has been chosen, a proof of validity needs to be created along with the
+ElGamal encryption.
+
+ \begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture} 
+		
+		\tikzstyle{row 1 column 13}=[nodes={draw=none}]
+		\tikzstyle{row 1 column 14}=[nodes={draw=none}]
+		\matrix (bitvector) [matrix of nodes, row sep=-\pgflinewidth, column
+	sep=-\pgflinewidth, nodes={rectangle, draw=black, minimum width=2.5em,
+	minimum height=2.5em, anchor=center}] {0 & 0
+	& 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & = & $32_{10}$\\ };
+		
+		\begin{scope}[decoration={brace, amplitude=1.5mm, raise=0.1cm}]
+			\draw [decorate] (bitvector-1-1.north
+			west) -- (bitvector-1-4.north east) node[midway,yshift=0.5cm] {Option A};
+			\draw [decorate] (bitvector-1-5.north
+			west) -- (bitvector-1-8.north east) node[midway,yshift=0.5cm] {Option B};
+			\draw [decorate] (bitvector-1-9.north
+			west) -- (bitvector-1-12.north east) node[midway,yshift=0.5cm] {Option C};
+			\draw [decorate] (bitvector-1-4.south east) -- (bitvector-1-1.south
+			west) node[midway,yshift=-0.6cm]	{length: $\lceil \log_2 n+1\rceil$};
+		\end{scope}
+		
+		\begin{scope}[>=latex,->, shorten >=8pt]
+			\node (chosenoptiontext) [below=of bitvector] {Chosen Option: B} edge
+			(bitvector-1-8.center);
+		\end{scope}
+	\end{tikzpicture}
+	\caption{Single Encryption Encoding - Ballot Vector}
+	\label{fig:singleencryptionencoding}
+\end{figure}
+
+During the tallying phase, the encrypted values for each ballots are verified
+and the homomorphic product of all valid ballots is calculated. After the joint
+decryption of this homomophic product by the trustees, the result of the vote
+has the form $\hat{g}^v$, where $v \in \mathbb{Z}_q$ again represents a bit
+vector. Each sector of this bitvector now contains the sum of each individual
+option. This works because the dimensions of the sectors have been designed such
+that they do not overflow while summing up the votes.
+\Vref{fig:singleencryptionencodingresult} illustrates the bitvector $v$
+containing each option's result after tallying the vote.
+
+ \begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture} 
+		
+		\tikzstyle{row 1 column 13}=[nodes={draw=none}]
+		\tikzstyle{row 1 column 14}=[nodes={draw=none}]
+		\matrix (bitvector) [matrix of nodes, row sep=-\pgflinewidth, column
+	sep=-\pgflinewidth, nodes={rectangle, draw=black, minimum width=2.5em,
+	minimum height=2.5em, anchor=center}] {0 & 0
+	& 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & = & $882_{10}$\\ };
+		
+		\begin{scope}[decoration={brace, amplitude=1.5mm, raise=0.1cm}]
+			\draw [decorate] (bitvector-1-1.north
+			west) -- (bitvector-1-4.north east) node[midway,yshift=0.5cm] {Option A};
+			\draw [decorate] (bitvector-1-5.north
+			west) -- (bitvector-1-8.north east) node[midway,yshift=0.5cm] {Option B};
+			\draw [decorate] (bitvector-1-9.north
+			west) -- (bitvector-1-12.north east) node[midway,yshift=0.5cm] {Option C};
+			\draw [decorate] (bitvector-1-4.south east) -- (bitvector-1-1.south
+			west) node[midway,yshift=-0.6cm]	{$3_{10}$};
+			\draw [decorate] (bitvector-1-8.south east) -- (bitvector-1-5.south
+			west) node[midway,yshift=-0.6cm]	{$7_{10}$};
+			\draw [decorate] (bitvector-1-12.south east) -- (bitvector-1-9.south
+			west) node[midway,yshift=-0.6cm]	{$2_{10}$};
+		\end{scope}
+		
+		
+	\end{tikzpicture}
+	\caption{Single Encryption Encoding - Result Vector}
+	\label{fig:singleencryptionencodingresult}
+\end{figure}
+
+We have seen that after decryption we end up with a value of the form
+$\hat{g}^v$. $v$ could be obtained by calculating the discrete logarithm, but as
+we have seen in \Vref{sec:discretelogarithm}, this is a hard problem. In this
+case though, we can exploit the fact that the number of votes is known. Using
+that fact, we systematically create probing vectors $c_1, c_2, c_3, \ldots$ where
+the sum of the values encoded in the sectors correspond to the number of votes
+that have been cast. We then check whether
+$\hat{g}^{c_i}\stackrel{?}{=}\hat{g}^v$ for $i=1, \ldots, x$ until we found the
+corresponding vector. 
+
+\subsection{Comparison}
+Each of the previously discussed approaches how to encode a ballot has its own
+advantages and disadvantages. For comparing the two approaches, we are using a
+\emph{one-out-of-k} voting scenario with $k$ options and $n$ participants. As we
+can see in \Vref{tab:comparisonofvoteencodings}, the single ballot encryption is in
+many ways more efficient, except for the decoding part. As the number of
+participants and options grow, the number of combinations which have to be
+probed in order to decode the final result is growing quickly. For small voting
+scenarios ($n \leq 10, k \leq 10$), the single ballot encryption encoding is
+clearly the more efficient choice.
+
+
+\begin{table}[htbp]
+	\centering
+	\renewcommand{\arraystretch}{1.4}
+	\begin{minipage}{\linewidth}
+	\begin{tabularx}{\textwidth}{lcc}
+		\toprule
+			&	\textbf{Multi Encryption}	& 	\textbf{Single Encryption}	\\ [-0.5ex]
+			&	\textbf{Ballot}				& 	\textbf{Ballot}	\\
+		\midrule
+		Encryptions / ballot & $k$& $1$ \\
+		Validity proofs / ballot & $k+1$ & $1$ \\
+		Decryption operations / option & $k$ & $1$ \\
+		Number of combinations for decoding & $k\cdot n$ & $\binom{n-k-1}{o-k}$ \\
+		\bottomrule
+	\end{tabularx}
+	\end{minipage}
+	\renewcommand{\arraystretch}{1}
+	\caption{Comparison of Vote Encodings}
+	\label{tab:comparisonofvoteencodings}
+\end{table}
+
 
 \section{UniCrypt}
 \label{sec:unicrypt}
@@ -1855,7 +2082,8 @@ possession of a mobile device such as a smartphone or a tablet computer running
 at least Android 4.0 (Ice Cream Sandwich). All the devices also need to be WLAN
 capable and the WLAN adapter has to be activated. Currently is not possible to
 use mobile devices of other flavours such as Apple iPhones or devices running
-Windows mobile.
+Windows mobile. At least two participants are required in order to run a voting
+session.
 
 \section{Installation}
 The MobiVote application is available as an APK file which can be installed on
