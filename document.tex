@@ -10,7 +10,6 @@ footsepline, oneside, draft=off]{scrreprt}
 
 \usepackage[T1]{fontenc}
 
-
 \usepackage[english]{babel} 
 \usepackage[utf8]{inputenc}
 
@@ -61,6 +60,9 @@ footsepline, oneside, draft=off]{scrreprt}
 % improve word spacing
 \usepackage{microtype}
 
+\usepackage{gnuplottex}
+\usepackage{epstopdf}
+
 % Using links in PDFs, but without the ugly borders
 \usepackage{hyperref}
 \hypersetup{
@@ -87,6 +89,7 @@ footsepline, oneside, draft=off]{scrreprt}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{siunitx}
+
 
 
 % menukeys for handbook in appendix
@@ -1191,8 +1194,8 @@ clearly the more efficient choice.
 		\midrule
 		Encryptions / ballot & $k$& $1$ \\
 		Validity proofs / ballot & $k+1$ & $1$ \\
-		Decryption operations / option & $k$ & $1$ \\
-		Number of combinations for decoding & $k\cdot n$ & $\binom{n-k-1}{o-k}$ \\
+		Decryption operations & $k$ & $1$ \\
+		Number of combinations for decoding & $k\cdot n$ & $\dbinom{k+n-1}{k-1}$ \\
 		\bottomrule
 	\end{tabularx}
 	\end{minipage}
@@ -1201,6 +1204,45 @@ clearly the more efficient choice.
 	\label{tab:comparisonofvoteencodings}
 \end{table}
 
+\begin{figure}[htbp]
+	\centering
+	\begin{gnuplot}[terminal=epslatex]
+      set terminal epslatex header "\\footnotesize"
+      f(k, n) = gamma(k+n-1+1)/(gamma(k-1+1) * gamma((k+n-1)-(k-1)+1))
+	  set xyplane 0
+	  set surface
+	  set isosamples 20
+	  set pm3d at s
+	  set palette gray negative
+	  set ztics 0,50000
+	  set cbtics 0,50000
+	  set xlabel "Options"
+	  set ylabel "Ballots"
+	  splot [0:10][0:10] f(x, y)
+    \end{gnuplot}
+	\caption{Single Ballot Encryption - Complexity}
+	\label{fig:singleencryptionencodingcomplexity}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\begin{gnuplot}[terminal=epslatex]
+      set terminal epslatex header "\\footnotesize"
+      f(k, n) = k*n
+	  set xyplane 0
+	  set surface
+	  set isosamples 20
+	  set pm3d at s
+	  set palette gray negative
+	  set ztics 0,50
+	  set cbtics 0,50
+	  set xlabel "Options"
+	  set ylabel "Ballots"
+	  splot [0:10][0:10] f(x, y)
+    \end{gnuplot}
+	\caption{Single Ballot Encryption - Complexity}
+	\label{fig:singleencryptionencodingcomplexity}
+\end{figure}
 
 \section{UniCrypt}
 \label{sec:unicrypt}
