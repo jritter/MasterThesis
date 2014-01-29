@@ -1218,6 +1218,7 @@ clearly the more efficient choice.
 	  set cbtics 0,50000
 	  set xlabel "Options"
 	  set ylabel "Ballots"
+	  set zlabel "Combinations" rotate by 90
 	  splot [0:10][0:10] f(x, y)
     \end{gnuplot}
 	\caption{Single Ballot Encryption - Complexity}
@@ -1238,6 +1239,7 @@ clearly the more efficient choice.
 	  set cbtics 0,50
 	  set xlabel "Options"
 	  set ylabel "Ballots"
+	  set zlabel "Combinations" rotate by 90
 	  splot [0:10][0:10] f(x, y)
     \end{gnuplot}
 	\caption{Single Ballot Encryption - Complexity}
@@ -1459,7 +1461,7 @@ start the voting process. The screen design of this phase is illustrated in
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[height=.4\textheight]{img/storyboard/vote_setup}
+	\includegraphics[height=.3\textheight]{img/storyboard/vote_setup}
 	\caption{Setup a vote}
 	\label{fig:vote_setup}
 \end{figure}
@@ -1480,7 +1482,7 @@ for themselves. The screen design of this phase is illustrated in
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[height=.4\textheight]{img/storyboard/network_setup}
+	\includegraphics[height=.3\textheight]{img/storyboard/network_setup}
 	\caption{Network setup}
 	\label{fig:network_setup}
 \end{figure}
@@ -1504,14 +1506,14 @@ illustrated in \Vref{fig:admin_review} and from the voter's perspective in
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[height=.4\textheight]{img/storyboard/admin_review}
+	\includegraphics[height=.3\textheight]{img/storyboard/admin_review}
 	\caption{Administrator defining the electorate}
 	\label{fig:admin_review}
 \end{figure}
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[height=.4\textheight]{img/storyboard/voter_review}
+	\includegraphics[height=.3\textheight]{img/storyboard/voter_review}
 	\caption{Review of the vote from voter's perspective}
 	\label{fig:voter_review}
 \end{figure}
@@ -1524,7 +1526,7 @@ design of this phase is illustrated in \Vref{fig:vote}.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[height=.4\textheight]{img/storyboard/vote}
+	\includegraphics[height=.3\textheight]{img/storyboard/vote}
 	\caption{Vote casting}
 	\label{fig:vote}
 \end{figure}
@@ -1538,7 +1540,7 @@ design of this phase is illustrated in \Vref{fig:result}.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[height=.4\textheight]{img/storyboard/result}
+	\includegraphics[height=.3\textheight]{img/storyboard/result}
 	\caption{Result of the vote}
 	\label{fig:result}
 \end{figure}
