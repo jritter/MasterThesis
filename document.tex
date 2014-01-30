@@ -2114,7 +2114,7 @@ This chapter describes how the MobiVote Application can be used in practice.
 
 \section{Purpose of this Application}
 MobiVote can be used as an e-voting system for a small group of people. A
-possible use case would a vote in a board of directors of a company, or any
+possible use case would be a vote in a board of directors of a company, or any
 other committee where a group of people want to seek a decision in a secure
 manner. With MobiVote, such a vote can be set up very spontaneously as no
 special infrastructure is required. The system guarantees the privacy of each
@@ -2124,8 +2124,8 @@ voter. It is not possible to find out how a participant has voted.
 In order to run a vote using MobiVote, all the participants need to be in
 possession of a mobile device such as a smartphone or a tablet computer running
 at least Android 4.0 (Ice Cream Sandwich). All the devices also need to be WLAN
-capable and the WLAN adapter has to be activated. Currently is not possible to
-use mobile devices of other flavours such as Apple iPhones or devices running
+capable and the WLAN adapter has to be activated. Currently it is not possible
+to use mobile devices of other flavours such as Apple iPhones or devices running
 Windows mobile. At least two participants are required in order to run a voting
 session.
 
@@ -2156,8 +2156,8 @@ administrator is responsible for the orchestration of the voting process. That
 includes defining the question and the possible options, approving other people
 to be in the electorate and initiating the voting phase.
 
-In order to setup a new vote, the nominated administrator selects the option
-\keys{Votes} on the main screen. The appearing screen shows a list of prepared
+\textbf{Admin only:} In order to setup a new vote, the nominated administrator
+selects the option \keys{Votes} on the main screen. The appearing screen shows a list of prepared
 votes, as well as an option to create a new vote \myref{fig:handbook_votes}. In
 the ``Vote Setup'' screen \myref{fig:handbook_votesetup}, the properties of the
 vote can be defined, namely the question of the vote and a list of possible
@@ -2184,8 +2184,8 @@ button \keys{Start vote}.
 \end{figure}
 
 \section{Start a Voting Session}
-In order to establish a voting session, some additional information regarding
-the network is required. First, you need to enter an identification into the
+\textbf{Admin only:} In order to establish a voting session, some additional
+information regarding the network is required. First, you need to enter an identification into the
 according textbox at the top of the screen
 \myref{fig:handbook_networkconfiguration}. This value defines how you will be
 represented in the voting session. Most likely you will want to enter your name
@@ -2262,8 +2262,8 @@ session.
 \end{figure}
 
 \section{Join a Voting Session as a Participant}
-Once the administrator has announced the session parameters, the participants
-can join the session using one of the sharing methods outlined in the previous
+\textbf{Voter only:} Once the administrator has announced the session
+parameters, the participants can join the session using one of the sharing methods outlined in the previous
 section. After starting up the MobiVote app, the participants now chooses the
 option \keys{Join electorate}. First, you need to enter an identification into
 the according textbox at the top of the screen
@@ -2338,7 +2338,7 @@ session, the administrator can forward to the next screen by clicking on
 the administrator can approve all the joined participants by clicking on the
 checkbox next to the allowed participants. Each action reflects
 immediately on all the joined devices \myref{fig:handbook_electoratedisplay}.
-Please note that the administrator can include or exclude himself in the
+Please note that the administrator can include or exclude itself in the
 electorate.
 Furthermore, the administrator has to define a so called \emph{threshold} value.
 This value defines how many honest behaving participants need to be available
@@ -2366,10 +2366,10 @@ After having defined the electorate, the administrator can move along the
 process by clicking on the \keys{Next} button. This leads to the review screen
 \myref{fig:handbook_votereview}, where all the participants see a summary of the
 vote and its electorate.
-All participants have to agree to this setup by clicking on the checkbox next to
+All participants have to agree on this setup by clicking on the checkbox next to
 their identification. In case some participants disagree, the administrator can
 always go back and adjust the electorate. Once all the participants have agreed
-to the setup, the administrator can start the actual voting period by clicking
+on the setup, the administrator can start the actual voting period by clicking
 on the button \keys{Start voting period}.
 
 \begin{figure}[!htb]
