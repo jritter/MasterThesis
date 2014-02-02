@@ -71,7 +71,7 @@ footsepline, oneside, draft=off]{scrreprt}
     pdfauthor={Juerg Ritter},
     pdftitle={Decentralized E-Voting on Android Devices Using Homomorphic
     Tallying},
-    pdfsubject={Master Thesis},
+    pdfsubject={Master's Thesis},
     pdfkeywords={E-Voting;Android;Master Thesis},
 }
 
@@ -100,8 +100,8 @@ footsepline, oneside, draft=off]{scrreprt}
 \begin{document}
 
 \title{\bf Decentralized E-Voting on Android Devices Using Homomorphic Tallying}
-\subject{Master Thesis}
-\author{Juerg Ritter\\
+\subject{Master's Thesis}
+\author{Jürg Ritter\\
 \\
 Bern University of Applied Sciences\\
 Engineering and Information Technology\\
@@ -115,8 +115,6 @@ Expert:\\
 Stephan Neumann, Technical University of Darmstadt}
 \maketitle
 
-\makenomenclature
-
 \clearpage
 \pagenumbering{roman}
 
@@ -127,7 +125,7 @@ evaluate decentralized e-voting systems for practical use. The term
 infrastructure involved in the voting process. The main application of such
 e-voting systems are votes with a low number of participants, for example the
 board of directors in a company. The idea is, that the participants create an
-ad-hoc network with mobile devices. The main goal of this master thesis is to
+ad-hoc network with mobile devices. The main goal of this master's thesis is to
 implement a decentralized e-voting system for Android based mobile devices. We
 are using a voting scheme that uses homomorphic tallying and secret sharing to
 guarantee privacy and verifiability. It also provides robustness in the sense
@@ -137,6 +135,35 @@ big focus area is also the usability of this system, it should be possible for
 participants without extensive knowledge in the area of information security to
 use this e-voting system.
 \end{abstract}
+
+\chapter*{Statutory declaration}
+\label{chap:decalration}
+
+I hereby declare having done this master's thesis myself without any
+unauthorized help. All information sources that strongly helped me in my work,
+are fully referenced in this document or directly in the source code.
+
+\begin{flushleft}
+
+
+\vspace{3.5cm}
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxxx\=xxxxxxxxxxxxxxxxxxxxxxx \kill
+
+Title of the thesis:		\>  Decentralized E-Voting on Android Devices\\
+ \> Using Homomorphic Tallying
+\\
+\\
+Firstname, Lastname:		\>  Jürg Ritter		\\
+\\
+\\
+Date, Place:		\> \today, \\
+\>Biel, Switzerland			\\
+\\
+\\
+Signature:
+\end{tabbing}
+\end{flushleft}
 
 \tableofcontents
 \listoffigures
@@ -149,8 +176,11 @@ project. Many interesting and inspiring discussions helped driving on this
 project. A special thanks goes to my advisor Prof. Dr. Rolf Haenni who supported
 me throughout the whole time during my master studies. A big thank you also goes
 to my fellow student Philémon von Bergen, with whom I worked closely during this
-master thesis. Coming a long way from Germany for serving as an expert for this
-master thesis, I would like to express my gratitude to Stephan Neumann.
+master's thesis. Coming a long way from Germany for serving as an expert for
+this master's thesis, I would like to express my gratitude to Stephan Neumann.
+I am also deeply grateful for the support of my employer Swisscom for supporting
+me during the whole time of my studies, especially my team who always gave me
+the necessary flexibility.
 
 % Nomenclature 
 % ------------------------------------------------------------------
@@ -181,12 +211,13 @@ revolutionized by the internet, it is not surprising that there are a lot of
 efforts going on to revolutionize the process of voting as well.
 
 One of the research fields of the Bern University of Applied Sciences is the
-area of e-voting. E-voting has become a big field of research in the past couple
-years. Still, there is no generic approach which meets all the criteria such as
-privacy, transparency, etc. which we want in e-voting. These properties are
-discussed in \Vref{sec:evoting}. The e-voting research group of the Bern
-University of Applied Sciences\footnote{\url{http://e-voting.bfh.ch/}} tries to
-improve this situation with the following approaches:
+area of electroing voting, hereinafter abbreviated as e-voting. E-voting has
+become a big field of research in the past couple years. Still, there is no
+generic approach which meets all the criteria such as privacy, transparency,
+etc. which we want in e-voting. These properties are discussed in
+\Vref{sec:evoting}. The e-voting research group of the Bern University of
+Applied Sciences\footnote{\url{http://e-voting.bfh.ch/}} tries to improve this
+situation with the following approaches:
 \begin{itemize}
   \item Contribute to the scientific community in the area of e-voting by
   publishing new approaches.
@@ -198,10 +229,12 @@ The evaluation of these approaches is usually done by implementing them into a
 prototype level application. This implementation is used to show that the
 approach works in practice and provides a certain usability. The E-Voting Group
 would like to gain some experience on how decentralized e-voting systems could
-be implemented and how they behave in practice. There are some approaches which
-focus explicitly on decentralized e-voting systems, such as the proposal of
-D. Khader et al. \cite{HKRS12}. In this project however, we would like to adapt
-the voting scheme proposed by Cramer et. al. \cite{CGS97} in a way that it can be
+be implemented and how they behave in practice. A decentralized e-voting system
+aims to provide a platform to do secure e-voting without the need of having a
+central infrastructre (e.g. a server) available. There are some approaches which
+focus explicitly on this kind of e-voting systems, such as the proposal of D.
+Khader et al. \cite{HKRS12}. In this project however, we would like to adapt the
+voting scheme proposed by Cramer et. al. \cite{CGS97} in a way that it can be
 used as a decentralized e-voting system.
 
 A potential usecase of such a system could be boardroom voting, for example a
@@ -257,7 +290,7 @@ missing:
   \item \textbf{ElGamal Proof of Validity:} This type of zero-knowledge proof is
   used in order to make sure that a ciphertext is an ElGamal encryption of an
   element which belongs to a set of possible plaintexts. This type of proof is
-  an instance of of a more generic \emph{OR-composition} of multiple proofs of
+  an instance	 of a more generic \emph{OR-composition} of multiple proofs of
   knowledge. This type of zero-knowledge proof is discussed in detail in
   \Vref{sec:zeroknowledgeproofs}.
   \item \textbf{Threshold Cryptosystem:} In order to ensure privacy of
@@ -272,8 +305,8 @@ As a goal of this project, these two essential building blocks have to be
 implemented and integrated into the UniCrypt library.
 \\
 
-The time budget of this master thesis is one year, although the project will be
-implemented part time. It is equivalent to 27 ECTS credits.
+The time budget of this master's thesis is one year, although the project will
+be implemented part time. It is equivalent to 27 ECTS credits.
 
 \section{Contribution}
 \label{sec:contribution}
@@ -299,10 +332,13 @@ implementation of other e-voting schemes.
 \Vref{cha:brw} gives an overview of the work on which this project has
 been based on. The cryptographic building blocks which we use are discussed,
 as well as the e-voting scheme on which this work is based on. We also discuss
-projects which have been implemented as a preparation of this master thesis.
+projects which have been implemented as a preparation of this master's thesis.
 \Vref{cha:results} explains the resulting implementation in detail.
-
-\todo{Needs to be extended with results, discussion and conclusion}
+\Vref{cha:discussion} reflects on the work which has been done, before ending
+the document with a conclusion that summarizes the achievements
+\myref{cha:conclusion}.
+A handbook of the product which has been implemented during this project can be found in the
+Appendix \myref{cha:handbook}.
 
 \chapter{Background and Related Work}
 \label{cha:brw}
@@ -627,27 +663,30 @@ cheating.
 \subsubsection{Non-interactive zero-knowledge proofs}
 \label{sec:nizkp}
 Zero-knowledge proofs as described earlier are \textit{interactive}
-conversations between a prover and a verifier. This also means that the prover proofs only to
-the verifier that she has knowledge of the secret. Of course, any observer could
-observe the conversation, but there is no way to determine whether the verifier
-actually accepts the the proof or not. The verifier could of course testify that
-the prover has the knowledge of the secret, but that would require a trust
-relationship between the observer and the verifier. In an e-voting scenario, we
-need a proof which can be verified by anybody and doesn't require an interactive
-conversation between the verifier and the prover. Such proofs are called
-\textit{non-interactive zero-knowledge proofs} or \textit{NIZKPs}. The
-foundations of these NIZKPs were introduced by A. Fiat and A. Shamir in 1986
-\cite{FS87}, later known as the \textit{Fiat-Shamir heuristic}. Instead of the
-verifier challenging the prover, the prover challenges himself by using a
-\emph{hashfunction} such as SHA-256. The result of such a non-interactive
-zero-knowledge proof is similar to a digital signature. Once published,
-everybody can verify the integrity of the data over which the signature has been
-calculated. In a similar way, non-interactive zero-knowledge proofs can be
-verified, with the important difference that the secret of course remains
-secret. So far, we did not specify what a secret actually is. There are multiple
-types of secrets and therefore also multiple types of zero-knowledge proofs, but
-due to the work of U. Maurer \cite{Maurer09}, we can formulate a general
-recipe how such a NIZKP is assembled:
+conversations between a prover and a verifier. This also means that the prover
+proofs only to the verifier that she has knowledge of the secret. Of course, any
+observer could observe the conversation, but there is no way to determine
+whether the verifier actually accepts the the proof or not. The verifier could
+of course testify that the prover has the knowledge of the secret, but that
+would require a trust relationship between the observer and the verifier. In an
+e-voting scenario, we need a proof which can be verified by anybody and doesn't
+require an interactive conversation between the verifier and the prover. Such
+proofs are called \textit{non-interactive zero-knowledge proofs} or
+\textit{NIZKPs}. The foundations of these NIZKPs were introduced by A. Fiat and
+A. Shamir in 1986 \cite{FS87}, later known as the \textit{Fiat-Shamir
+heuristic}. Instead of the verifier challenging the prover, the prover
+challenges himself by using a \emph{hashfunction} such as SHA-256. As input for
+this hashfunction, publicly known values are used. A verifier can use these
+publicly known values later to verify that the challenge was created correctly.
+The result of such a non-interactive zero-knowledge proof is similar to a
+digital signature. Once published, everybody can verify the integrity of the
+data over which the signature has been calculated. In a similar way,
+non-interactive zero-knowledge proofs can be verified, with the important
+difference that the secret of course remains secret. So far, we did not specify
+what a secret actually is. There are multiple types of secrets and therefore
+also multiple types of zero-knowledge proofs, but due to the work of U. Maurer
+\cite{Maurer09}, we can formulate a general recipe how such a NIZKP is
+assembled:
 
 Let $(X,\oplus)$ and $(Y,\otimes)$ be two mathematical groups and
 $f:X \rightarrow Y$ be a one-way homomorphic function. The prover wants to prove
@@ -981,6 +1020,7 @@ the bulletin board. Furthermore, each participating trustee has to provide a
 proof that he performed his decryption step in a correct fashion.
 
 \section{Ballot Encoding}
+\label{sec:ballotencoding}
 In many cases, a voting scenario contains more than simply two options. In order
 to deal with a scenario of the type \emph{one-out-of-k}, we need to think about
 the structure of a ballot which has to be able to contain more than just two
@@ -989,9 +1029,10 @@ advantages and disadvantages. These two strategies are discussed in the
 following.
 
 \subsection{Multi Encryption Ballot}
+\label{sec:multiencriptionballot}
 In in this strategy we treat each option as an individual \emph{yes-no}
 question. To do so, we create an encryption containing a $1$ for a
-\emph{yes}-vote or $0$ for a \emph{no}-vote for each individual option using
+\emph{yes}-vote or a $0$ for a \emph{no}-vote for each individual option using
 exponential ElGamal. In order to prove that the encryption indeed contains
 either $0$ or $1$, a proof of validity is required for each individual
 encryption.
@@ -1004,7 +1045,7 @@ encryptions of all valid ballots. We then end up with $k$ ElGamal encryptions,
 containing the result of each individual option. The trustees then perform a
 joint decryption of these values. Because exponential ElGamal is used, the
 decrypted results appear in the form $\hat{g}^{r_1}, \hat{g}^{r_2}, \ldots,
-\hat{g}^{r_o}$. To obtain the actual results $r_1, r_2, \ldots, r_o$, we would
+\hat{g}^{r_k}$. To obtain the actual results $r_1, r_2, \ldots, r_k$, we would
 have to calculate the discrete logarithm, but as
 we have seen in \Vref{sec:discretelogarithm}, this is a hard problem. A better
 way to obtain the results is to exploit the fact that we know the set
@@ -1012,63 +1053,89 @@ relativiely small set of the possible results. Each result has to contain a
 value between $0$ and $n$, $n$ being the size of the electorate. Each result can
 now be probed by generating values $\hat{g}^0, \hat{g}^1, \hat{g}^2, \ldots$ and
 compare them to the values $\hat{g}^{r_1}, \hat{g}^{r_2}, \ldots,
-\hat{g}^{r_o}$ until the corresponding values have been found.
+\hat{g}^{r_k}$ until the corresponding values for each option have been found.
+In the worst case, this decoding operation takes $k \cdot n$ steps.
+\Vref{fig:multiencryptionencodingcomplexity} visualizes the growth of the number
+of steps as the electorate and the number of options grow.
 
-\begin{table}[htbp]
+\begin{figure}[htbp]
 	\centering
-	\renewcommand{\arraystretch}{1.4}
-	\begin{minipage}{\linewidth}
-	\begin{tabularx}{\textwidth}{cclll}
-		\toprule
-		\multicolumn{2}{c}{\textbf{Voter/}}  &  \multicolumn{3}{c}{\textbf{Options}}
-		\\
-		\multicolumn{2}{c}{\textbf{Choice}}	& 	\multicolumn{1}{c}{\textbf{A}}	&
-		\multicolumn{1}{c}{\textbf{B}} &
-		\multicolumn{1}{c}{\textbf{C}}
-		\\
-		\midrule
-		\multirow{3}{*}{1} & \multirow{3}{*}{B} &	$e_{11}=Enc_y(\hat{g}^0)$	&
-		$e_{12}=Enc_y(\hat{g}^1)$ & $e_{13}=Enc_y(\hat{g}^0)$ \\
-		& & $\pi_{11}=Prove(e_{11})$ & $\pi_{11}=Prove(e_{11})$ &
-		$\pi_{11}=Prove(e_{11})$ \\	
-		& & \multicolumn{3}{c}{$\rho_1=Prove(e_{11}\cdot e_{12} \cdot e_{13})$} \\
-		[1.5ex]
-		\multirow{3}{*}{2} & \multirow{3}{*}{A} &	$e_{21}=Enc_y(\hat{g}^1)$	&
-		$e_{22}=Enc_y(\hat{g}^0)$ & $e_{23}=Enc_y(\hat{g}^0)$ \\
-		& & $\pi_{21}=Prove(e_{21})$ & $\pi_{21}=Prove(e_{21})$ &
-		$\pi_{21}=Prove(e_{21})$ \\	
-		& & \multicolumn{3}{c}{$\rho_2=Prove(e_{21}\cdot e_{22} \cdot e_{23})$} \\
-		[1.5ex]
-		\multirow{3}{*}{3} & \multirow{3}{*}{C} &	$e_{31}=Enc_y(\hat{g}^0)$	&
-		$e_{32}=Enc_y(\hat{g}^0)$ & $e_{33}=Enc_y(\hat{g}^1)$ \\
-		& & $\pi_{31}=Prove(e_{31})$ & $\pi_{31}=Prove(e_{31})$ &
-		$\pi_{31}=Prove(e_{31})$ \\	
-		& & \multicolumn{3}{c}{$\rho_3=Prove(e_{31}\cdot e_{32} \cdot e_{33})$} \\
-		[1.5ex]
-		\multirow{3}{*}{4} & \multirow{3}{*}{A} &	$e_{41}=Enc_y(\hat{g}^1)$	&
-		$e_{42}=Enc_y(\hat{g}^0)$ & $e_{43}=Enc_y(\hat{g}^0)$ \\
-		& & $\pi_{41}=Prove(e_{41})$ & $\pi_{41}=Prove(e_{41})$ &
-		$\pi_{41}=Prove(e_{41})$ \\	
-		& & \multicolumn{3}{c}{$\rho_4=Prove(e_{41}\cdot e_{42} \cdot e_{43})$}	\\ 
-		[1.5ex]
-		\midrule
-		& & $r_1 = \displaystyle\prod_{i=1}^4 e_{i1}$ & $r_2 =
-		\displaystyle\prod_{i=1}^4 e_{i2}$ & $r_3 = \displaystyle\prod_{i=1}^4 e_{i3}$
-		\\[1.5ex]
-		& & $Dec_x(r_1) = \hat{g}^{0+1+0+1}$ & $Dec_x(r_2) = \hat{g}^{1+0+0+0}$ &
-		$Dec_x(r_3) = \hat{g}^{0+0+1+0}$ \\ [1.5ex]
-		\multicolumn{2}{l}{\textbf{Result:}} & $2 = \log_{\hat{g}} \hat{g}^{0+1+0+1}$ & $1 =
-		\log_{\hat{g}} \hat{g}^{1+0+0+0}$ & $1 = \log_{\hat{g}} \hat{g}^{0+0+1+0}$
-		\\ [1.5ex]
-		\bottomrule
-	\end{tabularx}
-	\end{minipage}
-	\renewcommand{\arraystretch}{1}
-	\caption{Example of Multi Ballot Encryption}
-	\label{tab:multiencryption}
-\end{table}
+	\begin{gnuplot}[terminal=epslatex]
+      set terminal epslatex size 10 cm, 8 cm header "\\footnotesize"
+      f(k, n) = k*n
+	  set xyplane 0
+	  set surface
+	  set isosamples 20
+	  set pm3d at s
+	  set palette gray negative
+	  set ztics 0,50
+	  set cbtics 0,50
+	  set xlabel "Options"
+	  set ylabel "Ballots"
+	  set zlabel "Decoding steps" rotate by 90
+	  set nokey
+	  splot [0:10][0:10] f(x, y)
+    \end{gnuplot}
+	\caption{Multi Encryption Ballot - Complexity}
+	\label{fig:multiencryptionencodingcomplexity}
+\end{figure}
+
+% \begin{table}[htbp]
+% 	\centering
+% 	\renewcommand{\arraystretch}{1.4}
+% 	\begin{minipage}{\linewidth}
+% 	\begin{tabularx}{\textwidth}{cclll}
+% 		\toprule
+% 		\multicolumn{2}{c}{\textbf{Voter/}}  &  \multicolumn{3}{c}{\textbf{Options}}
+% 		\\
+% 		\multicolumn{2}{c}{\textbf{Choice}}	& 	\multicolumn{1}{c}{\textbf{A}}	&
+% 		\multicolumn{1}{c}{\textbf{B}} &
+% 		\multicolumn{1}{c}{\textbf{C}}
+% 		\\
+% 		\midrule
+% 		\multirow{3}{*}{1} & \multirow{3}{*}{B} &	$e_{11}=Enc_y(\hat{g}^0)$	&
+% 		$e_{12}=Enc_y(\hat{g}^1)$ & $e_{13}=Enc_y(\hat{g}^0)$ \\
+% 		& & $\pi_{11}=Prove(e_{11})$ & $\pi_{11}=Prove(e_{11})$ &
+% 		$\pi_{11}=Prove(e_{11})$ \\	
+% 		& & \multicolumn{3}{c}{$\rho_1=Prove(e_{11}\cdot e_{12} \cdot e_{13})$} \\
+% 		[1.5ex]
+% 		\multirow{3}{*}{2} & \multirow{3}{*}{A} &	$e_{21}=Enc_y(\hat{g}^1)$	&
+% 		$e_{22}=Enc_y(\hat{g}^0)$ & $e_{23}=Enc_y(\hat{g}^0)$ \\
+% 		& & $\pi_{21}=Prove(e_{21})$ & $\pi_{21}=Prove(e_{21})$ &
+% 		$\pi_{21}=Prove(e_{21})$ \\	
+% 		& & \multicolumn{3}{c}{$\rho_2=Prove(e_{21}\cdot e_{22} \cdot e_{23})$} \\
+% 		[1.5ex]
+% 		\multirow{3}{*}{3} & \multirow{3}{*}{C} &	$e_{31}=Enc_y(\hat{g}^0)$	&
+% 		$e_{32}=Enc_y(\hat{g}^0)$ & $e_{33}=Enc_y(\hat{g}^1)$ \\
+% 		& & $\pi_{31}=Prove(e_{31})$ & $\pi_{31}=Prove(e_{31})$ &
+% 		$\pi_{31}=Prove(e_{31})$ \\	
+% 		& & \multicolumn{3}{c}{$\rho_3=Prove(e_{31}\cdot e_{32} \cdot e_{33})$} \\
+% 		[1.5ex]
+% 		\multirow{3}{*}{4} & \multirow{3}{*}{A} &	$e_{41}=Enc_y(\hat{g}^1)$	&
+% 		$e_{42}=Enc_y(\hat{g}^0)$ & $e_{43}=Enc_y(\hat{g}^0)$ \\
+% 		& & $\pi_{41}=Prove(e_{41})$ & $\pi_{41}=Prove(e_{41})$ &
+% 		$\pi_{41}=Prove(e_{41})$ \\	
+% 		& & \multicolumn{3}{c}{$\rho_4=Prove(e_{41}\cdot e_{42} \cdot e_{43})$}	\\ 
+% 		[1.5ex]
+% 		\midrule
+% 		& & $r_1 = \displaystyle\prod_{i=1}^4 e_{i1}$ & $r_2 =
+% 		\displaystyle\prod_{i=1}^4 e_{i2}$ & $r_3 = \displaystyle\prod_{i=1}^4 e_{i3}$
+% 		\\[1.5ex]
+% 		& & $Dec_x(r_1) = \hat{g}^{0+1+0+1}$ & $Dec_x(r_2) = \hat{g}^{1+0+0+0}$ &
+% 		$Dec_x(r_3) = \hat{g}^{0+0+1+0}$ \\ [1.5ex]
+% 		\multicolumn{2}{l}{\textbf{Result:}} & $2 = \log_{\hat{g}} \hat{g}^{0+1+0+1}$ & $1 =
+% 		\log_{\hat{g}} \hat{g}^{1+0+0+0}$ & $1 = \log_{\hat{g}} \hat{g}^{0+0+1+0}$
+% 		\\ [1.5ex]
+% 		\bottomrule
+% 	\end{tabularx}
+% 	\end{minipage}
+% 	\renewcommand{\arraystretch}{1}
+% 	\caption{Example of Multi Ballot Encryption}
+% 	\label{tab:multiencryption}
+% \end{table}
 
 \subsection{Single Encryption Ballot}
+\label{sec:singleencriptionballot}
 In this strategy, the choice of each option is encoded in a single value, which
 is then encrypted. To do so, are using a bit zero vector which is divided
 into equally sized sections for each individual option. Let $k$ be the number of
@@ -1169,14 +1236,40 @@ that fact, we systematically create probing vectors $c_1, c_2, c_3, \ldots$ wher
 the sum of the values encoded in the sectors correspond to the number of votes
 that have been cast. We then check whether
 $\hat{g}^{c_i}\stackrel{?}{=}\hat{g}^v$ for $i=1, \ldots, x$ until we found the
-corresponding vector. 
+corresponding vector. As we can see in
+\Vref{fig:singleencryptionencodingcomplexity}, the number of steps to decode a
+vote is growing factorially as the number of participants and options go up.
+Using this method, decoding a vote with 10 participants and 10 options already
+needs almost $100\,000$ modular exponentiations.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{gnuplot}[terminal=epslatex]
+      set terminal epslatex size 10 cm, 8 cm header "\\footnotesize"
+      f(k, n) = gamma(k+n-1+1)/(gamma(k-1+1) * gamma((k+n-1)-(k-1)+1))
+	  set xyplane 0
+	  set surface
+	  set isosamples 20
+	  set pm3d at s
+	  set palette gray negative
+	  set ztics 0,50000
+	  set cbtics 0,50000
+	  set xlabel "Options"
+	  set ylabel "Ballots"
+	  set zlabel "Decoding steps" rotate by 90
+	  set nokey
+	  splot [0:10][0:10] f(x, y)
+    \end{gnuplot}
+	\caption{Single Encryption Ballot - Complexity}
+	\label{fig:singleencryptionencodingcomplexity}
+\end{figure}
 
 \subsection{Comparison}
 Each of the previously discussed approaches how to encode a ballot has its own
 advantages and disadvantages. For comparing the two approaches, we are using a
 \emph{one-out-of-k} voting scenario with $k$ options and $n$ participants. As we
-can see in \Vref{tab:comparisonofvoteencodings}, the single ballot encryption is in
-many ways more efficient, except for the decoding part. As the number of
+can see in \Vref{tab:comparisonofballotencodings}, the single ballot encryption
+is in many ways more efficient, except for the decoding part. As the number of
 participants and options grow, the number of combinations which have to be
 probed in order to decode the final result is growing quickly. For small voting
 scenarios ($n \leq 10, k \leq 10$), the single ballot encryption encoding is
@@ -1200,51 +1293,13 @@ clearly the more efficient choice.
 	\end{tabularx}
 	\end{minipage}
 	\renewcommand{\arraystretch}{1}
-	\caption{Comparison of Vote Encodings}
-	\label{tab:comparisonofvoteencodings}
+	\caption{Comparison of Ballot Encodings}
+	\label{tab:comparisonofballotencodings}
 \end{table}
 
-\begin{figure}[htbp]
-	\centering
-	\begin{gnuplot}[terminal=epslatex]
-      set terminal epslatex header "\\footnotesize"
-      f(k, n) = gamma(k+n-1+1)/(gamma(k-1+1) * gamma((k+n-1)-(k-1)+1))
-	  set xyplane 0
-	  set surface
-	  set isosamples 20
-	  set pm3d at s
-	  set palette gray negative
-	  set ztics 0,50000
-	  set cbtics 0,50000
-	  set xlabel "Options"
-	  set ylabel "Ballots"
-	  set zlabel "Combinations" rotate by 90
-	  splot [0:10][0:10] f(x, y)
-    \end{gnuplot}
-	\caption{Single Ballot Encryption - Complexity}
-	\label{fig:singleencryptionencodingcomplexity}
-\end{figure}
 
-\begin{figure}[htbp]
-	\centering
-	\begin{gnuplot}[terminal=epslatex]
-      set terminal epslatex header "\\footnotesize"
-      f(k, n) = k*n
-	  set xyplane 0
-	  set surface
-	  set isosamples 20
-	  set pm3d at s
-	  set palette gray negative
-	  set ztics 0,50
-	  set cbtics 0,50
-	  set xlabel "Options"
-	  set ylabel "Ballots"
-	  set zlabel "Combinations" rotate by 90
-	  splot [0:10][0:10] f(x, y)
-    \end{gnuplot}
-	\caption{Single Ballot Encryption - Complexity}
-	\label{fig:singleencryptionencodingcomplexity}
-\end{figure}
+
+
 
 \section{UniCrypt}
 \label{sec:unicrypt}
@@ -1268,7 +1323,7 @@ active development. Further information about UniCrypt can be found in \cite{rit
 \section{InstaCircle}
 \label{sec:instacircle}
 InstaCircle is the name of a project that has been implemented as a preparation
-of this master thesis. It is intended as a platform to connect mobile devices
+of this master's thesis. It is intended as a platform to connect mobile devices
 in a confined space to a Wi-Fi ad-hoc network in order to exchange broadcast
 and unicast messages. In order to keep the network traffic as low as possible,
 the basic communication relies on broadcast messages. Since it is not possible
@@ -1292,49 +1347,128 @@ about InstaCircle can be found in \cite{ritter13a}.
 
 \chapter{Organization}
 \label{cha:organization}
-This project is implemented as a master thesis project as a graduation project
-during the Master of Science in Engineering studies (MSE) at the Bern University
-of Applied Sciences. This project values 27 ECTS credits and is spread among two
-semesters. The hand in of the project is planned for February 7, 2014.
+This project has been implemented as a master's thesis project during the
+Master of Science in Engineering studies (MSE) at the Bern University of Applied
+Sciences. This project values 27 ECTS credits and was spread among two
+semesters.
+The hand in of the project is scheduled for February 7, 2014.
 
-During the same period, a fellow master student is working on a very similar
-topic, namely the implementation of the decentralized e-voting system proposed by
-D. Khader et al. \cite{HKRS12}. This project will also be based on the
-InstaCircle communication infrastructure \cite{ritter13a} and the UniCrypt
-cryptographic library \cite{ritter12} which have been developed earlier during
-the master studies. It is the plan to establish a collaboration between these
-two projects, mainly for the development of the graphical user interface. A
-collaboration between these project also makes it easier to compare the
-approaches and evaluate the advantages and disadvantages of the two approaches.
+During the same period, my fellow master student Philémon von Bergen worked on a
+very similar topic \cite{vonBergen14}, namely the implementation of the
+decentralized e-voting system proposed by D. Khader et al. \cite{HKRS12}. There
+was a big collaboration between the two project, mainly for the implementation
+of the graphical user interface. The collaboration between these project also
+made it easier to compare the approaches and evaluate the advantages and
+disadvantages of the two approaches.
 
-\section{Planning}
+\section{Timeline}
 \label{sec:planning}
-The gantt charts in \Vref{fig:planningpart1} and \Vref{fig:planningpart2}
-visualize the steps which are planned on the time axis during the project period. At the first stage, we define the project setup,
-later on the cryptographic components will be put in place and will be tested on
-the Android platform. At some point a detailed storyboard for the graphical
-user interface will be created. Especially this part of the project will be done
-in a strong collaboration with the other project which deals with decentralized e-voting
-systems. At this stage, we have prepared all the components we need in order to
-implement the actual e-voting system. The part which will consume most of the
-time budget will be the implementation and the testing of the actual e-voting
-logic. The last part will be dedicated to writing the project report of this
-master thesis project.
+\paragraph{Orignial planning.} The gantt chart in \Vref{fig:projectplanning}
+visualizes the steps which have been planned on the time axis during the project period. At the first stage, we
+defined the project setup, later on the cryptographic components were put in
+place and were tested on the Android platform. It was followed by the storyboard
+an the implementation of the user interface. Especially in this part there was a
+strong collaboration with Philémon von Bergen \cite{vonBergen14}. At this point
+we had the cornerstone and were able to implement the actual e-voting related
+logic, the implementation of the CGS97 protocol. For this step we calculated the
+biggest time period.
 
+\begin{sidewaysfigure}[ph]
+\noindent\resizebox{\textwidth}{!}{
+	\begin{tikzpicture}[x=.5cm, y=1cm]
+	\begin{ganttchart}
+	[vgrid, hgrid,
+	group/.style={draw=black, fill=black!50}, y unit chart=0.8cm]{52}
+	\gantttitle{\textbf{Master's Thesis Project Planning}}{52} \\
+	\gantttitlelist{8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2,3,4,5,6,7}{1}
+	\\
+	\ganttgroup{Writing of Project Proposal}{1}{6} \\
+	\ganttgroup{Secret Sharing scheme}{6}{10} \\
+	\ganttbar{Analyzing the possibilities of threshold secret sharing}{6}{8} \\
+	\ganttbar{Implementing secret sharing into UniCrypt}{7}{10} \\
+	\ganttbar{Testing the secret sharing scheme}{9}{10} \\
+	\ganttgroup{Proof of Validity}{11}{13} \\
+	\ganttbar{Implementing proof of validity into UniCrypt}{11}{12} \\
+	\ganttbar{Testing of the proof of validity implementation}{12}{13} \\
+	\ganttgroup{Evaluation of UniCrypt on Android}{14}{15} \\
+	\ganttbar{Testing out Example code on Android}{14}{14} \\
+	\ganttbar{Integration of code into Android project}{15}{15} \\
+	\ganttgroup{Implementation of e-voting Application of Android}{20}{39} \\
+	\ganttbar{Design of storyboard}{20}{24}\\
+	\ganttbar{Implementation of the User Interface}{23}{26}\\
+	\ganttbar{Implementation of the	e-voting logic}{27}{39}\\
+	\ganttgroup{Testing}{32}{45} \\
+	\ganttgroup{Documentation / Report}{1}{8}
+	\ganttgroup{}{40}{52}
+	\end{ganttchart}
+	\end{tikzpicture}
+}
+\caption{Master's Thesis Project Planning}
+\label{fig:projectplanning}
+\end{sidewaysfigure}
 
+\paragraph{Effective timeline.} As in many project, there were small deviations
+regarding the time consumption of some implementation steps. The implementation
+of the cryptographic building blocks in the first part could be done as planned.
+The implementation of the graphical user interface and the integration of the
+network layer took more time than anticipated, we finished this part in week 46.
+In order to start with the implementation of the e-voting logic, we had a
+dependency on UniCrypt, which converged to a stable codebase in week 46, so an
+eralier start of the implementation was not possible anyway. Because of the
+enormous help of UniCrypt, the implementation of the e-voting logic took much
+less time than anticipated, which helped catching up with the planning.
 
-\section{Milestones}
-\label{sec:milestones}
-In order to track the progress of the project, we define some milestones
-throughout the project period.
+\section{Meetings}
+In order to synchronize the two projects regarding progress, problems and the
+coordination of the next work packages, we agreed on one day per week where we
+work at the same location in Biel. It was also used to catch up with the advisor
+and discuss the next steps.
+
+\section{Project Dependencies}
+It was planned to use the UniCrypt cryptographic library for implemented the
+e-voting logic. This has been done mainly for two reasons:
 \begin{itemize}
-  \item \textbf{Kickoff:} The project is set up and the goals of the project
-  are clear. All involved persons know their role and their responsibilities.
-  \item \textbf{Building blocks ready:} At this stage, all the components we
-  need (e.g. UniCrypt) are prepared and tested on the Android platform.
-  \item \textbf{Hand in:} The implementation and the documentation are finished
-  and the work is handed over to the advisor.
+  \item Simplify the implementation by glueing together predefined cryptographic
+  building blocks.
+  \item Use the reengineered version of UniCrypt for the first time in a
+  project and provide feedback.
 \end{itemize}
+This creates a significant dependency to the UniCrypt project. The library has
+been under heavy development during this project and a lot of changes have been
+implemented even after we started with the e-voting logic. We could also provide
+some feedback which has been integrated into UniCrypt by the UniCrypt
+development team.
+
+\section{Source Code Organization}
+As a source code repository and a collaboration platform, the free hosting
+platform GitHub\footnote{\url{https://github.com/}} has been chosen. It
+provides Git\footnote{\url{http://git-scm.com/}} source code repositories which
+allow to do code versioning and branching. It also enables multiple contributors to maintain a certain codebase,
+which was important during the implementation of the user interface and the
+network layer. Using the branching mechanism of Git, we were able to split the
+codebase appart and implement the project specific protocols on top of the
+common codebase. \Vref{tab:sourcecoderepositories} outlines the three
+repositories which have been used for the implementation for this project.
+
+\begin{table}[htbp]
+	\centering
+	\renewcommand{\arraystretch}{1.4}
+	\begin{minipage}{\linewidth}
+	\begin{tabularx}{\textwidth}{lll}
+		\toprule
+		\textbf{Component}	&  \textbf{Repository URL} & \textbf{Branch} 	\\
+		\midrule
+		Voter App			& \url{https://github.com/jritter/VoterApp}	& CGS97	\\
+		AllJoynLib		  	& \url{https://github.com/jritter/AllJoynLib}	& unicastfeature	
+		\\
+		ZXing				& \url{https://github.com/jritter/ZXing}		& master	\\
+		\bottomrule
+	\end{tabularx}
+	\end{minipage}
+	\renewcommand{\arraystretch}{1}
+	\caption{Source Code Repositories}
+	\label{tab:sourcecoderepositories}
+\end{table} 
 
 \chapter{Results}
 \label{cha:results}
@@ -1351,9 +1485,11 @@ of the graphical user interface, the architecture and implementation of the
 Android application and finally the contributions to related projects.
 
 \section{Used Technologies}
+\label{sec:usedtechnologies}
 This Section outlines the frameworks which have been used for the implementation
 of this project and how they are put together into an application.
 \subsection{Android}
+\label{sec:android}
 The Android\footnote{\url{http://developer.android.com/}} platform serves as the
 foundation of the whole implementation. The Application has been built using
 existing building blocks such as Activities, Services, Fragments, etc.
@@ -1364,6 +1500,7 @@ Android development kit then compiles this Java code and creates Android
 specific Dalvik VM byte code which is then executed on Android devices.
 
 \subsection{AllJoyn}
+\label{sec:alljoyn}
 AllJoyn\footnote{\url{https://allseenalliance.org/}} is a library which allows
 peer-to-peer communication between several devices. The library has been
 released as open-source recently by the Qualcomm company. It is available for
@@ -1386,6 +1523,7 @@ for transmiting the communication parameters could be adapted from the
 InstaCircle implementation.
 
 \subsection{ZXing}
+\label{sec:zxing}
 ZXing\footnote{\url{https://code.google.com/p/zxing/}} (pronounced ``Zebra
 Crossing'') is a Java library provided by Google which allows to deal with many
 flavours of barcodes, including QR-codes which we are using in this
@@ -1401,18 +1539,21 @@ that is being used, the encryption key of the conversation, as well as a group
 identifier in case there are multiple conversations running in the same network.
 
 \subsection{AChartEngine}
+\label{sec:achartengine}
 AChartEngine\footnote{\url{http://www.achartengine.org/}} is an open-source
 library which can be used to draw all sorts of charts on Android devices. In
 this project, we use this library in order to visualize the result on the
 result screen using a pie-chart.
 
 \subsection{Simple}
+\label{sec:simple}
 Simple\footnote{\url{http://simple.sourceforge.net/}} is an open-source
 framework which allows to serialize and deserialize Java objects to XML. It is
 used to save and export the transcript of a vote to a XML file. This
 functionality is further discussed in \Vref{sec:datastructures}. 
 
 \subsection{UniCrypt}
+\label{sec:unicrypt}
 UniCrypt\footnote{\url{https://github.com/bfh-evg/unicrypt/}} is a cryptographic
 library which provides mathematical and cryptographic primitives which are used
 for implementing the e-voting protocol for this application. The version 2 of
@@ -1441,8 +1582,8 @@ a screen design which meets these requirements. This screen design has been
 designed as a storyboard without writing actual code. We have chosen an
 iterative approach where the design has been peer reviewed several times before
 the final draft was available. One major decision point was to decide whether we
-implement a single Android app or whether we should split it into an app for the
-voter and another for the vote administrator. The approach with multiple apps
+implement a single Android application or whether we should split it into an app
+for the voter and another for the vote administrator. The approach with multiple apps
 turned out to be confusing and was hence dismissed.
 
 The design which has been finally chosen is based on a single Android
@@ -1456,8 +1597,6 @@ during the voting phase. A vote can also be prepared and saved in advance in
 order to save time at the reunion. From here, the administrator can also
 start the voting process. The screen design of this phase is illustrated in
 \Vref{fig:vote_setup}.
-
-
 
 \begin{figure}[htb]
 	\centering
@@ -1933,7 +2072,116 @@ in the Java package \texttt{ch.bfh.evoting.voterapp.protocol.cgs97.xml}.
 
 \section{Testing}
 \label{sec:testing}
-\todo{Testing scenarios}
+To verify the correct behaviour of the implemented product, a number of
+different tests have been conducted during the implementation phase. These
+testing activities are outlined in the following.
+
+\subsection{Functionality Tests}
+\label{sec:functionalitytests}
+The test of the functionality mostly took place right after the implementation
+step. The functional tests were all done manually on the available devices. The
+devices outlined in \Vref{tab:testinginfrastructure} were available for testing the
+functionality.
+
+\begin{table}[htbp]
+	\centering
+	\renewcommand{\arraystretch}{1.4}
+	\begin{minipage}{\linewidth}
+	\begin{tabularx}{\textwidth}{lll}
+		\toprule
+		\textbf{Device}	&  \textbf{Formfactor} & \textbf{Android Version} 	\\
+		\midrule
+		Samsung Galaxy S 3		& Smartphone	& 4.3 (Samsung original)	\\
+		Samsung Galaxy S 1  	& Smartphone	& 4.3.1
+		(CyanogenMod)\footnote{\url{http://www.cyanogenmod.org/}}		\\
+		Samsung Galaxy Tab 10.1	& Tablet		& 4.0.4 (Samsung original)	\\
+		\bottomrule
+	\end{tabularx}
+	\end{minipage}
+	\renewcommand{\arraystretch}{1}
+	\caption{Testing Infrastructure}
+	\label{tab:testinginfrastructure}
+\end{table}
+
+\subsection{Usability Tests}
+\label{sec:usabilitytests}
+The implementation phase of this project started with the implementation of the
+Graphical User Interface of the application. At this stage, it was possible
+setup and run a vote on multiple devices, but without the security of the later
+implemented e-voting protocol. This implementation was then used to verify that
+the user interface of the application does not cause any confusion among users.
+Several people were asked to use the application and provide feedback, which
+then got compiled into the implementation. The implementation of the e-voting
+protocol mostly took place behind the scenes, there were only some slight
+modifications in the user interface necessary to add this functionality.
+
+\subsection{Performance Tests}
+\label{sec:performancetests}
+In a decentralized environment, the load which each device has to handle grows
+with the number of participants and the number of options in a vote. In order to
+verify that the implementation is able to handle scenarios with more than just
+3 participants, 17 LG Nexus 5 smartphones running Android version 4.4 were
+available to test more complex scenarios. Various tests with different scenarios
+have been performed and assessed regarding time consumption in the two most time
+consuming steps, namely casting a ballot tallying a vote. The results of these
+performance tests are shown in \Vref{tab:perftestresults}. The performance tests
+were executed using the two separate ballot encoding strategies as discussed in
+\Vref{sec:ballotencoding}. Another relevant factor regarding performance is the
+bit lenght of the cryptographic parameters $p$ and $q$. For all tests,
+parameters with the length of 2038 bits have been used.
+
+\begin{table}[htbp]
+	\centering
+	\renewcommand{\arraystretch}{1.4}
+	\begin{minipage}{\linewidth}
+	\begin{tabularx}{\textwidth}{cccccc}
+		\toprule
+		& & \multicolumn{2}{c}{\textbf{Single Ballot}} &
+		\multicolumn{2}{c}{\textbf{Multi Ballot}} \\
+		& & \multicolumn{2}{c}{\textbf{Encryption}} &
+		\multicolumn{2}{c}{\textbf{Encryption}} \\
+		\textbf{Options}	&  \textbf{Participants} & \textbf{Cast Ballot} &
+		\textbf{Tallying} & \textbf{Cast Ballot} &	\textbf{Tallying}
+		\\
+		\midrule
+		4 & 3 & \SI{2.0}{\second} & \SI{1.2}{\second} & \SI{3.7}{\second} & 
+		\SI{3.7}{\second} \\
+		4 & 4 & \SI{2.0}{\second} & \SI{1.3}{\second} & \SI{3.4}{\second} &	
+		\SI{3.6}{\second} \\
+		4 & 5 & \SI{2.0}{\second} & \SI{1.3}{\second} & \SI{3.2}{\second} & 
+		\SI{4.0}{\second} \\
+		6 & 3 & \SI{2.6}{\second} & \SI{1.2}{\second} & \SI{4.3}{\second} &	
+		\SI{4.8}{\second} \\
+		6 & 4 & \SI{2.4}{\second} & \SI{1.5}{\second} & \SI{4.8}{\second} &	
+		\SI{5.4}{\second} \\
+		6 & 17 & \SI{2.5}{\second} & \SI{39.0}{\second} & \SI{4.6}{\second} & 
+		\SI{22.0}{\second} \\
+		10 & 17 &  &  & \SI{6.7}{\second} &	
+		\SI{47.2}{\second} \\
+		\bottomrule
+	\end{tabularx}
+	\end{minipage}
+	\renewcommand{\arraystretch}{1}
+	\caption{Performance Test Results}
+	\label{tab:perftestresults}
+\end{table}
+
+These results clearly show that the single encryption ballot strategy is the
+better choice for small voting scenarios, looses its advantages in bigger
+scenarios because the number of combinations which have to be checked during the
+tallying process grows factorially. One combination check (which is
+baiscally a modular exponentiation) was measured to take around
+1.8 milliseconds on a LG Nexus 5 smartphone. In the scenario with 10 options and
+17 participants, the tallying process would take roughly 2 hours and 40 minutes.
+Using the multi encryption ballot strategy on the other hand, tallying the same
+scenario takes 42 seconds. 
+
+The performance tests were executed on modern smartphone hardware which can
+perform expensive operations such as generating encryptions and proofs in a
+reasonable time. The user experience on older devices such as the Samsung Galaxy
+S1 offer a less smooth user experience, especially when using the multi
+encryption ballot strategy which requires much more calculation power for
+creating and verifying ballots.
 
 \section{UniCrypt Extensions}
 \label{sec:enhancmentsunicrypt}
@@ -1978,8 +2226,8 @@ value pairs as specified with the threshold value during instantiation. The
 method returns a single element which represents the recovered secret.
 
 \paragraph{Testing.}
-UniCrypt components are tested using the JUnit framework. A JUnit Test for the
-Shamir Secret Sharing scheme has been implemented in order to check the correct
+UniCrypt components are tested using the JUnit\footnote{\url{http://junit.org/}}
+framework. A JUnit Test for the Shamir Secret Sharing scheme has been implemented in order to check the correct
 functionality after each change that is done in the UniCrypt library. The
 following testclass has been implemented:
 
@@ -2001,13 +2249,160 @@ version of the ElGamal proof of validity.
 
 \chapter{Discussion}
 \label{cha:discussion}
-\todo{This chapter will be written in a later phase of the project}
+At the end of this project, we reached the goal of creating an e-voting
+application which runs on mobile devices and can be used without additional
+infrastructure and offers security features such as privacy, anonymity and
+verifiability. This chapter reflects on certain aspects of this work.
 
-\section{Implementation}
-\label{sec:implementation}
+\section{Decentralized E-Voting}
+\label{sec:discussiondecentralizedevoting}
+This section reflects the term \emph{decentralized} in relation to this project
+and what approaches have been chosen to achieve this property.
 
-\section{Security Considerations}
-\label{sec:securityconsiderations}
+\paragraph{Communication Layer:} During this project we implemented an e-voting
+system which does not require any other infrastructure than the devices of the
+participants (smartphone or tablets). As a communication layer for the
+communication between the devices, WLAN is used. Many facilities provied a WLAN
+infrastructure. The application provides the functionality to use this
+infrastructure, but also offers the possibility to set up a new WLAN network
+using the hot spot functionality of Android. The hot spot integrated in older
+devices are usually not as powerful as a hotspot which is designed for large
+networks. For larger scenarios it is recommended to use a proper infrastructure
+WLAN hot spot as the communication layer. One can argue that this violates the
+principle of decentralization. This is true for the base communication layer,
+but it does not affect the decentralized behaviour of the e-voting protocol
+which is running on top of this communication layer.
+
+\paragraph{Messaging Layer:} In a preceeding project, a decentralized messaging
+infrastructure for Android called InstaCircle \cite{ritter13a} has been
+implemented. The goal is to establish a group communication so that the
+participating devices can exchange message among each other. The message
+exchange in InstaCircle is based on broadcasts in an IP network.
+Because broadcast communication does not offer a reliable message exchange, this
+approach turned out to be not reliable enough in certain network situations. The
+messaging layer has been replaced by the AllJoyn library \myref{sec:alljoyn}.
+In contrast to InstaCircle, the initiator of a group takes the role as a master
+who orchestrates the communication within the group. In some sense, this too
+violates the principle of decentralization. The choice of this architecture can
+be justified for two reasons though: 
+\begin{itemize}
+  \item The master only orchestrates the message exchange. Attempts to cheat on
+  the e-voting protocol layer would be recognized by the protocol.
+  \item In a voting session, some sort of administrator is necessary. This
+  person is predestined to take the master of the group communication as well.
+\end{itemize}
+Regardless of who manages the group communication, from an infrastructure point
+of view, the communication between the devices can still be done in a
+decentralized manner.
+
+\paragraph{E-Voting Protocol:} As we have seen in \Vref{sec:CGS97}, the protocol
+has not specifically been designed to be used in decentralized scenarios. The
+protocol has been adapted in two major points in order to achieve this property:
+\begin{itemize}
+  \item All the participants become trustees and contribute to the key
+  generation and decryption process
+  \item All participants have their own bulletin boards
+\end{itemize}
+More details regarding these modifications can be found in
+\Vref{sec:votingprotocol}. The fact that there is no central bulletin board also
+means that there is no master on which final result is derived from. Even though
+several security measures have been built into the application, we still have to
+consider that this software runs on devices which are potentially compromised.
+For example, a malware could fake the screens when the application asks for
+input or displays the result.
+At this point, we can take advantage of the fact that the votes only take place
+in a confined space where the participants can communicate visually and orally
+without using their devices. In the case of a disagreement on the official
+result of the vote, the participants can compare the result displayed on their
+device and then take one of the following actions:
+\begin{itemize}
+  \item Agree on the result which is displayed on the majority of devices.
+  \item Rerun the vote, potentially with different devices.
+\end{itemize}
+Using this method of negotiating without using the devices should allow to agree
+on an official result of the vote.
+
+\paragraph{Verifiability:} Using the recorded values on the bulletin board, the
+whole voting cycle can be verified. It stands for itself that the MobiVote
+application verifies all the values, but in order to increase the confidence in
+MobiVote, it would be desirable that a vote can be verified by an external
+software. To do so, MobiVote offers the functionality to export the values of
+the bulletin board to an XML file, which then can be used as an input for an
+external verifier software.
+One missing link in this verifiability chain stems from the fact that that the
+identities used in a vote are created ad-hoc when establishing the group
+communication before voting. That means that the integrity of the messages which
+are exchange can only be verified during the session. Of course, the public keys
+of all participants used during a particular voting session could also be
+exported, but could be replaced along with all the signatures which are
+recalculated using the secret key corresponding to the new public key. This
+missing link could be added by using identities verified by a trusted authority,
+for example with digital certificates. Dealing with certificates usually has a
+significant negative impact on the usability. Furthermore, only a minority of
+people are in possession of such a digital certificate which could be used as a
+digital identity during the voting process. 
+
+\section{Usability}
+\label{sec:discusionusability}
+In retrospective, the decision to create a proper storyboard before we started
+to implement the user interface was a very good decision. It forced to reflect
+on how such a spontaneous e-voting process should look like in practice. It turns
+out that the process in such a spontaneous manner looks different compared to a
+classic e-voting scenario in many ways. For example, we need to find a way on
+how the electorate and setup can be defined and, more importantly, approved
+by everybody before the vote itself can start. When we consider classic voting
+scenarios, the electorate is clearly defined in advance, for example all
+eligible citizen of a country. The same is true for defining how the question
+and the possible options should be defined. Quite some paperwork usually
+preceds a vote, whereas in a spontaneous vote, the setup needs to be approved
+somehow.
+
+Before implementing the actual e-voting protocol which provides the e-voting
+specific security measures, we had an implementation ready which allowed to
+perform a votes in a decentralized manner, but didn't offer the desired
+security. We used this stage to do tests of the communication layer and, more
+importantly usability, tests \myref{sec:usabilitytests}. The fact that the user
+interface at this stage and at the final stage almost look identical shows two
+things:
+\begin{itemize}
+  \item We were able to implement the e-voting protocol in an almost transparent
+  manner. 
+  \item The storyboard that has been designed seems to be universal and not
+  specific to this implementation.
+\end{itemize}
+The latter fact is also underpinned by the fact that the partner project came to
+the same conclusion \myref{sec:comparisontopartnerproject}.
+
+
+
+
+\section{Comparison to the Partner Project}
+\label{sec:comparisontopartnerproject}
+During the same period, a project with the same focus, but with a different
+e-voting protocol has been implemented \cite{vonBergen14}
+\myref{cha:organization}. This allows us to compare each others implementation.
+In both projects, the specified e-voting protocol could be implemented
+successfully. Also, both projects share the same user interface, which shows
+that the storyboard is generic. There is only one small deviation in the
+implementation of this project, namely the threshold parameter which has to be
+defined in the secret sharing part of the CGS97 e-voting protocol. Sharing the
+same user interface also means that the protocol implementation could be merged
+into a single app and let the user choose which protocol to use.
+
+As we found out, both protocols have their own advantages and disadvantages,
+mainly in the area of performance. The HKRS12 protocol \cite{HKRS12} which has
+been implemented in the partner project is specifically designed for this kind
+of voting scenarios. It is also a very slim protocol which results in a faster
+execution, especially on slower devices. A disadvantage is the fact, that the
+decoding step of the HKRS12 protocol requires an exhaustive search of
+combination in order to avoid the discrete logarithm problem, very similar to
+the single encryption ballot encoding used in this project
+\myref{sec:singleencriptionballot}. This means that the time consumption of the
+tallying process grows rapidly as the number of participants and options grow.
+In this implementation we have the same problem when using the single encryption
+ballot strategy, but in this implementation we have the option to switch to the
+multi encryption ballot strategy \myref{sec:multiencriptionballot}.
+
 
 \chapter{Conclusion}
 \label{cha:conclusion}
@@ -2017,99 +2412,8 @@ version of the ElGamal proof of validity.
 
 \appendix
 
-\chapter{Planning}
-
-\begin{sidewaysfigure}[ph]
-\noindent\resizebox{\textwidth}{!}{
-	\begin{tikzpicture}[x=.5cm, y=1cm]
-	\begin{ganttchart}
-	[vgrid, hgrid,
-	group/.style={draw=black, fill=black!50}, y unit chart=0.8cm]{26}
-	\gantttitle{\textbf{Planning Master Thesis (part 1)}}{26} \\
-	\gantttitlelist{8,...,33}{1} \\
-	\ganttmilestone{Kickoff}{0.5} \\
-	\ganttgroup{Writing of Project Proposal}{1}{6} \\
-	\ganttgroup{Secret Sharing scheme}{6}{10} \\
-	\ganttbar{Analyzing the possibilities of threshold secret sharing}{6}{8} \\
-	\ganttbar{Implementing secret sharing into UniCrypt}{7}{10} \\
-	\ganttbar{Testing the secret sharing scheme}{9}{10} \\
-	\ganttgroup{Proof of Validity}{11}{13} \\
-	\ganttbar{Implementing proof of validity into UniCrypt}{11}{12} \\
-	\ganttbar{Testing of the proof of validity implementation}{12}{13} \\
-	\ganttgroup{Evaluation of UniCrypt on Android}{14}{15} \\
-	\ganttbar{Testing out Example code on Android}{14}{14} \\
-	\ganttbar{Integration of code into Android project}{15}{15} \\
-	\ganttmilestone{Building blocks ready}{15.5} \\
-	\ganttgroup{Implementation of e-voting Application of Android}{20}{26} \\
-	\ganttbar{Design of storyboard}{20}{24}\\
-	\ganttbar{Implementation of the User Interface}{23}{26}\\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the
-	e-voting logic}{0}{0}\\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Testing}{0}{0} \\
-	\ganttgroup{Documentation / Report}{1}{8} \\
-	\ganttmilestone[milestone height=0.0, milestone/.style={draw=none}]{Hand in}{0}	
-	\end{ganttchart}
-	\end{tikzpicture}
-}
-\caption{Planning part 1}
-\label{fig:planningpart1}
-\end{sidewaysfigure}
-	
-
-\begin{sidewaysfigure}[ph]
-\noindent\resizebox{\textwidth}{!}{
-	\begin{tikzpicture}[x=.5cm, y=1cm]
-	\begin{ganttchart}
-	[vgrid, hgrid,
-	group/.style={draw=black, fill=black!50}, y unit chart=0.8cm]{26}
-	\gantttitle{\textbf{Planning Master Thesis (part 2)}}{26} \\
-	\gantttitlelist{34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2,3,4,5,6,7}{1}
-	\\
-	\ganttmilestone[milestone height=0.0,
-	milestone/.style={draw=none}]{Kickoff}{0.5} \\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Writing of Project
-	Proposal}{}{} \\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Secret Sharing
-	scheme}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Analyzing the possibilities
-	of threshold secret sharing}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementing secret sharing
-	into UniCrypt}{0}{0}
-	\\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing the secret sharing
-	scheme}{0}{0} \\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Proof of
-	Validity}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementing proof of
-	validity into UniCrypt}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing of the proof of
-	validity implementation}{0}{0} \\
-	\ganttgroup[group height=0.0, group/.style={draw=none}]{Evaluation of UniCrypt
-	on Android}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Testing out Example code on
-	Android}{0}{0} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Integration of code into
-	Android project}{0}{0} \\
-	\ganttmilestone[milestone height=0.0,
-	milestone/.style={draw=none}]{Building blocks ready}{0.5} \\
-	\ganttgroup{Implementation of
-	e-voting Application of Android}{1}{13} \\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Design of
-	storyboard}{0}{0}\\
-	\ganttbar[bar height=0.0, bar/.style={draw=none}]{Implementation of the User
-	Interface}{0}{0}\\
-	\ganttbar{Implementation of the e-voting logic}{1}{13}\\
-	\ganttgroup{Testing}{7}{19} \\
-	\ganttgroup{Documentation / Report}{14}{24.5} \\
-	\ganttmilestone{Hand in}{24.5}
-	\end{ganttchart}
-	\end{tikzpicture}
-}
-\caption{Planning part 2}
-\label{fig:planningpart2}
-\end{sidewaysfigure}
-
 \chapter{User Handbook}
+\label{cha:handbook}
 This chapter describes how the MobiVote Application can be used in practice.
 
 \section{Purpose of this Application}
@@ -2256,7 +2560,7 @@ session.
 	\begin{minipage}{.5\textwidth}
   		\centering
 		\includegraphics[height=.2\textheight]{img/nfc_tag}
-		\caption{NFC tag}
+		\caption{NFC Tag}
 		\label{fig:handbook_nfctag}
 	\end{minipage}
 \end{figure}
