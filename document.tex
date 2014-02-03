@@ -119,16 +119,15 @@ Stephan Neumann, Technical University of Darmstadt}
 \pagenumbering{roman}
 
 \begin{abstract}
-The E-Voting Group of the Bern University of Applied Sciences is planning to
-evaluate decentralized e-voting systems for practical use. The term
+During this master's thesis, a decentralized e-voting system for mobile devices
+such as smartphones and tablets running Android has been implemented. The term
 ``decentralized'' in that context means that there is no central server
 infrastructure involved in the voting process. The main application of such
 e-voting systems are votes with a low number of participants, for example the
-board of directors in a company. The idea is, that the participants create an
-ad-hoc network with mobile devices. The main goal of this master's thesis is to
-implement a decentralized e-voting system for Android based mobile devices. We
-are using a voting scheme that uses homomorphic tallying and secret sharing to
-guarantee privacy and verifiability. It also provides robustness in the sense
+board of directors in a company. The idea is that the participants create an
+ad-hoc network with their mobile devices and then use this network to run a
+secure e-voting protocol. In order to guarantee privacy and verifiability, we are using
+a voting scheme that uses homomorphic tallying. It also provides robustness in the sense
 that it is not possible for a single party to break the voting process just by
 refusing the collaboration at a certain step throughout the voting process. A
 big focus area is also the usability of this system, it should be possible for
@@ -440,9 +439,10 @@ compute the logarithm in discrete modular groups and hence making the
 exponentiation in modular groups a one way function. A major advantage of the
 ElGamal cryptosystem is the fact, that the encryption function includes a random
 value. Especially in the context of e-voting this is a crucial property, because
-when encrypting a value (for example the value $1$ which means \textit{Yes}),
-the resulting ciphertext is always different. That is why ElGamal is also called
-a \textit{randomized} cryptosystem.
+when encrypting a value (for example the value $1$ which means \textit{yes})
+multiple times using the same public key, the resulting ciphertext is always
+different. That is why ElGamal is also called a \textit{randomized}
+cryptosystem.
 
 In order to define an ElGamal cryptosystem, three parameters are required. Let
 $p$ and $q$ be large prime numbers such that $q|p-1$.\footnote{In the case of
@@ -1363,7 +1363,7 @@ disadvantages of the two approaches.
 
 \section{Timeline}
 \label{sec:planning}
-\paragraph{Orignial planning.} The gantt chart in \Vref{fig:projectplanning}
+\paragraph{Original planning.} The gantt chart in \Vref{fig:projectplanning}
 visualizes the steps which have been planned on the time axis during the project period. At the first stage, we
 defined the project setup, later on the cryptographic components were put in
 place and were tested on the Android platform. It was followed by the storyboard
@@ -2128,7 +2128,7 @@ performance tests are shown in \Vref{tab:perftestresults}. The performance tests
 were executed using the two separate ballot encoding strategies as discussed in
 \Vref{sec:ballotencoding}. Another relevant factor regarding performance is the
 bit lenght of the cryptographic parameters $p$ and $q$. For all tests,
-parameters with the length of 2038 bits have been used.
+parameters with the length of 2048 bits have been used.
 
 \begin{table}[htbp]
 	\centering
@@ -2373,8 +2373,45 @@ things:
 The latter fact is also underpinned by the fact that the partner project came to
 the same conclusion \myref{sec:comparisontopartnerproject}.
 
+\section{Security Considerations}
+It speaks for itself that security plays a crucial role in the context of
+e-voting. In this project we employed modern cryptographic techniques which are
+the answers to many threats. Nevertheless we had to make some compromises. Most
+of them relate to the tradeoff between security and usability. This section
+should give an overview of these compromises.
 
+\paragraph{Public Key Exchange:} In order to guarantee the authenticity of
+messages which have been exchanged during a voting session, each participant
+needs a secret key for signing all the outgoing messages. All the other
+participants need to be in possession of the corresponding public key, which
+they use to verify incoming messages of that particular sender. Obviously these
+public keys have to be exchanged at the beginning of the session. Of course,
+these keys can be transmitted using the existing network communication layer,
+but since these keys are not linked to a real life identity, we can only assume
+that the key really belongs to the sender. During this key exchange process, a
+participant could hence impersonate somebody else. The key exchange happens on
+the secured layer, so that impersonation would have to be done by a participant
+who is in possession of the group password. This fact reduces the risk
+significantely, because since all participants are gathered in the same physical
+space, the fact that something is wrong would be discovered. The fact that
+non-certified keys are used for each session also makes it impossible to verify
+the authenticity of the messages after the voting session.
 
+This problem could be solved if each participant has its own certificate, which
+is a certified digital identity that lasts for longer than just a voting
+session. Unfortunately only a small percentage of people possess a digital
+certificate nowadays. Requiring such a certificate would narrow the group of
+potential users further down and would have a negative impact on the security.
+
+\paragraph{Untrusted Devices:} Nowadays, smartphones are little computers which
+allow to run all sort of software. The ever growing popularity of these devices
+also caused malware to appear. Malware could be employed to circumvent security
+measures, for example by showing a user a fake screen on its devices. For
+example, during a vote with options A and B, the malware would display option B
+instead of A and vice versa. This causes a voter that intends to vote for option
+A to vote for option B. Malware could also be used to collect information on how
+a participant voted. Dealing with untrusted platforms is subject of ongoing
+research and is out of scope of this project. 
 
 \section{Comparison to the Partner Project}
 \label{sec:comparisontopartnerproject}
@@ -2395,7 +2432,7 @@ been implemented in the partner project is specifically designed for this kind
 of voting scenarios. It is also a very slim protocol which results in a faster
 execution, especially on slower devices. A disadvantage is the fact, that the
 decoding step of the HKRS12 protocol requires an exhaustive search of
-combination in order to avoid the discrete logarithm problem, very similar to
+combinations in order to avoid the discrete logarithm problem, very similar to
 the single encryption ballot encoding used in this project
 \myref{sec:singleencriptionballot}. This means that the time consumption of the
 tallying process grows rapidly as the number of participants and options grow.
@@ -2406,7 +2443,70 @@ multi encryption ballot strategy \myref{sec:multiencriptionballot}.
 
 \chapter{Conclusion}
 \label{cha:conclusion}
-\todo{This chapter will be written in a later phase of the project}
+During this project, we implemented a mobile e-voting application which can be
+used for boardroom voting. It is running on the popular mobile platform
+Android and therfore be used on devices such as smartphones and tablets. There
+is no infrastructure other than the participant's devices required in order to
+run a vote on them. During this project, we also contributed to the UniCrypt
+library and implemented cryptographic building blocks which were used to
+implement the application at hand. We were also able to give feedback regarding
+the ongoing implementation of UniCrypt and also found some bugs along the way.
+Of course, these bugs have been fixed by the UniCrypt development team in the
+meanwhile. The fact that we could implement multiple cryptographic protocols
+relatively easy also proves, that UniCrypt is heading in the direction that it
+was intended to. 
+
+The user interface design of a decentralized e-voting system requires some
+additional considerations, for example there is a mechanism required which
+allows the participant to approve a certain vote setup. We invested a good deal
+of time into building a user interface for mobile devices that allows to deal
+with this additional requirements. After some unsatisfactory attempts, we ended
+up with a design that met the requirements, proved by usability tests. The user
+interface has been designed in cooperation with another master's thesis project
+\cite{vonBergen14}. This cooperation proved to be extremely valuable, thanks to
+a lot of discussions and different perspectives. The fact that the resulting
+user interface was also used in the master's thesis project of Philémon von
+Bergen shows that we built a truly universal user interface for decentralized
+e-voting systems.
+
+\section{Future Work}
+\label{sec:futurework}
+The application at hand could be extended in many different ways. In this
+section we present some ideas for extensions which could be realized in the future.
+
+\paragraph{Mobile Platforms:} The current implementation is limited to devices
+running the Android mobile operating system. All participants have to be in
+possession of an Android device. Despite the fact that Android is an extremely
+popular platform, this would be a big coincidence. To enable users of other
+mobile platforms to participate on votes, this MobiVote implementation should be
+reimplemented on other platforms such as Apple iOS or Windows Mobile.
+
+\paragraph{Vote Verifier:} The MobiVote application allows to export all
+relevant cryptographic values which are required to verify the whole vote
+process. After exporting these values, they could be fed into a verification
+software that recalculates all necessary steps and recalculates potential
+problems.
+
+\paragraph{Identity Management:} At this point, MobiVote works with temporary
+identities for each voting session. This fact makes it impossible to check the
+integrity of messages after the voting session ended because the identity cannot
+be assigned to a human participant or at least to a device. This issue could be
+solved if MobiVote could use identity providers to assign a participant
+distinctively to a identity.
+
+\paragraph{Multiple Protocols:} Another interesting experiment would be to merge
+the application implemented in this project and in the partner project by
+Philémon von Bergen \cite{vonBergen14}. An application featuring multiple
+e-voting protocols could choose automatically the most efficient protocol
+according to a scenario (e.g. number of participants or number of options), or
+even give the user the choice which protocol should be used for a voting
+session.
+\\
+
+This is a non-exhaustive list of proposals for following projects, but it
+clearly shows that the research in the field of decentralized e-voting is
+certainly not at its end and there is still a lot of room for interesting
+projects in this area.
 
 \printbibliography
 
