@@ -108,7 +108,7 @@ Engineering and Information Technology\\
 CH-2501 Biel, Switzerland\\
 }
 \date{\today}
-\publishers{Advisor:\\
+\publishers{Adviser:\\
 Prof. Dr. Rolf Haenni, Bern University of Applied Sciences\\
 \bigskip
 Expert:\\
@@ -140,7 +140,7 @@ use this e-voting system.
 
 I hereby declare having done this master's thesis myself without any
 unauthorized help. All information sources that strongly helped me in my work,
-are fully referenced in this document or directly in the source code.
+are fully referenced in this document t or directly in the source code.
 
 \begin{flushleft}
 
@@ -168,14 +168,14 @@ Signature:
 \listoffigures
 \listoftables
 
-\markright{Acknowledgements}
-\chapter*{Acknowledgements} I would like to thank the E-Voting Group of the Bern
+\markright{Acknowledgments}
+\chapter*{Acknowledgments} I would like to thank the E-Voting Group of the Bern
 University of Applied Sciences for giving me the opportunity to realize this
 project. Many interesting and inspiring discussions helped driving on this
-project. A special thanks goes to my advisor Prof. Dr. Rolf Haenni who supported
+project. A special thanks goes to my adviser Prof. Dr. Rolf Haenni who supported
 me throughout the whole time during my master studies. A big thank you also goes
 to my fellow student Philémon von Bergen, with whom I worked closely during this
-master's thesis. Coming a long way from Germany for serving as an expert for
+master's thesis. Coming a long way from Germany for serving as an Expert for
 this master's thesis, I would like to express my gratitude to Stephan Neumann.
 I am also deeply grateful for the support of my employer Swisscom for supporting
 me during the whole time of my studies, especially my team who always gave me
@@ -210,7 +210,7 @@ revolutionized by the internet, it is not surprising that there are a lot of
 efforts going on to revolutionize the process of voting as well.
 
 One of the research fields of the Bern University of Applied Sciences is the
-area of electroing voting, hereinafter abbreviated as e-voting. E-voting has
+area of electronic voting, hereinafter abbreviated as e-voting. E-voting has
 become a big field of research in the past couple years. Still, there is no
 generic approach which meets all the criteria such as privacy, transparency,
 etc. which we want in e-voting. These properties are discussed in
@@ -230,13 +230,13 @@ approach works in practice and provides a certain usability. The E-Voting Group
 would like to gain some experience on how decentralized e-voting systems could
 be implemented and how they behave in practice. A decentralized e-voting system
 aims to provide a platform to do secure e-voting without the need of having a
-central infrastructre (e.g. a server) available. There are some approaches which
+central infrastructure (e.g. a server) available. There are some approaches which
 focus explicitly on this kind of e-voting systems, such as the proposal of D.
 Khader et al. \cite{HKRS12}. In this project however, we would like to adapt the
 voting scheme proposed by Cramer et. al. \cite{CGS97} in a way that it can be
 used as a decentralized e-voting system.
 
-A potential usecase of such a system could be boardroom voting, for example a
+A potential use case of such a system could be boardroom voting, for example a
 vote held in a board of directors of a company. The architecture of our system
 requires that all the participants are in a confined space and are able to
 exchange some sort of credential using a communication channel which relies on
@@ -287,15 +287,15 @@ order to implement a CGS97 based e-voting system, however two crucial parts are
 missing:
 \begin{itemize}
   \item \textbf{ElGamal Proof of Validity:} This type of zero-knowledge proof is
-  used in order to make sure that a ciphertext is an ElGamal encryption of an
-  element which belongs to a set of possible plaintexts. This type of proof is
+  used in order to make sure that a cipher text is an ElGamal encryption of an
+  element which belongs to a set of possible plain texts. This type of proof is
   an instance	 of a more generic \emph{OR-composition} of multiple proofs of
   knowledge. This type of zero-knowledge proof is discussed in detail in
   \Vref{sec:zeroknowledgeproofs}.
   \item \textbf{Threshold Cryptosystem:} In order to ensure privacy of
   the ballots, the CGS97 e-voting scheme uses a so called threshold system. This
   system allows to split a secret key and distribute \emph{key shares} to a
-  given set of participants. In order to decrypt a ciphertext, the parties have
+  given set of participants. In order to decrypt a cipher text, the parties have
   to collaborate in order to reconstruct the secret key. Threshold cryptosystems
   are discussed in further detail in \Vref{sec:secretsharing}.
 \end{itemize}
@@ -440,7 +440,7 @@ exponentiation in modular groups a one way function. A major advantage of the
 ElGamal cryptosystem is the fact, that the encryption function includes a random
 value. Especially in the context of e-voting this is a crucial property, because
 when encrypting a value (for example the value $1$ which means \textit{yes})
-multiple times using the same public key, the resulting ciphertext is always
+multiple times using the same public key, the resulting cipher text is always
 different. That is why ElGamal is also called a \textit{randomized}
 cryptosystem.
 
@@ -461,7 +461,7 @@ applying the following function:
 Enc_y : G_q \times \mathbb{Z}_q \rightarrow G_q \times G_q,
 (a, b)=Enc_y(m, r)=(g^r, y^r \cdot m) \notag
 \end{equation}
-The tuple $(a, b)$ is the ciphertext of the message $m$. $m$ can be recovered using the secret key $x$
+The tuple $(a, b)$ is the cipher text of the message $m$. $m$ can be recovered using the secret key $x$
 by applying the decryption function:
 \begin{equation}
 Dec_x : G_q \times G_q \rightarrow G_q,
@@ -483,16 +483,16 @@ ElGamal looks as follows:
 \hat{Enc_y} : \mathbb{Z}_q \times \mathbb{Z}_q \rightarrow G_q \times G_q,
 (a, b)=\hat{Enc_y}(\hat{m}, r)=(g^r, y^r \cdot \hat{g}^{\hat{m}}) \notag
 \end{equation}
-In order to decrypt a given ciphertext, we apply the ordinary ElGamal decryption
+In order to decrypt a given cipher text, we apply the ordinary ElGamal decryption
 function and obtain the value $\hat{g}^{\hat{m}} \in G_q$. To reveal $\hat{m}$,
 we would have to compute the discrete logarithm, which is a hard problem in
-general. If we have knowledge about all the possible plaintexts (e.g. we know
+general. If we have knowledge about all the possible plain texts (e.g. we know
 that a ballot either contains 0 for \emph{no} or 1 for \emph{yes}), we can just try all
-possible plaintexts. 
+possible plain texts. 
 
 Exponential ElGamal has another property which is important in the context of
 e-voting: It transforms the right part of the ElGamal encryption function from a
-multiplicative homomorph function into an additive homomorph function.
+multiplicative homomorphic function into an additive homomorphic function.
 Homomorphic encryption is discussed in detail in \Cref{sec:homenc}.
 
 \subsection{Homomorphic encryption}
@@ -524,7 +524,7 @@ x^a \cdot x^b = x^{a+b} \notag
 \end{equation}
 
 This is exactly the property that we obtain by using exponential ElGamal as
-discussed in \Vref{sec:expelgamal}. The product of all ciphertext
+discussed in \Vref{sec:expelgamal}. The product of all cipher text
 values results in the encrypted sum of the cast ballots, encrypted using the
 exponential ElGamal encryption function $\hat{Enc_y}:\mathbb{Z}_q \times
 \mathbb{Z}_q \rightarrow G_q \times G_q$:
@@ -535,7 +535,7 @@ r_2)
 \notag
 \end{equation}
 
-After decrypting the product of all ciphertexts, we end up with a value of the
+After decrypting the product of all cipher texts, we end up with a value of the
 form $\hat{g}^{(m_1+m_2)}$. The value that we are interested in is $m_1+m_2$.
 This value can be obtained by computing the discrete logarithm, but we have seen in
 \Vref{sec:discretelogarithm} that this is a hard problem. In the context of
@@ -611,7 +611,7 @@ jointly generate a secret, the trustees perform the following steps:
   F_{j0}$.
 \end{enumerate}
 The public key $y$ can now be used by anybody, for example to do an ElGamal
-encryption. In order to decrypt an ElGamal ciphertext $(a, b)$ created using the
+encryption. In order to decrypt an ElGamal cipher text $(a, b)$ created using the
 public key $y$, at least $t$ trustees have to collaborate and execute the following steps:
 \begin{enumerate}
   \item Each collaborating trustee $\tau_i$ publishes a part decryption $w_i =
@@ -621,18 +621,18 @@ public key $y$, at least $t$ trustees have to collaborate and execute the follow
   \begin{equation}
 	\log_g g^{x_i} = \log_a w_i \notag
   \end{equation}
-  This proves that the trustee $\tau_i$ indeed used its keyshare to do the part
+  This proves that the trustee $\tau_i$ indeed used its key share to do the part
   decryption. Further details about zero-knowledge proofs can be found in
   \Vref{sec:zeroknowledgeproofs}.
 \end{enumerate}
 As soon as at least $t$ part decryptions are publicly available, anyone can use
-the Lagrange interpolation algorithm to recover the plaintext. Let $\Lambda$ be a set of
+the Lagrange interpolation algorithm to recover the plain text. Let $\Lambda$ be a set of
 at least $t$ available shares. Using this set, the Lagrange coefficients can be
 calculated as follows:
 \begin{equation}
 	\lambda_{j,\Lambda} = \prod_{l\in \Lambda \backslash \{j\}} \frac{l}{l-j} \notag
 \end{equation}
-The plaintext $m$ of the ElGamal ciphertext $(a, b)$ can then be recovered as
+The plain text $m$ of the ElGamal cipher text $(a, b)$ can then be recovered as
 follows:
 \begin{equation}
 	m = \frac{b}{\prod_{j \in \Lambda} w_j^{\lambda_{j,\Lambda}}} \notag
@@ -676,7 +676,7 @@ proofs are called \textit{non-interactive zero-knowledge proofs} or
 A. Shamir in 1986 \cite{FS87}, later known as the \textit{Fiat-Shamir
 heuristic}. Instead of the verifier challenging the prover, the prover
 challenges himself by using a \emph{hashfunction} such as SHA-256. As input for
-this hashfunction, publicly known values are used. A verifier can use these
+this hash function, publicly known values are used. A verifier can use these
 publicly known values later to verify that the challenge was created correctly.
 The result of such a non-interactive zero-knowledge proof is similar to a
 digital signature. Once published, everybody can verify the integrity of the
@@ -696,7 +696,7 @@ $\alpha$, the prover performs the following steps:
 \begin{enumerate}
   \item Choose a uniformly random value $\omega \in_R X$
   \item Compute $t=f(\omega)$
-  \item Compute $c=H(\beta||t)$, where $H$ represents a \emph{hashfunction} such
+  \item Compute $c=H(\beta||t)$, where $H$ represents a \emph{hash function} such
   as SHA-256
   \item Compute $s=\omega \oplus c \cdot \alpha$
   \item Publish the proof $\pi = (t,s)$
@@ -716,7 +716,7 @@ condition holds:
 This type of proof was first presented by C. P. Schnorr in 1991
 \cite{Schnorr91}. We have seen that the ElGamal encryption function has the
 homomorphic property \myref{sec:homenc}. Therefore, it is possible to prove the
-knowledge of the plaintext of a given ciphertext by applying the scheme above.
+knowledge of the plain text of a given cipher text by applying the scheme above.
 We define the ElGamal encryption function using the public key $y$ and the
 predefined generator $g$ of the group $G_q$ as follows:
 \begin{equation}
@@ -742,7 +742,7 @@ This translates to the following steps:
 \begin{enumerate}
   \item Choose a uniformly random value $\omega \in_R \mathbb{Z}_q$
   \item Compute $t=g^\omega$
-  \item Compute $c=H(a||t)$, where $H$ represents a \emph{hashfunction} such
+  \item Compute $c=H(a||t)$, where $H$ represents a \emph{hash function} such
   as SHA-256
   \item Compute $s=\omega + c \cdot r$
   \item Publish the proof $\pi = (t,s)$
@@ -775,7 +775,7 @@ This translates to the following steps:
   \item Choose a uniformly random value $\omega \in_R \mathbb{Z}_q$
   \item Compute $t=(g_1^\omega, g_2^\omega)$
   \item Compute $c=H(c_1||c_2||t)$, where $H$ represents a
-  \emph{hashfunction} such as SHA-256
+  \emph{hash function} such as SHA-256
   \item Compute $s=\omega + c \cdot m$
   \item Publish the proof $\pi = (t,s)$
 \end{enumerate}
@@ -826,8 +826,8 @@ the index $i$.
   $j=(1, \ldots, i-1, i+1, \ldots, n)$
   \item Select $\omega_i \in_R X$
   \item Compute $t_i=f(\omega_i) \in Y$
-  \item Compute challenge $c\in X$ with hashfunction\footnote{Usually a
-  hashfunction such as SHA-256 is used, which does not necessary produce an
+  \item Compute challenge $c\in X$ with hash function\footnote{Usually a
+  hash function such as SHA-256 is used, which does not necessary produce an
   element of $X$. Some sort of mapping is required.} $H$:
   $c=H(\beta_1||\ldots||\beta_n||t_1||\ldots||t_n)$
   \item Compute $c_i=c\oplus(\sum_{j=1, j \neq i}^n c_j)^{-1} \in X$
@@ -847,8 +847,8 @@ the following conditions hold:
 \end{align}
 The formal description above depicts how a general OR-proof is assembled. The
 cryptographic building block we need for our implementation is a proof of
-validity, which proves that the plaintext $m$ of a certain ElGamal ciphertext
-$(a, b)$ is an element of a set of possible plaintexts $M=\{m_1, \ldots, m_n\}$. This
+validity, which proves that the plain text $m$ of a certain ElGamal cipher text
+$(a, b)$ is an element of a set of possible plain texts $M=\{m_1, \ldots, m_n\}$. This
 scenario can be seen as an instance of an OR-proof. We can show this relation by
 substituting the variables in the generalized schema above as follows:
 \begin{align}
@@ -1007,7 +1007,7 @@ Furthermore, each voter needs to post a proof of validity
 
 \paragraph{Tallying Phase.}
 The tallying phase can start as soon as the voting period has come to an end. In
-order to tally a vote, the ciphertexts of the valid ballots are multiplied
+order to tally a vote, the cipher texts of the valid ballots are multiplied
 and posted to the bulletin board. Since all the encrypted ballots are publicly
 available, this multiplication step can be verified easily by doing the
 multiplication individually and compare the result to the values on the
@@ -1049,7 +1049,7 @@ decrypted results appear in the form $\hat{g}^{r_1}, \hat{g}^{r_2}, \ldots,
 have to calculate the discrete logarithm, but as
 we have seen in \Vref{sec:discretelogarithm}, this is a hard problem. A better
 way to obtain the results is to exploit the fact that we know the set
-relativiely small set of the possible results. Each result has to contain a
+relatively small set of the possible results. Each result has to contain a
 value between $0$ and $n$, $n$ being the size of the electorate. Each result can
 now be probed by generating values $\hat{g}^0, \hat{g}^1, \hat{g}^2, \ldots$ and
 compare them to the values $\hat{g}^{r_1}, \hat{g}^{r_2}, \ldots,
@@ -1188,12 +1188,12 @@ ElGamal encryption.
 
 During the tallying phase, the encrypted values for each ballots are verified
 and the homomorphic product of all valid ballots is calculated. After the joint
-decryption of this homomophic product by the trustees, the result of the vote
+decryption of this homomorphic product by the trustees, the result of the vote
 has the form $\hat{g}^v$, where $v \in \mathbb{Z}_q$ again represents a bit
-vector. Each sector of this bitvector now contains the sum of each individual
+vector. Each sector of this bit vector now contains the sum of each individual
 option. This works because the dimensions of the sectors have been designed such
 that they do not overflow while summing up the votes.
-\Vref{fig:singleencryptionencodingresult} illustrates the bitvector $v$
+\Vref{fig:singleencryptionencodingresult} illustrates the bit vector $v$
 containing each option's result after tallying the vote.
 
  \begin{figure}[htbp]
@@ -1317,7 +1317,7 @@ without functions like automatic padding, encoding, etc. This is the main
 difference between UniCrypt and other cryptographic libraries.
 
 At the moment, UniCrypt has only been used in classic Java environments, but not
-on mobile devices. At this point, a reengineered version of UniCrypt is under
+on mobile devices. At this point, a re-engineered version of UniCrypt is under
 active development. Further information about UniCrypt can be found in \cite{ritter12}.
 
 \section{InstaCircle}
@@ -1328,7 +1328,7 @@ in a confined space to a Wi-Fi ad-hoc network in order to exchange broadcast
 and unicast messages. In order to keep the network traffic as low as possible,
 the basic communication relies on broadcast messages. Since it is not possible
 to implement a reliable protocol using broadcast techniques, mechanisms to
-compensate message losses have been implemented. These resending mechanisms rely
+compensate message losses have been implemented. These re-sending mechanisms rely
 on a reliable unicast channel.
 
 From a usability perspective, the process on agreeing to a communication channel
@@ -1413,24 +1413,24 @@ of the cryptographic building blocks in the first part could be done as planned.
 The implementation of the graphical user interface and the integration of the
 network layer took more time than anticipated, we finished this part in week 46.
 In order to start with the implementation of the e-voting logic, we had a
-dependency on UniCrypt, which converged to a stable codebase in week 46, so an
-eralier start of the implementation was not possible anyway. Because of the
+dependency on UniCrypt, which converged to a stable code base in week 46, so an
+earlier start of the implementation was not possible anyway. Because of the
 enormous help of UniCrypt, the implementation of the e-voting logic took much
 less time than anticipated, which helped catching up with the planning.
 
 \section{Meetings}
 In order to synchronize the two projects regarding progress, problems and the
 coordination of the next work packages, we agreed on one day per week where we
-work at the same location in Biel. It was also used to catch up with the advisor
+work at the same location in Biel. It was also used to catch up with the adviser
 and discuss the next steps.
 
 \section{Project Dependencies}
 It was planned to use the UniCrypt cryptographic library for implemented the
 e-voting logic. This has been done mainly for two reasons:
 \begin{itemize}
-  \item Simplify the implementation by glueing together predefined cryptographic
+  \item Simplify the implementation by gluing together predefined cryptographic
   building blocks.
-  \item Use the reengineered version of UniCrypt for the first time in a
+  \item Use the re-engineered version of UniCrypt for the first time in a
   project and provide feedback.
 \end{itemize}
 This creates a significant dependency to the UniCrypt project. The library has
@@ -1443,11 +1443,11 @@ development team.
 As a source code repository and a collaboration platform, the free hosting
 platform GitHub\footnote{\url{https://github.com/}} has been chosen. It
 provides Git\footnote{\url{http://git-scm.com/}} source code repositories which
-allow to do code versioning and branching. It also enables multiple contributors to maintain a certain codebase,
+allow to do code versioning and branching. It also enables multiple contributors to maintain a certain code base,
 which was important during the implementation of the user interface and the
 network layer. Using the branching mechanism of Git, we were able to split the
-codebase appart and implement the project specific protocols on top of the
-common codebase. \Vref{tab:sourcecoderepositories} outlines the three
+code base appart and implement the project specific protocols on top of the
+common code base. \Vref{tab:sourcecoderepositories} outlines the three
 repositories which have been used for the implementation for this project.
 
 \begin{table}[htbp]
@@ -1519,21 +1519,21 @@ the communication is orchestrated on the master device that initiates the group
 communication. In exchange, the communication is reliable.
 
 Some parts of InstaCircle were used, mainly the WLAN management and the logic
-for transmiting the communication parameters could be adapted from the
+for transmitting the communication parameters could be adapted from the
 InstaCircle implementation.
 
 \subsection{ZXing}
 \label{sec:zxing}
 ZXing\footnote{\url{https://code.google.com/p/zxing/}} (pronounced ``Zebra
 Crossing'') is a Java library provided by Google which allows to deal with many
-flavours of barcodes, including QR-codes which we are using in this
+flavors of bar codes, including QR-codes which we are using in this
 implementation. It provides the logic to encode information into a QR-code and
 display it on the user interface of the application. It also provides the
 functionality which allows to use the camera of a smartphone/tablet as a scanner
 in order to decode the QR-code which is being displayed on the screen of another
 device.
 
-In this project, we are using this functionality for transmiting the parameters
+In this project, we are using this functionality for transmitting the parameters
 of the group to other devices. These parameters include the SSID of the WLAN
 that is being used, the encryption key of the conversation, as well as a group
 identifier in case there are multiple conversations running in the same network.
