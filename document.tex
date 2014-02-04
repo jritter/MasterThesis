@@ -196,8 +196,8 @@ the necessary flexibility.
 \chapter{Introduction}
 \pagenumbering{arabic}
 \label{cha:introduction}
-The history of voting on a particular question in order determine the will of a
-group of people goes far back to the ancient Greeks, who laid the groundwork of
+The history of voting on a particular question in order to determine the will of
+a group of people goes far back to the ancient Greeks, who laid the groundwork of
 today's democratic societies. Over the years, the purpose of holding elections
 remained the same, while the procedures on how voting is done has changed
 significantly. The most ancient way of expressing the will by a hand sign has
@@ -205,7 +205,7 @@ been replaced by modern technologies. The 20th century has seen a lot of changes
 in this area. Paper based voting has been introduced, and with the
 industrialization, the first voting machines appeared on the surface. The
 purpose of these machines was to simplify the counting process. In today's internet
-society where a lot of tasks such as banking, shopping, mailing, etc. has been
+society where a lot of tasks such as banking, shopping, mailing, etc. have been
 revolutionized by the internet, it is not surprising that there are a lot of
 efforts going on to revolutionize the process of voting as well.
 
@@ -324,7 +324,7 @@ devices.
 
 Furthermore, the extensions for the UniCrypt library can be used for other
 projects as well. In the area of e-voting, threshold cryptosystems and validity
-proofs are considered as standard building blocks and can be used for the
+proofs are considered being standard building blocks and can be used for the
 implementation of other e-voting schemes.
 
 \section{Outline}
@@ -351,7 +351,7 @@ In today's internet world, many tasks such as sending mail, doing bank
 transactions, booking flights etc. can be done using the internet. Instead of
 going to the post office, to the bank or the travel agency, one can complete
 these tasks in a very comfortable fashion at home in front of the computer. Not
-surprisingly, people have thought about replace the way to the voting station
+surprisingly, people have thought about replaceing the way to the voting station
 with an internet based solution. This so called e-voting has appeared on the
 surface soon after the quick rise of the internet, but so far the big
 breakthrough has not happened, which might be surprising at first sight.
@@ -359,7 +359,7 @@ Instead, the area of e-voting has become a big research area, tightly related to
 the area of cryptography.
 
 Let us have a closer look at the reasons why e-voting
-could not find it's way to success so far. For a better understanding, we should
+has not found its way to success so far. For a better understanding, we should
 identify the properties that we expect from an e-voting system. Over the time,
 some properties and their definitions have emerged.
 
@@ -371,7 +371,7 @@ some properties and their definitions have emerged.
   than valid votes can influence the result.
   \item[Universal verifiability:] Anyone can verify the correctness of
   the result.
-  \item[Individual verifiability:] A voter can can verify that her vote
+  \item[Individual verifiability:] A voter can verify that her vote
   is included in the result as she cast it.
   \item[Privacy:] Nobody can obtain information how a voter has
   voted.
@@ -541,7 +541,7 @@ This value can be obtained by computing the discrete logarithm, but we have seen
 \Vref{sec:discretelogarithm} that this is a hard problem. In the context of
 e-voting, we can solve this problem by iterating over all possible solutions and
 compare it with the decrypted value. The number of possible solutions can't be
-bigger as the number of cast ballots, therefore iterating over these solutions
+bigger than the number of cast ballots, therefore iterating over these solutions
 is not a big problem.
 
 
@@ -549,7 +549,7 @@ is not a big problem.
 \label{sec:secretsharing}
 In e-voting scenarios it is crucial that not a
 single entity can manipulate the result or reveal single votes. This
-responsibility, or in our case the secret key which is needed to obtain the
+responsability, or in our case the secret key which is needed to obtain the
 final result, has to be spread across a set of so called trustees. In the CGS97
 scheme, this property is achieved by using a secret sharing mechanism as
 proposed by A. Shamir in 1979 \cite{Shamir79}. This scheme even allows to define a so called
@@ -581,7 +581,7 @@ polynomial function of degree $t-1$ is defined by at least $t$ points, the
 secret can only be reproduced if at least $t$ trustees are collaborating and
 contribute their shares.
 
-The approach of Shamir is quite simple, has one major drawback though: It
+The approach of Shamir is quite simple, but has one major drawback though: It
 requires a trusted dealer which has the knowledge of the shared key. It it
 would be nice to have a scheme where the group of trustees collaborate to create
 the shares in a way that nobody can derive the secret key unless a sufficient
@@ -1003,7 +1003,8 @@ them to the bulletin board. Note that we need to use \emph{exponential
 ElGamal} \myref{sec:expelgamal} so that we can \emph{add} the result in an upcoming
 stage.
 Furthermore, each voter needs to post a proof of validity
-\myref{sec:proofofvalidity} on the bulletin board in order to prove that encrypted ballot indeed contains a valid option of the election.
+\myref{sec:proofofvalidity} on the bulletin board in order to prove that
+the encrypted ballot indeed contains a valid option of the election.
 
 \paragraph{Tallying Phase.}
 The tallying phase can start as soon as the voting period has come to an end. In
@@ -1030,7 +1031,7 @@ following.
 
 \subsection{Multi Encryption Ballot}
 \label{sec:multiencriptionballot}
-In in this strategy we treat each option as an individual \emph{yes-no}
+In this strategy we treat each option as an individual \emph{yes-no}
 question. To do so, we create an encryption containing a $1$ for a
 \emph{yes}-vote or a $0$ for a \emph{no}-vote for each individual option using
 exponential ElGamal. In order to prove that the encryption indeed contains
@@ -1048,7 +1049,7 @@ decrypted results appear in the form $\hat{g}^{r_1}, \hat{g}^{r_2}, \ldots,
 \hat{g}^{r_k}$. To obtain the actual results $r_1, r_2, \ldots, r_k$, we would
 have to calculate the discrete logarithm, but as
 we have seen in \Vref{sec:discretelogarithm}, this is a hard problem. A better
-way to obtain the results is to exploit the fact that we know the set
+way to obtain the results is to exploit the fact that we know the
 relatively small set of the possible results. Each result has to contain a
 value between $0$ and $n$, $n$ being the size of the electorate. Each result can
 now be probed by generating values $\hat{g}^0, \hat{g}^1, \hat{g}^2, \ldots$ and
@@ -1137,7 +1138,7 @@ of steps as the electorate and the number of options grow.
 \subsection{Single Encryption Ballot}
 \label{sec:singleencriptionballot}
 In this strategy, the choice of each option is encoded in a single value, which
-is then encrypted. To do so, are using a bit zero vector which is divided
+is then encrypted. To do so, we are using a bit zero vector which is divided
 into equally sized sections for each individual option. Let $k$ be the number of
 options in a vote, and $n$ be the size of the electorate. For this scenario, we need a bit
 vector with $k$ sections, each containing at least $\lceil\log_2 n+1\rceil$
@@ -1146,8 +1147,8 @@ A vote can then be encoded by flipping the least significant bit of the
 chosen option's corresponding section to 1. This creates a binary representation
 of the number $v \in \mathbb{Z}_q$, provided that the bit
 vector does not exceed the bitlenght of the order of the group.
-\Vref{fig:singleencryptionencoding} illustrate how such a vector would look like
-if someone chose option \emph{B}. A voting scenario with this setup would be
+\Vref{fig:singleencryptionencoding} illustrates how such a vector would look
+like if someone chose option \emph{B}. A voting scenario with this setup would be
 limited to $2^4-1=15$ participants because each sector can only accommodate
 numbers from $0$ to $15$. In order to achieve additive homomorphism with respect
 to the message, this number needs to be encoded by calculating $\hat{v}=\hat{g}^{v}$ \myref{sec:expelgamal}.
@@ -1191,8 +1192,8 @@ and the homomorphic product of all valid ballots is calculated. After the joint
 decryption of this homomorphic product by the trustees, the result of the vote
 has the form $\hat{g}^v$, where $v \in \mathbb{Z}_q$ again represents a bit
 vector. Each sector of this bit vector now contains the sum of each individual
-option. This works because the dimensions of the sectors have been designed such
-that they do not overflow while summing up the votes.
+option. This works because the dimensions of the sectors have been designed as
+such that they do not overflow while summing up the votes.
 \Vref{fig:singleencryptionencodingresult} illustrates the bit vector $v$
 containing each option's result after tallying the vote.
 
@@ -1265,8 +1266,8 @@ needs almost $100\,000$ modular exponentiations.
 \end{figure}
 
 \subsection{Comparison}
-Each of the previously discussed approaches how to encode a ballot has its own
-advantages and disadvantages. For comparing the two approaches, we are using a
+Each of the previously discussed approaches on how to encode a ballot has its
+own advantages and disadvantages. For comparing the two approaches, we are using a
 \emph{one-out-of-k} voting scenario with $k$ options and $n$ participants. As we
 can see in \Vref{tab:comparisonofballotencodings}, the single ballot encryption
 is in many ways more efficient, except for the decoding part. As the number of
@@ -1311,8 +1312,8 @@ UniCrypt tries to look at cryptographic functions such as cryptosystems,
 signature systems, hash functions etc. from a mathematical point of view. Cipher
 texts, plain texts, signatures, hashes, etc. are treated as elements of
 algebraic structures, the cryptographic functions are treated as mathematical functions.
-This is necessary because in secure protocols as we use in the area of e-voting,
-we depend on the plain textbook implementation of the cryptographic functions
+This is necessary because in secure protocols as we use them in the area of
+e-voting, we depend on the plain textbook implementation of the cryptographic functions
 without functions like automatic padding, encoding, etc. This is the main
 difference between UniCrypt and other cryptographic libraries.
 
@@ -1364,11 +1365,11 @@ disadvantages of the two approaches.
 \section{Timeline}
 \label{sec:planning}
 \paragraph{Original planning.} The gantt chart in \Vref{fig:projectplanning}
-visualizes the steps which have been planned on the time axis during the project period. At the first stage, we
+visualizes the steps which have been planned on the time axis during the project period. At first, we
 defined the project setup, later on the cryptographic components were put in
 place and were tested on the Android platform. It was followed by the storyboard
-an the implementation of the user interface. Especially in this part there was a
-strong collaboration with Philémon von Bergen \cite{vonBergen14}. At this point
+and the implementation of the user interface. Especially in this part there was
+a strong collaboration with Philémon von Bergen \cite{vonBergen14}. At this point
 we had the cornerstone and were able to implement the actual e-voting related
 logic, the implementation of the CGS97 protocol. For this step we calculated the
 biggest time period.
@@ -1420,12 +1421,12 @@ less time than anticipated, which helped catching up with the planning.
 
 \section{Meetings}
 In order to synchronize the two projects regarding progress, problems and the
-coordination of the next work packages, we agreed on one day per week where we
-work at the same location in Biel. It was also used to catch up with the adviser
-and discuss the next steps.
+coordination of the next work packages, we agreed on one day per week to 
+work together at the same location in Biel. It was also used to catch up with
+the adviser and discuss the next steps.
 
 \section{Project Dependencies}
-It was planned to use the UniCrypt cryptographic library for implemented the
+It was planned to use the UniCrypt cryptographic library for implementing the
 e-voting logic. This has been done mainly for two reasons:
 \begin{itemize}
   \item Simplify the implementation by gluing together predefined cryptographic
@@ -1473,9 +1474,9 @@ repositories which have been used for the implementation for this project.
 \chapter{Results}
 \label{cha:results}
 During the project phase, a working implementation of the CGS97 voting protocol
-running on Android mobile devices has been implemented. As the name for the
-application we chose ``MobiVote'', which is related to the name ``UniVote'',
-which is an e-voting system targeted for the use at a desktop computer.
+running on Android mobile devices has been implemented. We named the
+application ``MobiVote'', which is related to the name ``UniVote'', which is an
+e-voting system targeted for the use at a desktop computer.
 UniVote\footnote{\url{https://www.univote.ch/}} is developed at the same
 institute, therefore we tried to create this relation.
 
@@ -1631,7 +1632,7 @@ for themselves. The screen design of this phase is illustrated in
 After joining the network session, a list of all the session participants is
 displayed. At this stage, the administrator can define the electorate, meaning
 he can select the participants which are allowed to vote. This can be done by
-clicking on the the checkboxes next to the participant's identification. The
+clicking on the checkboxes next to the participant's identification. The
 participants can see who has been selected on their devices.
 
 Once the administrator has defined the electorate, each participant has to
@@ -1672,8 +1673,8 @@ design of this phase is illustrated in \Vref{fig:vote}.
 
 \paragraph{Displaying the result.}
 The vote is tallied as soon as the last vote has been cast, or if the
-administrator has ended the voting phase. The result is displayed in the form of
-a pie-chart and a tabular view. The result of the vote is saved on each devices
+administrator has ended the voting phase. The result is displayed in form of
+a pie-chart and a tabular view. The result of the vote is saved on each device
 and can be revisited using the archive function in the main screen. The screen
 design of this phase is illustrated in \Vref{fig:result}.
 
@@ -2439,6 +2440,38 @@ tallying process grows rapidly as the number of participants and options grow.
 In this implementation we have the same problem when using the single encryption
 ballot strategy, but in this implementation we have the option to switch to the
 multi encryption ballot strategy \myref{sec:multiencriptionballot}.
+
+\section{Challenges}
+Along the way to the finished app, there were a few challenges to overcome. This
+section should give an overview on some points that turned out to be a bit more
+challenging than anticipated.
+
+\paragraph{Decentralized communication:} The original plan was to employ the
+InstaCircle communication infrastructure in the project. InstaCircle is a
+completely decentralized communication infrastructure. That also means that here
+is no master instance which manages the overall state of the communication
+session. Problems with synchronisation and reliability arise. This is one reason
+that the communication layer has been switched to the AllJoyn library.
+
+\paragraph{Security - Usability Trade-off:} From a user's point of view,
+security usually puts many obstacles in the way. PIN-codes, Passwords, Keys,
+Certificates and similar things are confusing the users. To keep the usability
+on an acceptable level, some compromises have been made. One such compromise is
+the use of non-certified identities. Of course, the design of a usable user
+interface was quite a challenge on its own.
+
+\paragraph{Android Wifi API:} The android platform provides an API for managing
+the Wireless connections on an Android device. This API is used in our
+application to properly configure the network on which the voting session is
+going to take place. Despite the documentation, it took quite some time to
+figure out how this API can be used properly.
+
+\paragraph{Robustness in many Situations:} An application running on a mobile
+device has to be in a way that it can deal with many unexpected situations. For
+example, an incoming phone call should not disrupt the entire ongoing voting
+process. In a voting scenario with many participants, the chance that something
+unexpected happens are quite high. If these situations are not handled properly,
+the votes have be rerun many times until everything works as expected.
 
 
 \chapter{Conclusion}
