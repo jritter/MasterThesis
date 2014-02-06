@@ -111,7 +111,7 @@ Engineering and Information Technology\\
 CH-2501 Biel, Switzerland\\
 }
 \date{\today}
-\publishers{Adviser:\\
+\publishers{Advisor:\\
 Prof. Dr. Rolf Haenni, Bern University of Applied Sciences\\
 \bigskip
 Expert:\\
@@ -171,11 +171,11 @@ Signature:
 \listoffigures
 \listoftables
 
-\markright{Acknowledgments}
-\chapter*{Acknowledgments} I would like to thank the E-Voting Group of the Bern
+\markright{Acknowledgements}
+\chapter*{Acknowledgements} I would like to thank the E-Voting Group of the Bern
 University of Applied Sciences for giving me the opportunity to realize this
 project. Many interesting and inspiring discussions helped driving on this
-project. A special thanks goes to my adviser Prof. Dr. Rolf Haenni who supported
+project. A special thanks goes to my advisor Prof. Dr. Rolf Haenni who supported
 me throughout the whole time during my master studies. A big thank you also goes
 to my fellow student Philémon von Bergen, with whom I worked closely during this
 master's thesis. Coming a long way from Germany for serving as an Expert for
@@ -331,6 +331,7 @@ proofs are considered being standard building blocks and can be used for the
 implementation of other e-voting schemes.
 
 \section{Outline}
+\label{sec:outline}
 \Vref{cha:brw} gives an overview of the work on which this project has
 been based on. The cryptographic building blocks which we use are discussed,
 as well as the e-voting scheme on which this work is based on. We also discuss
@@ -350,21 +351,14 @@ project.
 
 \section{E-Voting in 2014}
 \label{sec:evoting}
-In today's internet world, many tasks such as sending mail, doing bank
-transactions, booking flights etc. can be done using the internet. Instead of
-going to the post office, to the bank or the travel agency, one can complete
-these tasks in a very comfortable fashion at home in front of the computer. Not
-surprisingly, people have thought about replaceing the way to the voting station
-with an internet based solution. This so called e-voting has appeared on the
-surface soon after the quick rise of the internet, but so far the big
-breakthrough has not happened, which might be surprising at first sight.
-Instead, the area of e-voting has become a big research area, tightly related to
-the area of cryptography.
-
-Let us have a closer look at the reasons why e-voting
-has not found its way to success so far. For a better understanding, we should
-identify the properties that we expect from an e-voting system. Over the time,
-some properties and their definitions have emerged.
+Electroing voting has been a field of research ever since the internet
+revolutionized many areas of our daily life. Nevertheless, only few governments
+have made e-voting publicly available for their citizens. Some countries, among
+them Switzerland, are putting high efforts into officially introduce
+e-voting as an official way of voting, along with paper based voting. The reason
+why the introduction of e-voting takes much more time than for example e-banking
+stems from the fact that e-voting requires some properties which are not easy to
+implement. What follows is a non-exhaustive list of these properties.
 
 \begin{description}
   \item[Democracy:] Only eligible voters can vote, and each voter can
@@ -372,30 +366,31 @@ some properties and their definitions have emerged.
   \item[Accuracy:] The result is derived from \emph{all} valid
   votes as they were cast, i.e. cast votes can not be modified. No other factors
   than valid votes can influence the result.
-  \item[Universal verifiability:] Anyone can verify the correctness of
-  the result.
+  \item[Universal verifiability:] Anybody, even people who are not involved in
+  the voting process, can verify the correctness of the result.
   \item[Individual verifiability:] A voter can verify that her vote
   is included in the result as she cast it.
-  \item[Privacy:] Nobody can obtain information how a voter has
-  voted.
+  \item[Privacy:] The e-voting system does not reveal any information about what
+  option the voter has chosen.
   \item[Receipt-freeness:] The voter can not prove to anybody else how
   she voted.
-  \item[Coercion-resistance:] Nobody can force a voter to vote in a
-  particular way, or prevent a voter to vote at all.
-  \item[Robustness:] An attacker is not able to disrupt an election
-  process or change the outcome by damaging a small set of system components. 
+  \item[Coercion-resistance:] The voter cannot be coerced, meaning it is not
+  possible to force a voter to vote in a particular way, or prevent a voter to
+  vote at all.
+  \item[Robustness:] An attacker or a small colluding set of the electorate is
+  not able to disrupt an election process or change the outcome by damaging a
+  small set of system components.
 \end{description}
 
 All these properties are discussed in detail in \cite{HS11} and \cite{Jonker09}.
-As it turns out, it is not at all easy to build a system that meets all these
-desired requirements. Not even the classic paper based voting meets all the
-requirements, for example the verifiability is not given in a classic voting
-scenario. Researchers are trying to develop schemes towards these requirements
-using cryptographic building blocks. The robustness property is probably the
-biggest factor that prevents the breakthrough of e-voting on large scales.
+The currently ongoing research efforts are put into developing approaches how
+e-voting systems that meet all these requirements could be built. Many of the
+properties mentioned above can be achieved by employing crypographic building
+blocks, which are discussed in the next section. The robustness property is
+probably the biggest factor that prevents the breakthrough of e-voting on large scales.
 E-voting systems are the perfect targets for an intended manipulation or a
-boycott of an election. That is the reason why many governments use e-voting
-only on small scales so that the electorate is small enough that it is
+boycott of an election. That is the reason why e-voting is currently used
+only on small scales. The size of the electorate is limited so that it is
 statistically unlikely to tip the scale to one side or the other.
 
 \section{Cryptographic Building Blocks}
@@ -477,8 +472,8 @@ In the area of e-voting, we often find a slight variation of ElGamal which is
 called \emph{exponential ElGamal}. In exponential ElGamal, we encode a message
 $\hat{m}$ by using a generator $\hat{g}$ of $G_q$ and raise it to the power of
 the message $\hat{m} \in \mathbb{Z}_q$. In many cases, the ElGamal parameter $g$
-is used as $\hat{g}$, which makes it unnecessary to define a fourth predefined
-parameter. Note that the message $\hat{m}$ is an element of the additive group
+is used as $\hat{g}$, which makes it unnecessary to define a fourth
+predefined parameter. Note that the message $\hat{m}$ is an element of the additive group
 $\mathbb{Z}_q$ as opposed to the classical ElGamal where $m$ is an element of
 the multiplicative group $G_q$. The modified encryption function of exponential
 ElGamal looks as follows:
@@ -909,7 +904,7 @@ this project, the voter, trustee and observer roles can be combined and all
 participants impersonate these roles. The administrator role needs to be
 assigned to one particular participant.
 
-\subsection{Security Properties}
+\subsection{Voting Properties}
 \label{sec:secproperties}
 In \Vref{sec:evoting} we discussed some security requirements which
 are desirable for e-voting systems. The following paragraph assesses the CGS97
@@ -922,8 +917,9 @@ fulfill the democracy requirement. The criteria that only one valid vote can be
 cast is also tied to the authentication mechanism.
 
 \paragraph{Accuracy.} A zero-knowledge proof is used to prove that all valid
-ballots are tallied correctly. Since the bulletin board is publicly available,
-this can be verified by anybody.
+ballots are tallied correctly. Since the all the relevant information is
+publicly accessible on the bulletin board, this can be
+verified by anybody.
 
 \paragraph{Universal verifiability.} The bulletin board which is publicly
 available (for voters as well as for observers who don't participate at the
@@ -942,9 +938,9 @@ voter always remains encrypted unless a sufficient amount of trustees decide
 conspire and decrypt single votes and reveal information on how the participants
 voted.
 
-\paragraph{Receipt-freeness.} This property is one of the weak points of the
-CGS97 voting scheme. A voter is able to derive a proof which shows how she
-voted.
+\paragraph{Receipt-freeness.} A voter using the CGS97 scheme is able to create a
+receipt which can be used to prove to another persion which option has been
+chosen. The CGS97 scheme hence does not offer receipt-freeness.
 
 \paragraph{Coercion-resistance.} Coercion resistant protocols have mechanisms
 to allow the voter to lie about the vote when under coercion. The voter pretends
@@ -954,22 +950,28 @@ her intention. Unfortunately, CGS97 does not offer this possibility.
 \paragraph{Robustness.} The CGS97 protocol offers robustness by including a
 threshold secret sharing mechanism that assures a working system as long as a
 certain number of properly behaving trustees remain in the system. The other
-crucial part which requires robustness is the bulletin board, which should be
-replicated for achieving robustness. The CGS97 scheme doesn't specify in detail
-how this should be achieved. A possible approach can be found in \cite{HL09}.
+crucial part which requires robustness is the bulletin board. To achive
+robustness, the bulletin board should be replicated so that multiple consistent
+instances are available. The CGS97 scheme doesn't specify in detail how this
+should be achieved. A possible approach can be found in \cite{HL09}.
 
-\subsection{Usability Properties}
-\label{sec:usabilityproperties}
-It is a generally known fact that high security measures have a negative impact
-on the usability of a certain application. In the area of e-voting, usability is a
-crucial factor since the potential average voter is not expected to have a high
-expertise in cryptography and information security. In the CGS97 scheme, casting
-a vote is surprisingly easy and also the computation costs are fairly low,
-regardless of how many trustees the vote has or how big the electorate is.
+\subsection{Efficiency}
+\label{sec:efficiencyproperties}
+From a voter's perspective, the CGS97 protocol is surprisingly efficient. No
+matter how big the electorate of the voting scenario is, there is only one
+interaction with the e-voting system in order to cast a ballot. This makes the
+protocol very efficient from a usability perspective.
 
-A similar property is also valid for the trustees, the complexity of verifying
-votes, tallying and decrypting always remains linear which is a huge advantage
-compared to other e-voting schemes.
+The CGS97 voting scheme is also very efficient in terms of computation steps.
+When we consider a simple \emph{yes-no} vote, the number of computation steps
+are linear with regards to the size of the electorate, as well as the number of
+trustees. The same is true for the trustees who are responsible for the key
+generation and the tallying process.
+
+When we extend the voting scenario from a simple \emph{yes-no} scenario to a
+\emph{one-out-of-k} scenario, additional complexity comes in. The complexity
+depends on the encoding of the ballot, which is discussed in more detail in
+\Vref{sec:ballotencoding}.
 
 \subsection{The Protocol}
 The CGS97 voting scheme has a well defined procedure on how a vote should be
@@ -1347,7 +1349,14 @@ the conversation.
 InstaCircle is currently available for Android devices only. Further information
 about InstaCircle can be found in \cite{ritter13a}.
 
-
+\section{Related Projects}
+During the same time period, Philémon von Bergen realized his master's thesis
+\cite{vonBergen14}, implementing the same kind of application but with a
+different e-voting scheme. His application uses a protocol specifically designed
+for decentralized e-voting. It has been designed in 2012 by D. Khader et. al.
+\cite{HKRS12}. A research team at the Technical University of Darmstadt is also
+planning to implement a similar application which is able to deal with several
+protocols and more complex voting scenarios.
 
 \chapter{Organization}
 \label{cha:organization}
@@ -1426,7 +1435,7 @@ less time than anticipated, which helped catching up with the planning.
 In order to synchronize the two projects regarding progress, problems and the
 coordination of the next work packages, we agreed on one day per week to 
 work together at the same location in Biel. It was also used to catch up with
-the adviser and discuss the next steps.
+the advisor and discuss the next steps.
 
 \section{Project Dependencies}
 It was planned to use the UniCrypt cryptographic library for implementing the
@@ -1791,90 +1800,7 @@ applies the correct layout.
 % a scrollable list. 
 % \\
 
-\section{Voting Protocol}
-\label{sec:votingprotocol}
-A major goal of this project is to create a decentralized e-voting system which
-provides as many security properties as possible. These
-properties are discussed in \Vref{sec:evoting}. The CGS97 voting scheme
-\cite{CGS97} offers most of these properties. The properties of the CGS97 scheme
-are discussed in \Vref{sec:CGS97}. This section gives an overview of some
-aspects which have been considered during the implementation.
 
-\subsection{Modifications in the Protocol}
-The CGS97 scheme has not specifically been
-designed for decentralized e-voting systems. The protocol itself remains exactly
-the same, but the assignment of some roles are slightly changed:
-
-\paragraph{Trustees:} The CGS97 scheme stipulates the role of trustees. Trustees
-are responsible to jointly generate an asymmetric key pair for the voting
-session and jointly decrypt the result after the voting period has come to an end. In the
-decentralized scenario, we merge the role of the trustee with the role of the
-participant. This doesn't create a conflict because a trustee can also be a
-participant in the vote. The fact that we assign the role of a trustee to each
-participant also reduces the complexity from a usability perspective, because no
-explicit assignment is required during the setup process of the vote.
-
-\paragraph{Bulletin Board:} In classic e-voting scenarios, a bulletin board is
-considered as a centralized high available infrastructure. This paradigm can't
-be applied to the decentralized voting scenario because no central
-infrastructure should be required. Instead, each participant creates its own
-transcript of the voting protocol. Almost all messages are exchanged by
-broadcasting them to all participants of the group and can be intercepted and
-recorded by each participant. In case of a manipulation, the participants would
-discover the manipulation by comparing the recorded values using their physical
-proximity.
-
-\subsection{Ballot Encoding}
-One goal of this project was to build an e-voting system that supports
-\emph{one-out-of-k} voting scenarios. This functionality can be achieved by
-employing a ballot encoding mechanism. We discussed two possible vote encodings
-in \Vref{sec:ballotencoding} we discussed two approaches, each with its own
-advantages and disadvantages. The single encryption ballot encoding is the more
-efficient approach in the voting phase. In the tallying phase on the other hand,
-this approach becomes very expensive as the number of options and participants
-grow. At this point, the multi encryption ballot encoding comes in. In order to
-get better performance in small voting scenarios while being able to perform
-votes with a big number of votes and participants, a hybrid system has been
-implemented. Using the strategy pattern, the protocols can be interchanged. The
-decision which strategy is going to be used is reached by calculating the number
-of steps which are required to tally the vote in a single encryption ballot
-scenario. In order to calculate the number of these steps, the following formula
-can be used, $k$ being the number of options available, $n$ the number of
-voting participants and $s$ the resulting number of steps:
-
-\begin{equation}
-s = \dbinom{k+n-1}{k-1} \notag
-\end{equation}
-
-Further background regarding this relation can be found in \cite{vonBergen14}.
-As a threshold value, the number $10\,000$ has been chosen. If $s$ is smaller,
-the single encryption ballot encoding is used, the multi encryption ballot
-strategy otherwise.
-
-\subsection{Vote Export}
-We have seen that the CGS97 protocol is verifiable. The implemented application
-of course does all the checks in order to make sure that nothing goes wrong
-during the voting process. For the user, these security mechanisms are not
-visible, and therefore a user could question the soundness of the voting
-process. Since all the relevant cryptographic values are recorded and saved, we
-can export these values so that a third party verification software could verify
-the voting process. This export functionality exports all the values of a vote
-into a XML File. The XML structure depends on the vote encoding that has been
-chosen. \Vref{fig:xmlstructuresingle} depicts the structure which is used for a
-single encryption ballot vote, \Vref{fig:xmlstructuremulti} the structure used
-for a multi encryption ballot vote.
-
- \begin{figure}[htbp]	
-	\includegraphics[width=\textwidth]{xmlstructuresingle.pdf}
-	\caption{XML Structure of a Single Encryption Ballot Vote}
-	\label{fig:xmlstructuresingle}
-\end{figure}
-
- \begin{figure}[htbp]	
-	\includegraphics[width=\textwidth]{xmlstructuremulti.pdf}
-	\caption{XML Structure of a Multi Encryption Ballot Vote}
-	\label{fig:xmlstructuremulti}
-\end{figure}
 
 \section{Bootstrapping of Group Communication}
 \label{sec:bootstraping}
@@ -2129,6 +2055,98 @@ These POJO classes could later be used for writing a verifier software which
 allows to check a vote by a third party software. The POJO classes can be found
 in the Java package \texttt{ch.bfh.evoting.voterapp.protocol.cgs97.xml}.
 
+\nopagebreak[2]
+
+
+\section{Voting Protocol}
+\label{sec:votingprotocol}
+A major goal of this project is to create a decentralized e-voting system which
+provides as many security properties as possible. These
+properties are discussed in \Vref{sec:evoting}. The CGS97 voting scheme
+\cite{CGS97} offers most of these properties. The properties of the CGS97 scheme
+are discussed in \Vref{sec:CGS97}. This section gives an overview of some
+aspects which have been considered during the implementation.
+
+\subsection{Modifications in the Protocol}
+The CGS97 scheme has not specifically been
+designed for decentralized e-voting systems. The protocol itself remains exactly
+the same, but the assignment of some roles are slightly changed:
+
+\paragraph{Trustees:} The CGS97 scheme stipulates the role of trustees. Trustees
+are responsible to jointly generate an asymmetric key pair for the voting
+session and jointly decrypt the result after the voting period has come to an end. In the
+decentralized scenario, we merge the role of the trustee with the role of the
+participant. This doesn't create a conflict because a trustee can also be a
+participant in the vote. The fact that we assign the role of a trustee to each
+participant also reduces the complexity from a usability perspective, because no
+explicit assignment is required during the setup process of the vote.
+
+\paragraph{Bulletin Board:} In classic e-voting scenarios, a bulletin board is
+considered as a centralized high available infrastructure. This paradigm can't
+be applied to the decentralized voting scenario because no central
+infrastructure should be required. Instead, each participant creates its own
+transcript of the voting protocol. Almost all messages are exchanged by
+broadcasting them to all participants of the group and can be intercepted and
+recorded by each participant. In case of a manipulation, the participants would
+discover the manipulation by comparing the recorded values using their physical
+proximity.
+
+\subsection{Ballot Encoding}
+One goal of this project was to build an e-voting system that supports
+\emph{one-out-of-k} voting scenarios. This functionality can be achieved by
+employing a ballot encoding mechanism. We discussed two possible vote encodings
+in \Vref{sec:ballotencoding} we discussed two approaches, each with its own
+advantages and disadvantages. The single encryption ballot encoding is the more
+efficient approach in the voting phase. In the tallying phase on the other hand,
+this approach becomes very expensive as the number of options and participants
+increase. At this point, the multi encryption ballot encoding comes in. In order
+to get better performance in small voting scenarios while being able to perform
+votes with a big number of votes and participants, a hybrid system has been
+implemented. Using the strategy pattern, the protocols can be interchanged. The
+decision which strategy is going to be used is reached by calculating the number
+of steps which are required to tally the vote in a single encryption ballot
+scenario. In order to calculate the number of these steps, the following formula
+can be used, $k$ being the number of options available, $n$ the number of
+voting participants and $s$ the resulting number of steps:
+
+\begin{equation}
+s = \dbinom{k+n-1}{k-1} \notag
+\end{equation}
+
+Further background regarding this relation can be found in \cite{vonBergen14}
+and \cite{HRZ10}.
+As a threshold value for $s$, the number $10\,000$ has been chosen. This value
+seemed to be a reasonable balance, considering that the evaluation of a combination takes
+roughly $1.8$ milliseconds on a modern device. That means that we allow a
+tallying time of 18 seconds on modern devices. If $s$ is smaller, the single
+encryption ballot encoding is used, the multi encryption ballot strategy otherwise.
+
+\subsection{Vote Export}
+We have seen that the CGS97 protocol is verifiable. The implemented application
+of course does all the checks in order to make sure that nothing goes wrong
+during the voting process. For the user, these security mechanisms are not
+visible, and therefore a user could question the soundness of the voting
+process. Since all the relevant cryptographic values are recorded and saved, we
+can export these values so that a third party verification software could verify
+the voting process. This export functionality exports all the values of a vote
+into a XML File. The XML structure depends on the vote encoding that has been
+chosen. \Vref{fig:xmlstructuresingle} depicts the structure which is used for a
+single encryption ballot vote, \Vref{fig:xmlstructuremulti} the structure used
+for a multi encryption ballot vote.
+
+ \begin{figure}[htbp]	
+	\includegraphics[width=\textwidth]{xmlstructuresingle.pdf}
+	\caption{XML Structure of a Single Encryption Ballot Vote}
+	\label{fig:xmlstructuresingle}
+\end{figure}
+
+ \begin{figure}[htbp]	
+	\includegraphics[width=\textwidth]{xmlstructuremulti.pdf}
+	\caption{XML Structure of a Multi Encryption Ballot Vote}
+	\label{fig:xmlstructuremulti}
+\end{figure}
+
+
 \section{Testing}
 \label{sec:testing}
 To verify the correct behaviour of the implemented product, a number of
@@ -2165,17 +2183,21 @@ functionality.
 \subsection{Usability Tests}
 \label{sec:usabilitytests}
 The implementation phase of this project started with the implementation of the
-Graphical User Interface of the application. At this stage, it was possible to 
+Graphical User Interface of the application. At this stage, it was possible to
 setup and run a vote on multiple devices, but without the security of the later
 implemented e-voting protocol. This implementation was then used to verify that
 the user interface of the application does not cause any confusion among users.
-Several people were asked to use the application and provide feedback, which
-then got compiled into the implementation. The implementation of the e-voting
-protocol mostly took place behind the scenes, there were only some slight
-modifications in the user interface necessary to add this functionality.
+Several people without any background in the e-voting area were asked to use the
+application and provide feedback. The feedback we got from the first
+implementation showed potential for optimization, details such as the placement
+of buttons or the purpose of some user interface elements. The overall feedback
+showed, that we were able to build a e-voting application which is easy to use.
+The implementation of the e-voting protocol which was done after the
+usability tests mostly took place behind the scenes, there were only some
+slight modifications in the user interface necessary to add this functionality.
 
-\subsection{Performance Tests}
-\label{sec:performancetests}
+\subsection{Load Tests}
+\label{sec:loadtests}
 In a decentralized environment, the load which each device has to handle grows
 with the number of participants and the number of options in a vote. In order to
 verify that the implementation is able to handle scenarios with more than just
@@ -2215,7 +2237,7 @@ parameters with the length of 2048 bits have been used.
 		\SI{5.4}{\second} \\
 		6 & 17 & \SI{2.5}{\second} & \SI{39.0}{\second} & \SI{4.6}{\second} & 
 		\SI{22.0}{\second} \\
-		10 & 17 &  &  & \SI{6.7}{\second} &	
+		10 & 17 & \SI{2.4}{\second} & - & \SI{6.7}{\second} &	
 		\SI{47.2}{\second} \\
 		\bottomrule
 	\end{tabularx}
@@ -2231,9 +2253,9 @@ scenarios because the number of combinations which have to be checked during the
 tallying process grows factorially. One combination check (which is
 basically a modular exponentiation) was measured to take around
 1.8 milliseconds on a LG Nexus 5 smartphone. In the scenario with 10 options and
-17 participants, the tallying process would take roughly 2 hours and 40 minutes.
-Using the multi encryption ballot strategy on the other hand, tallying the same
-scenario takes 42 seconds. 
+17 participants, the tallying process would take roughly 2 hours and 40 minutes,
+that is why there is no result for this scenario in the table. Using the multi
+encryption ballot strategy on the other hand, tallying the same scenario takes 42 seconds. 
 
 The performance tests were executed on modern smartphone hardware which can
 perform expensive operations such as generating encryptions and proofs in a
@@ -2241,6 +2263,14 @@ reasonable time. The user experience on older devices such as the Samsung Galaxy
 S1 offer a less smooth user experience, especially when using the multi
 encryption ballot strategy which requires much more calculation power for
 creating and verifying ballots.
+
+The load tests with many devices also unveiled another fact: The AllJoyn
+communication framework only allows 16 devices to join into a communication
+group. This restricts the voting scenario to a maximum of 17 participants,
+including the administrator who initiated the communication session. According
+to the documentation of AllJoyn, the library does not have such a restriction,
+which after a glance into the source code of AllJoyn proved to be not true. This
+is why this restriction has been discovered only in a late stage of the project.
 
 \section{UniCrypt Extensions}
 \label{sec:enhancmentsunicrypt}
@@ -2494,7 +2524,7 @@ decoding step of the HKRS12 protocol requires an exhaustive search of
 combinations in order to avoid the discrete logarithm problem, very similar to
 the single encryption ballot encoding used in this project
 \myref{sec:singleencriptionballot}. This means that the time consumption of the
-tallying process grows rapidly as the number of participants and options grow.
+tallying process grows rapidly as the number of participants and options increase.
 In this implementation we have the same problem when using the single encryption
 ballot strategy, but in this implementation we have the option to switch to the
 multi encryption ballot strategy \myref{sec:multiencriptionballot}.
@@ -2504,7 +2534,7 @@ Along the way to the finished app, there were a few challenges to overcome. This
 section should give an overview on some points that turned out to be a bit more
 challenging than anticipated.
 
-\paragraph{Decentralized communication:} The original plan was to employ the
+\paragraph{Decentralized Communication:} The original plan was to employ the
 InstaCircle communication infrastructure in the project. InstaCircle is a
 completely decentralized communication infrastructure. That also means that here
 is no master instance which manages the overall state of the communication
@@ -2512,13 +2542,13 @@ session. Problems with synchronisation and reliability arise. This is one reason
 that the communication layer has been switched to the AllJoyn library.
 
 \paragraph{Security - Usability Trade-off:} From a user's point of view,
-security usually puts many obstacles in the way. PIN-codes, Passwords, Keys,
-Certificates and similar things are confusing the users. To keep the usability
+security usually puts many obstacles in the way. PIN-codes, passwords, keys,
+certificates and similar things are confusing the users. To keep the usability
 on an acceptable level, some compromises have been made. One such compromise is
 the use of non-certified identities. Of course, the design of a usable user
 interface was quite a challenge on its own.
 
-\paragraph{Android Wifi API:} The android platform provides an API for managing
+\paragraph{Android Wi-Fi API:} The android platform provides an API for managing
 the Wireless connections on an Android device. This API is used in our
 application to properly configure the network on which the voting session is
 going to take place. Despite the documentation, it took quite some time to
@@ -2530,6 +2560,12 @@ example, an incoming phone call should not disrupt the entire ongoing voting
 process. In a voting scenario with many participants, the chance that something
 unexpected happens are quite high. If these situations are not handled properly,
 the votes have be rerun many times until everything works as expected.
+
+\paragraph{Ongoing Development of UniCrypt:} During the implementation phase of
+this project, UniCrypt was still under heavy development and was undergoing a
+lot of changes, also on the exposed interfaces on the library. Updating to the
+newest snapshot version of UniCrypt often also required changes in the
+implementation of the protocol.
 
 
 \chapter{Conclusion}
