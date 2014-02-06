@@ -1,6 +1,6 @@
 
 \documentclass[numbers=noenddot, abstract=on, a4paper, headsepline,
-footsepline, oneside, draft=off]{scrreprt}
+footsepline, oneside, draft=off, listof=leveldown]{scrreprt}
 
 % Setting heading fonts to serif
 \addtokomafont{disposition}{\rmfamily}
@@ -43,6 +43,8 @@ footsepline, oneside, draft=off]{scrreprt}
 
 \usetikzlibrary{matrix,arrows,positioning,decorations.pathreplacing,calc,decorations.pathmorphing}
 
+\usepackage{dot2texi}
+
 % Intelligent references
 \usepackage{varioref} 
 
@@ -82,13 +84,14 @@ footsepline, oneside, draft=off]{scrreprt}
 %\newcommand{\myref}[1]{(see section \ref{#1} on page \pageref{#1})}
 \newcommand{\myref}[1]{(see \Vref{#1})}
 
-\usepackage[enabled]{easy-todo}
 
 % Pretty tables
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{siunitx}
+
+\usepackage{graphicx}
 
 
 
@@ -1794,7 +1797,11 @@ A major goal of this project is to create a decentralized e-voting system which
 provides as many security properties as possible. These
 properties are discussed in \Vref{sec:evoting}. The CGS97 voting scheme
 \cite{CGS97} offers most of these properties. The properties of the CGS97 scheme
-are discussed in \Vref{sec:CGS97}. This scheme has not specifically been
+are discussed in \Vref{sec:CGS97}. This section gives an overview of some
+aspects which have been considered during the implementation.
+
+\subsection{Modifications in the Protocol}
+The CGS97 scheme has not specifically been
 designed for decentralized e-voting systems. The protocol itself remains exactly
 the same, but the assignment of some roles are slightly changed:
 
@@ -1817,7 +1824,57 @@ recorded by each participant. In case of a manipulation, the participants would
 discover the manipulation by comparing the recorded values using their physical
 proximity.
 
-\todo{Vote encoding}
+\subsection{Ballot Encoding}
+One goal of this project was to build an e-voting system that supports
+\emph{one-out-of-k} voting scenarios. This functionality can be achieved by
+employing a ballot encoding mechanism. We discussed two possible vote encodings
+in \Vref{sec:ballotencoding} we discussed two approaches, each with its own
+advantages and disadvantages. The single encryption ballot encoding is the more
+efficient approach in the voting phase. In the tallying phase on the other hand,
+this approach becomes very expensive as the number of options and participants
+grow. At this point, the multi encryption ballot encoding comes in. In order to
+get better performance in small voting scenarios while being able to perform
+votes with a big number of votes and participants, a hybrid system has been
+implemented. Using the strategy pattern, the protocols can be interchanged. The
+decision which strategy is going to be used is reached by calculating the number
+of steps which are required to tally the vote in a single encryption ballot
+scenario. In order to calculate the number of these steps, the following formula
+can be used, $k$ being the number of options available, $n$ the number of
+voting participants and $s$ the resulting number of steps:
+
+\begin{equation}
+s = \dbinom{k+n-1}{k-1} \notag
+\end{equation}
+
+Further background regarding this relation can be found in \cite{vonBergen14}.
+As a threshold value, the number $10\,000$ has been chosen. If $s$ is smaller,
+the single encryption ballot encoding is used, the multi encryption ballot
+strategy otherwise.
+
+\subsection{Vote Export}
+We have seen that the CGS97 protocol is verifiable. The implemented application
+of course does all the checks in order to make sure that nothing goes wrong
+during the voting process. For the user, these security mechanisms are not
+visible, and therefore a user could question the soundness of the voting
+process. Since all the relevant cryptographic values are recorded and saved, we
+can export these values so that a third party verification software could verify
+the voting process. This export functionality exports all the values of a vote
+into a XML File. The XML structure depends on the vote encoding that has been
+chosen. \Vref{fig:xmlstructuresingle} depicts the structure which is used for a
+single encryption ballot vote, \Vref{fig:xmlstructuremulti} the structure used
+for a multi encryption ballot vote.
+
+ \begin{figure}[htbp]	
+	\includegraphics[width=\textwidth]{xmlstructuresingle.pdf}
+	\caption{XML Structure of a Single Encryption Ballot Vote}
+	\label{fig:xmlstructuresingle}
+\end{figure}
+
+ \begin{figure}[htbp]	
+	\includegraphics[width=\textwidth]{xmlstructuremulti.pdf}
+	\caption{XML Structure of a Multi Encryption Ballot Vote}
+	\label{fig:xmlstructuremulti}
+\end{figure}
 
 \section{Bootstrapping of Group Communication}
 \label{sec:bootstraping}
@@ -2877,7 +2934,5 @@ verify that the vote has been done correctly.
 	\caption{Vote Archive}
 	\label{fig:handbook_votearchive}
 \end{figure}
-
-\listoftodos
 
 \end{document}
