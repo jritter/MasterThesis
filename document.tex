@@ -70,11 +70,11 @@ footsepline, oneside, draft=off, listof=leveldown]{scrreprt}
 \hypersetup{
     colorlinks=false,
     pdfborder={0 0 0},
-    pdfauthor={Juerg Ritter},
+    pdfauthor={Jürg Ritter},
     pdftitle={Decentralized E-Voting on Android Devices Using Homomorphic
     Tallying},
     pdfsubject={Master's Thesis},
-    pdfkeywords={E-Voting;Android;Master Thesis},
+    pdfkeywords={E-Voting;Android;Master's Thesis},
 }
 
 \usepackage{cleveref}
@@ -351,7 +351,7 @@ project.
 
 \section{E-Voting in 2014}
 \label{sec:evoting}
-Electroing voting has been a field of research ever since the internet
+Electronic voting has been a field of research ever since the internet
 revolutionized many areas of our daily life. Nevertheless, only few governments
 have made e-voting publicly available for their citizens. Some countries, among
 them Switzerland, are putting high efforts into officially introduce
@@ -385,7 +385,7 @@ implement. What follows is a non-exhaustive list of these properties.
 All these properties are discussed in detail in \cite{HS11} and \cite{Jonker09}.
 The currently ongoing research efforts are put into developing approaches how
 e-voting systems that meet all these requirements could be built. Many of the
-properties mentioned above can be achieved by employing crypographic building
+properties mentioned above can be achieved by employing cryptographic building
 blocks, which are discussed in the next section. The robustness property is
 probably the biggest factor that prevents the breakthrough of e-voting on large scales.
 E-voting systems are the perfect targets for an intended manipulation or a
@@ -547,7 +547,7 @@ is not a big problem.
 \label{sec:secretsharing}
 In e-voting scenarios it is crucial that not a
 single entity can manipulate the result or reveal single votes. This
-responsability, or in our case the secret key which is needed to obtain the
+responsibility, or in our case the secret key which is needed to obtain the
 final result, has to be spread across a set of so called trustees. In the CGS97
 scheme, this property is achieved by using a secret sharing mechanism as
 proposed by A. Shamir in 1979 \cite{Shamir79}. This scheme even allows to define a so called
@@ -673,7 +673,7 @@ proofs are called \textit{non-interactive zero-knowledge proofs} or
 \textit{NIZKPs}. The foundations of these NIZKPs were introduced by A. Fiat and
 A. Shamir in 1986 \cite{FS87}, later known as the \textit{Fiat-Shamir
 heuristic}. Instead of the verifier challenging the prover, the prover
-challenges himself by using a \emph{hashfunction} such as SHA-256. As input for
+challenges himself by using a \emph{hash function} such as SHA-256. As input for
 this hash function, publicly known values are used. A verifier can use these
 publicly known values later to verify that the challenge was created correctly.
 The result of such a non-interactive zero-knowledge proof is similar to a
@@ -939,7 +939,7 @@ conspire and decrypt single votes and reveal information on how the participants
 voted.
 
 \paragraph{Receipt-freeness.} A voter using the CGS97 scheme is able to create a
-receipt which can be used to prove to another persion which option has been
+receipt which can be used to prove to another person which option has been
 chosen. The CGS97 scheme hence does not offer receipt-freeness.
 
 \paragraph{Coercion-resistance.} Coercion resistant protocols have mechanisms
@@ -950,7 +950,7 @@ her intention. Unfortunately, CGS97 does not offer this possibility.
 \paragraph{Robustness.} The CGS97 protocol offers robustness by including a
 threshold secret sharing mechanism that assures a working system as long as a
 certain number of properly behaving trustees remain in the system. The other
-crucial part which requires robustness is the bulletin board. To achive
+crucial part which requires robustness is the bulletin board. To achieve
 robustness, the bulletin board should be replicated so that multiple consistent
 instances are available. The CGS97 scheme doesn't specify in detail how this
 should be achieved. A possible approach can be found in \cite{HL09}.
@@ -1035,7 +1035,7 @@ advantages and disadvantages. These two strategies are discussed in the
 following.
 
 \subsection{Multi Encryption Ballot}
-\label{sec:multiencriptionballot}
+\label{sec:multiencryptionballot}
 In this strategy we treat each option as an individual \emph{yes-no}
 question. To do so, we create an encryption containing a $1$ for a
 \emph{yes}-vote or a $0$ for a \emph{no}-vote for each individual option using
@@ -1046,7 +1046,7 @@ Furthermore, we need to make sure that each ballot contains exactly one
 \emph{yes}-vote. This can be achieved by creating a validity proof, proving that
 the sum of all encryptions is equal to one. In the
 tallying phase, a ballot is only accepted if all validity proofs are valid. For
-each option a homomorphical sum is calculated, containing the corresponding
+each option a homomorphic sum is calculated, containing the corresponding
 encryptions of all valid ballots. We then end up with $k$ ElGamal encryptions,
 containing the result of each individual option. The trustees then perform a
 joint decryption of these values. Because exponential ElGamal is used, the
@@ -1141,7 +1141,7 @@ of steps as the electorate and the number of options grow.
 % \end{table}
 
 \subsection{Single Encryption Ballot}
-\label{sec:singleencriptionballot}
+\label{sec:singleencryptionballot}
 In this strategy, the choice of each option is encoded in a single value, which
 is then encrypted. To do so, we are using a bit zero vector which is divided
 into equally sized sections for each individual option. Let $k$ be the number of
@@ -1151,7 +1151,7 @@ bits.
 A vote can then be encoded by flipping the least significant bit of the
 chosen option's corresponding section to 1. This creates a binary representation
 of the number $v \in \mathbb{Z}_q$, provided that the bit
-vector does not exceed the bitlenght of the order of the group.
+vector does not exceed the bit length of the order of the group.
 \Vref{fig:singleencryptionencoding} illustrates how such a vector would look
 like if someone chose option \emph{B}. A voting scenario with this setup would be
 limited to $2^4-1=15$ participants because each sector can only accommodate
@@ -1395,20 +1395,20 @@ biggest time period.
 	\gantttitle{\textbf{Master's Thesis Project Planning}}{52} \\
 	\gantttitlelist{8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2,3,4,5,6,7}{1}
 	\\
-	\ganttgroup{Writing of Project Proposal}{1}{6} \\
-	\ganttgroup{Secret Sharing scheme}{6}{10} \\
+	\ganttgroup{Writing of project proposal}{1}{6} \\
+	\ganttgroup{Secret sharing scheme}{6}{10} \\
 	\ganttbar{Analyzing the possibilities of threshold secret sharing}{6}{8} \\
 	\ganttbar{Implementing secret sharing into UniCrypt}{7}{10} \\
 	\ganttbar{Testing the secret sharing scheme}{9}{10} \\
-	\ganttgroup{Proof of Validity}{11}{13} \\
+	\ganttgroup{Proof of validity}{11}{13} \\
 	\ganttbar{Implementing proof of validity into UniCrypt}{11}{12} \\
 	\ganttbar{Testing of the proof of validity implementation}{12}{13} \\
 	\ganttgroup{Evaluation of UniCrypt on Android}{14}{15} \\
-	\ganttbar{Testing out Example code on Android}{14}{14} \\
+	\ganttbar{Testing example code on Android}{14}{14} \\
 	\ganttbar{Integration of code into Android project}{15}{15} \\
-	\ganttgroup{Implementation of e-voting Application of Android}{20}{39} \\
+	\ganttgroup{Implementation of e-voting application on Android}{20}{39} \\
 	\ganttbar{Design of storyboard}{20}{24}\\
-	\ganttbar{Implementation of the User Interface}{23}{26}\\
+	\ganttbar{Implementation of the user interface}{23}{26}\\
 	\ganttbar{Implementation of the	e-voting logic}{27}{39}\\
 	\ganttgroup{Testing}{32}{45} \\
 	\ganttgroup{Documentation / Report}{1}{8}
@@ -1459,7 +1459,7 @@ provides Git\footnote{\url{http://git-scm.com/}} source code repositories which
 allow to do code versioning and branching. It also enables multiple contributors to maintain a certain code base,
 which was important during the implementation of the user interface and the
 network layer. Using the branching mechanism of Git, we were able to split the
-code base appart and implement the project specific protocols on top of the
+code base apart and implement the project specific protocols on top of the
 common code base. \Vref{tab:sourcecoderepositories} outlines the three
 repositories which have been used for the implementation for this project.
 
@@ -1603,8 +1603,8 @@ The design which has been finally chosen is based on a single Android
 application. A voting cycle can be broken into several phases which are outlined
 in the following, along with the storyboard for this particular phase.
 
-\paragraph{Setup a Vote.}
-The designated administrator of the vote is responsible for setting up a vote,
+\paragraph{Create a Vote.}
+The designated administrator of the vote is responsible for creating a vote,
 namely defining the question and the possible options which can be chosen later
 during the voting phase. A vote can also be prepared and saved in advance in
 order to save time at the reunion. From here, the administrator can also
@@ -1814,14 +1814,14 @@ password, along with the other information which is needed to connect, namely
 the SSID of the WLAN on which the conversation takes place and the group name to
 identify the conversation. The following possibilities are available:
 \begin{itemize}
-  \item Communicate the password, the groupname and the SSID as text.
+  \item Communicate the password, the group name and the SSID as text.
   Participants who want to join the session need to enter these parameters using
   the soft keyboard of the mobile device.
-  \item Display a QR-code which encodes password, groupname and SSID.
+  \item Display a QR-code which encodes password, group name and SSID.
   Participants who want to join the session can snap a picture of this QR-code
   using the camera of the mobile device and decode the information on their
   devices.
-  \item Write password, groupname and SSID to a NFC tag which then can be passed
+  \item Write password, group name and SSID to a NFC tag which then can be passed
   along to all the participants. When tapping this NFC tag on the back of a NFC
   capable device, the User will be connected to the session.
 \end{itemize}
@@ -1829,7 +1829,7 @@ identify the conversation. The following possibilities are available:
 The application uses the password to derive an AES key which will be used to
 symmetrically encrypt all the broadcast traffic in the conversation.
 Furthermore, a dynamic salt which is generated by the administrator decreases
-the risk of rainbowtable attacks.
+the risk of rainbow table attacks.
 
 In order to guarantee the authenticity and integrity of the messages in the
 conversation, each participant generates an RSA key pair. The public key is 
@@ -1841,7 +1841,7 @@ conversation.
 For the unicast functionality of the messaging layer, a hybrid encryption
 mechanism is used. To achieve this, we encrypt an AES key which is used
 previously to encrypt the unicast payload using the RSA public key of the
-recipient. The recipient can then use its secret key to decrypt the AES key,
+recipient. The recipient can then use his secret key to decrypt the AES key,
 and then in a second step use this AES key to decrypt the payload.
 
 \section{Messaging}
@@ -1870,8 +1870,8 @@ These messages are passed through a stack of communication layers.
 establishing a group communication among network devices, the AllJoyn library is
 used. For the specific use in MobiVote, a wrapper library has been implemented.
 The availability of this interface allows to interchange the messaging library
-which is used for MobiVote. The AllJoyn Interface Library allows to send
-broadcast messages, meaning the messages reach all the participant in the group.
+which is used for MobiVote. The AllJoyn interface library allows to send
+broadcast messages which reach all the participants of the group.
 Most of the communication is done in this manner. It is also possible to send a
 message to a specific member of the group. This method is called unicast. In
 order to distinguish the different purpose of the messages interchanged between
@@ -1937,7 +1937,7 @@ This paradigm was used heavily for the implementation of this project.
 		VOTE\_MESSAGE\_START\_POLL					& 	Used to signal the start of a voting
 														period. \\
 		VOTE\_MESSAGE\_COEFFICIENT\_COMMITMENT		& 	Used during the key generation
-														phase for commiting to the chosen coefficients.\\
+														phase for committing to the chosen coefficients.\\
 		VOTE\_MESSAGE\_KEY\_SHARE					& 	Used to transmit the key shares between
 														participants.\\
 		VOTE\_MESSAGE\_KEY\_SHARE\_COMMITMENT		& 	Used to commit to the key share
@@ -2166,7 +2166,7 @@ functionality.
 	\begin{minipage}{\linewidth}
 	\begin{tabularx}{\textwidth}{lll}
 		\toprule
-		\textbf{Device}	&  \textbf{Formfactor} & \textbf{Android Version} 	\\
+		\textbf{Device}	&  \textbf{Form factor} & \textbf{Android Version} 	\\
 		\midrule
 		Samsung Galaxy S 3		& Smartphone	& 4.3 (Samsung original)	\\
 		Samsung Galaxy S 1  	& Smartphone	& 4.3.1
@@ -2208,7 +2208,7 @@ consuming steps, namely casting a ballot tallying a vote. The results of these
 performance tests are shown in \Vref{tab:perftestresults}. The performance tests
 were executed using the two separate ballot encoding strategies as discussed in
 \Vref{sec:ballotencoding}. Another relevant factor regarding performance is the
-bit lenght of the cryptographic parameters $p$ and $q$. For all tests,
+bit length of the cryptographic parameters $p$ and $q$. For all tests,
 parameters with the length of 2048 bits have been used.
 
 \begin{table}[htbp]
@@ -2318,21 +2318,21 @@ method returns a single element which represents the recovered secret.
 UniCrypt components are tested using the JUnit\footnote{\url{http://junit.org/}}
 framework. A JUnit Test for the Shamir Secret Sharing scheme has been implemented in order to check the correct
 functionality after each change that is done in the UniCrypt library. The
-following testclass has been implemented:
+following test class has been implemented:
 
 \texttt{ch.bfh.unicrypt.crypto.schemes.sharing.ShamirSecretSharingSchemeTest}
 
 \subsection{ElGamal Proof of Validity}
 A proof of validity is required if a party wants to prove that an ElGamal
-ciphertext is the encryption of element of a set of possible plaintexts without
+cipher text is the encryption of element of a set of possible plain texts without
 revealing which one it is. \Vref{sec:proofofvalidity} covers this topic in
 further detail.
 
 The implementation of the this proof has been done in a very early stage of this
 project, according to the architecture of UniCrypt 1. In the meantime, UniCrypt
-has been completely reengineered. The validity proof has been reimplemented
+has been completely re-engineered. The validity proof has been re-implemented
 independently of this project in order to fit into the new architecture. Since
-this project is based on UniCrypt 2, the project makes use of the reimplemented
+this project is based on UniCrypt 2, the project makes use of the re-implemented
 version of the ElGamal proof of validity.
 
 
@@ -2354,15 +2354,15 @@ participants (smartphone or tablets). As a communication layer for the
 communication between the devices, WLAN is used. Many facilities provide a WLAN
 infrastructure. The application provides the functionality to use this
 infrastructure, but also offers the possibility to set up a new WLAN network
-using the hot spot functionality of Android. The hot spot integrated in older
-devices is usually not as powerful as a hot spot which is designed for large
+using the hotspot functionality of Android. The hotspot integrated in older
+devices is usually not as powerful as a hotspot which is designed for large
 networks. For larger scenarios it is recommended to use a proper infrastructure
-WLAN hot spot as the communication layer. One can argue that this violates the
+WLAN hotspot as the communication layer. One can argue that this violates the
 principle of decentralization. This is true for the base communication layer,
 but it does not affect the decentralized behaviour of the e-voting protocol
 which is running on top of this communication layer.
 
-\paragraph{Messaging Layer:} In a preceeding project, a decentralized messaging
+\paragraph{Messaging Layer:} In a preceding project, a decentralized messaging
 infrastructure for Android called InstaCircle \cite{ritter13a} has been
 implemented. The goal is to establish a group communication so that the
 participating devices can exchange messages among each other. The message
@@ -2481,7 +2481,7 @@ that the key really belongs to the sender. During this key exchange process, a
 participant could hence impersonate somebody else. The key exchange happens on
 the secured layer, so that impersonation would have to be done by a participant
 who is in possession of the group password. This fact reduces the risk
-significantely, because since all participants are gathered in the same physical
+significantly, because since all participants are gathered in the same physical
 space, the fact that something is wrong would be discovered. The fact that
 non-certified keys are used for each session also makes it impossible to verify
 the authenticity of the messages after the voting session.
@@ -2523,11 +2523,11 @@ execution, especially on slower devices. A disadvantage is the fact, that the
 decoding step of the HKRS12 protocol requires an exhaustive search of
 combinations in order to avoid the discrete logarithm problem, very similar to
 the single encryption ballot encoding used in this project
-\myref{sec:singleencriptionballot}. This means that the time consumption of the
+\myref{sec:singleencryptionballot}. This means that the time consumption of the
 tallying process grows rapidly as the number of participants and options increase.
 In this implementation we have the same problem when using the single encryption
 ballot strategy, but in this implementation we have the option to switch to the
-multi encryption ballot strategy \myref{sec:multiencriptionballot}.
+multi encryption ballot strategy \myref{sec:multiencryptionballot}.
 
 \section{Challenges}
 Along the way to the finished app, there were a few challenges to overcome. This
@@ -2572,7 +2572,7 @@ implementation of the protocol.
 \label{cha:conclusion}
 During this project, we implemented a mobile e-voting application which can be
 used for boardroom voting. It is running on the popular mobile platform
-Android and therfore be used on devices such as smartphones and tablets. There
+Android and therefore be used on devices such as smartphones and tablets. There
 is no infrastructure other than the participant's devices required in order to
 run a vote on them. During this project, we also contributed to the UniCrypt
 library and implemented cryptographic building blocks which were used to
@@ -2606,7 +2606,7 @@ running the Android mobile operating system. All participants have to be in
 possession of an Android device. Despite the fact that Android is an extremely
 popular platform, this would be a big coincidence. To enable users of other
 mobile platforms to participate on votes, this MobiVote implementation should be
-reimplemented on other platforms such as Apple iOS or Windows Mobile.
+re-implemented on other platforms such as Apple iOS or Windows Mobile.
 
 \paragraph{Vote Verifier:} The MobiVote application allows to export all
 relevant cryptographic values which are required to verify the whole vote
