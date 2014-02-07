@@ -1,6 +1,6 @@
 
 \documentclass[numbers=noenddot, abstract=on, a4paper, headsepline,
-footsepline, oneside, openright, draft=off, listof=leveldown]{scrreprt}
+footsepline, twoside, openright, draft=off, listof=leveldown]{scrreprt}
 
 % Setting heading fonts to serif
 \addtokomafont{disposition}{\rmfamily}
@@ -540,7 +540,7 @@ form $\hat{g}^{(m_1+m_2)}$. The value that we are interested in is $m_1+m_2$.
 This value can be obtained by computing the discrete logarithm, but we have seen in
 \Vref{sec:discretelogarithm} that this is a hard problem. In the context of
 e-voting, we can solve this problem by iterating over all possible solutions and
-compare it with the decrypted value. The number of possible solutions can't be
+compare it with the decrypted value. The number of possible solutions cannot be
 bigger than the number of cast ballots, therefore iterating over these solutions
 is not a big problem.
 
@@ -1006,7 +1006,7 @@ threshold secret sharing mechanism that assures a working system as long as a
 certain number of properly behaving trustees remain in the system. The other
 crucial part which requires robustness is the bulletin board. To achieve
 robustness, the bulletin board should be replicated so that multiple consistent
-instances of the bulletin board are available. The CGS97 scheme doesn't specify
+instances of the bulletin board are available. The CGS97 scheme does not specify
 in detail how this should be achieved. A possible approach can be found in \cite{HL09}.
 
 \subsection{Efficiency}
@@ -2083,13 +2083,13 @@ the same, but the assignment of some roles are slightly changed:
 are responsible to jointly generate an asymmetric key pair for the voting
 session and jointly decrypt the result after the voting period has come to an end. In the
 decentralized scenario, we merge the role of the trustee with the role of the
-participant. This doesn't create a conflict because a trustee can also be a
+participant. This does not create a conflict because a trustee can also be a
 participant in the vote. The fact that we assign the role of a trustee to each
 participant also reduces the complexity from a usability perspective, because no
 explicit assignment is required during the setup process of the vote.
 
 \paragraph{Bulletin Board:} In classic e-voting scenarios, a bulletin board is
-considered as a centralized high available infrastructure. This paradigm can't
+considered as a centralized high available infrastructure. This paradigm cannot
 be applied to the decentralized voting scenario because no central
 infrastructure should be required. Instead, each participant creates its own
 transcript of the voting protocol. Almost all messages are exchanged by
@@ -2457,7 +2457,7 @@ somehow.
 
 Before implementing the actual e-voting protocol which provides the e-voting
 specific security measures, we had an implementation ready which allowed to
-perform a vote in a decentralized manner, but didn't offer the desired
+perform a vote in a decentralized manner, but did not offer the desired
 security. We used this stage to do tests of the communication layer and, more
 importantly usability tests \myref{sec:usabilitytests}. The fact that the user
 interface at this stage and at the final stage almost looks identical shows two
